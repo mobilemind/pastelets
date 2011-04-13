@@ -1,0 +1,58 @@
+version 1.0.0; July 23, 2008; Tom King
+version 1.0.1; October 29, 2008; Tom King; fixed typos, improved formatting
+version 1.0.2; November 28, 2008; Tom King; tighter wording, title/bookmark name updates, adds AdMob http://www.admob.com
+version 1.1.0; December 14, 2009; Tom King; improve generated bookmarklet (quicker exit from inner loop, paste text at front), PNGS now cacheable
+version 1.2.0; December 18, 2009; Tom King; change delivery page to HTML 5, refactor & minify script tags, update load handler, reload URL no longer hardcoded
+version 1.3.0; December 18, 2009; Tom King; HTML & CSS improvements to validate better, display generated Pastelet in textarea
+version 1.4.0; December 19, 2009; Tom King; HTML 5 cache manifest, added apple-mobile-web-app meta tags, re-brand as 'Pastelet' (vs iPastelet)
+version 1.4.1; December 21, 2009; Tom King; refactor to share code between Mobile Safari & Firefox/IE/Safari desktop pages, removed cache manifest
+version 1.4.2; December 22, 2009; Tom King; center button and (orange)crush style it, CSS improved, PayPal button centered
+version 1.4.3; December 28, 2009; Tom King; crop 'Save' graphic, tighten wording, add link to Donation area & back to top
+version 1.4.4; December 28, 2009; Tom King; use Firebug for strict check of javascript, do Total Validator HTML & accessibility check, Mobile Safari console check
+version 1.4.5; December 28, 2009; Tom King; remove favicon references, restore manifest [also, Page Speed Analysis optimizations of mobilemind.net config]
+version 1.5.0; December 28, 2009; Tom King; accessibility improvements, released to web as "http://mobilemind.net/___"
+version 1.5.1; December 28, 2009; Tom King; minor tweak to generated bookmarklet- i & j are declared, link published version to minified CSS & js, updated manifest
+version 1.6.0; December 29, 2009; Tom King; major overhaul to generated bookmarklet- now anon f(n) & tighter, match regex changed, script comment fixed, republished [bmmark ~70bytes smaller]
+version 1.6.1; December 30, 2009; Tom King; change loadPgWithPastelet() to update text area before reload (allows offline use), add touch-icon
+version 2.0.0; December 30, 2009; Tom King; loadPgWithPastelet() now uses document.getElementsByTagName (simplifies checks & works w/Google), match regex updated, page show version, no longer mentions issue w/Google pages
+version 2.0.1; December 30, 2009; Tom King; checked w/Firebug and Total Validator and fixed, republished to web [bookmarklets now ~70bytes smaller vs. v1.6x]
+version 2.0.2; January 01, 2010; Tom King; removed anonymous f(n) from bookmarklet [9bytes shorter], more comments, IE compatibility, pastex.js optimizations (& inlined w/ ___ HTML)
+version 2.0.3; January 01, 2010; Tom King; fixed missing character in pastelet concatenation, added lang="en" to html
+version 2.0.4; January 03, 2010; Tom King; now handles iPhone keyboard 'Go'/submit (w/awkward 2nd page load though)
+version 2.0.5; January 03, 2010; Tom King; added <noscript> tag
+version 2.0.6; January 04, 2010; Tom King; handles submit/button click without re-submitting
+version 2.0.7; January 04, 2010; Tom King; tighter minified version (forks '___' file HTML & JavaScript)
+version 2.1.0; January 05, 2010; Tom King; uses HTML 5 input types/attributes, improve bookmarklet, avoid unneeded reloads, try/catch w/error alert, no 'urchin() undefined' error
+version 2.2.0; January 19, 2010; Tom King; switch from Dreamweaver to Eclipse/Ant for build, fix URL encoding of i++ in pastelet, use htmlcompressor/yuicompressor for optimization
+version 2.3.2; January 20, 2010; Tom King; integrate 1 build process for iPhone (Mobile Safari) and web (Firefox/IE/Safari) versions ['unforks' v2.0.7 work]
+version 2.3.3; January 21, 2010; Tom King; reordered HTML 5 input types property list (helps manual edits), minor wording changes for brevity, Ant build updates local server & web server w/scp
+version 2.3.4; January 21, 2010; Tom King; fixed typo in content, shorter CSS class names, externalized AdMob/Urchin vars using Ant build changes
+version 2.3.5; February 01, 2010; Tom King; updated donations as a property (currently $3, thanks lad)
+version 2.3.6; February 03, 2010; Tom King; check to skip "search" fields common on forms/login pages, makepastelet() now pastelet(), updates to html tag attributes for smaller output
+version 2.4.0; February 10, 2010; Tom King; use named anchor to scroll on reload, update wording & CSS/layout for iPad, improve Google Chrome compatibility, add -moz-border-radius for Firefox
+version 2.4.1; February 14, 2010; Tom King; pastelet checks for/returns null, leverage existing id/elements as named anchors for links, changes save 40 bytes net (9648b)
+version 2.4.2; February 16, 2010; Tom King; wording changes save 37 bytes (9611b), revalidated & confirmed AdMob setup
+version 2.4.3; March 24, 2010; Tom King; updates AdMob code to their latest version, adds .ico to iPhone/iPad app just in case iPad uses it
+version 2.4.4; April 30, 2010; Tom King; Layout changes only after seeing it on an actual iPad (combined Step1/Your Pastelet, combined Donations/Notes & Issues)
+version 2.4.5; April 30, 2010; Tom King; Layout changes only after seeing it on an actual iPad (made Text to Paste input wider, Your Pastelet textarea narrower)
+version 2.4.6; May 27, 2010; Tom King; Using #yp anchor to scroll to Step 2 on reload broke pastelets that didn't 'Skip confirm'- fixed by using scrollTo again
+version 2.4.7; May 30, 2010; Tom King; Set focus to input that receives text while stepping through fields, and when a paste is confirmed set event.change = true for that input (fixes some Javascript-driven fields)
+version 2.4.8; October 31, 2010; Tom King; Makes triggering change event conditional, adds special pastelet versions for email/login & tel(ephone) that also checks names/ids
+version 2.4.9; November 1, 2010; Tom King; Abandons triggering change event instead sets focus, Confirm alert now includes field #, Specials have custom placeholders and use 'email' or 'tel' input type
+version 2.5.0; November 1, 2010; Tom King; Use blur()/focus() to trigger onchange, Consolidated to single for loop in special ('email', 'tel') utilities and added annotated code there, Remove favicon references
+version 2.5.1; November 3, 2010; Tom King; Major updates to build.xml, Added 'Not found' alert AND manifests for each iPhone/Special file
+version 2.5.2; November 5, 2010; Tom King; Updates 'Email'/Login version to check in id/name/title for 'user', Also switches to search for 'ogin' to better handle initial caps or all-lowercase 'Login'/'login'
+version 2.5.3; November 6, 2010; Tom King; Updates 'Tel' version to check id/name/title for 'tel' or 'hone' (to handle initial-caps/all-lowercase 'Phone'/'phone'), Also uses 'earch' for search
+version 2.5.4; November 7, 2010; Tom King; Updates 'special' pastelets to skip hidden fields
+version 2.5.5; November 7, 2010; Tom King; Updated generic pastelet with 'earch', HTML page text edits based on feedback from 'El Diablo'
+version 2.5.6; November 7, 2010; Tom King; Cache manifests w/NETWORK:*, AdMob/Analytics activated for all Pastelet Makers, Google Analytics script marked defer
+version 2.6.0; November 19, 2010; Tom King; Moved CSS to ios.css (share amongst 3 pastelet makers), Externalized 'loader' JavaScript, Show Pastelet as link for non-Mobile Safari browsers
+version 2.6.1; November 20, 2010; Tom King; Add cross-links between 'special' versions, update "hide" code for step 2
+version 2.6.2; November 27, 2010; Tom King; Removed "hide" code for step 2, put CSS back inline, inline images for 'bkadd.png' and donate.png, PNG optimization of other images, streamline manifest (combined changes = -3 http requests, ~same payload size)
+version 2.6.3; November 29, 2010; Tom King; Correct second image for step 2 of 'special' (tel, email) pastelet makers, updated build file to handle manifests for 'special' pastelets
+version 2.6.4; December 31, 2010; Tom King; Changes to project and build.xml: added ./lib with symlinks to htmlcompressor.jar and yuicompressor-2.4.2.jar, updated to htmlcompressor-0.9.8
+version 2.6.5; January 16, 2011; Tom King; Updates to Google Analytics code, remove HTML file itself from manifests
+version 2.6.6; January 16, 2011; Tom King; Removed Google Analytics code, reverted to 'bkadd.png' (vs data:)
+version 2.6.7; April 3, 2011; Tom King; Removed AdMob (useless; $1.85 revenue in 27 months), updated copyright & buld.xml
+TO DO items:
+Copyright (c) 2008-2011 Tom King. All rights reserved.

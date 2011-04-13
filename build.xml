@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2010-2011 Tom King. All rights reserved. -->
+<project name="pastelet" basedir="." default="update-build">
+	
+	<!-- set global properties -->
+	<!-- environment vars -->
+	<property environment="env"/>
+	<!-- read javascript files into properties -->
+	<loadfile property="loaderjs" srcFile="src/js/loader.js"/>
+	<loadfile property="pastejs" srcFile="src/js/paste.js"/>
+	<loadfile property="emailjs" srcFile="src/js/email.js"/>
+	<loadfile property="teljs" srcFile="src/js/tel.js"/>
+	<!--
+	<loadfile property="admob-urchin" srcFile="../admob-urchin.js"/>
+	-->
+	<!-- set properties into global properties file for search and replace -->
+	<propertyfile file="ant.properties" comment="ant.properties - product.date is dynamically added; paste.js and admob-urchin.js are imported">
+		<entry key="product.date" type="date" value="now"/>
+		<entry key="loaderjs" operation="=" value="${loaderjs}"/>
+		<entry key="pastejs" operation="=" value="${pastejs}"/>
+		<entry key="emailjs" operation="=" value="${emailjs}"/>
+		<entry key="teljs" operation="=" value="${teljs}"/>
+		<!-- 
+		<entry key="admob-urchin" operation="=" value="${admob-urchin}"/>
+		-->
+	</propertyfile>
+	<property file="${basedir}/ant.properties"/>
+	
+	<!-- CLEANUP
+	-->
+	<target name="cleanup" description="Clean-up generated files to prepare for a build.">
+		<echo message="Delete generated files in src, build/${iphoneapp}, and build/${webapp}/${webappdir}"/>
+		<delete verbose="${verbosity}">
+			<fileset dir="src" includes="index.html,${product.name}.html,${product.name}.manifest,email.html,tel.html,*-x.html"/>
+		</delete>
+		<delete verbose="${verbosity}">
+			<fileset dir="build/${iphoneapp}" includes="___,___.manifest,email,email.manifest,tel,tel.manifest,.DS_Store"/>
+		</delete>
+		<delete verbose="${verbosity}">
+			<fileset dir="build/${webapp}/${webappdir}" includes="index.html,${product.name}-history.txt,.DS_Store"/>
+		</delete>
+	</target>
+		
+	<!-- MAKE-HTML
+	-->
+	<target name="make-html" depends="cleanup" description="Minify HTML including inline javascript and css">
+		<!-- copy template to new files -->
+	    <echo message="Create ${product.name} HTML and manifest from ${iphoneapp}.html, ${iphoneapp}.manifest and ${webapp}.html"/>
+		<copy file="src/${iphoneapp}.html" tofile="src/${product.name}.html" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/${iphoneapp}.manifest" tofile="src/${product.name}.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/${iphoneapp}.manifest" tofile="src/email.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/${iphoneapp}.manifest" tofile="src/tel.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/${webapp}.html" tofile="src/index.html" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/special.html" tofile="src/email.html" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/special.html" tofile="src/tel.html" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<!-- replace universal tokens from templates (eg, special versions use same manifest) -->
+		<replace dir="src" includes="${product.name}.html,${product.name}.manifest,index.html,email.html,email.manifest,tel.html,tel.manifest" casesensitive="on" propertyfile="ant.properties" summary="${verbosity}">
+			<replacefilter token="@PRODUCT.VERSION@" property="product.version"/>
+			<replacefilter token="@PRODUCT.DATE@" property="product.date"/>
+			<replacefilter token="@PRODUCT.COPYRIGHT@" property="product.copyright"/>
+			<replacefilter token="${iphoneapp}.manifest" value="${product.name}.manifest"/>
+			<replacefilter token="@DONATIONS@" property="donations"/>
+			<replacefilter token="@LOADERJS@" property="loaderjs"/>
+			<!--
+			<replacefilter token="@ADMOB-URCHIN@" property="admob-urchin"/>
+			-->
+		</replace>
+		<!-- replace tokens from templates for GENERIC pastelet (eg, different javascript) -->
+		<replace dir="src" includes="${product.name}.html,${product.name}.manifest,index.html" casesensitive="on" propertyfile="ant.properties" summary="${verbosity}">
+			<replacefilter token="@PASTEJS@" property="pastejs"/>
+		</replace>
+		<!-- replace tokens from templates for EMAIL pastelet (eg, different title/moniker, javascript) -->
+		<replace file="src/email.manifest" token="___" value="email" casesensitive="on" summary="${verbosity}"/>
+		<replace dir="src" includes="email.html" casesensitive="on" propertyfile="ant.properties" summary="${verbosity}">
+			<replacefilter token="${product.name}.manifest" value="email.manifest"/>
+			<replacefilter token="@SPECIAL@" value="Email/Login"/>
+			<replacefilter token="${typetext}" value="${typeemail}"/>
+			<replacefilter token="@PLACEHOLDER@" value="email@abc.com or userID"/>
+			<replacefilter token="@PASTEJS@" property="emailjs"/>
+			<replacefilter token="http://mobilemind.net/___" value="http://mobilemind.net/email"/>
+			<replacefilter token="special_Pastelet" value="Email/Login Pastelet"/>
+		</replace>
+		<!-- replace tokens from templates for TEL pastelet (eg, different title/moniker, javascript) -->
+		<replace file="src/tel.manifest" token="___" value="tel" casesensitive="on" summary="${verbosity}"/>
+		<replace dir="src" includes="tel.html" casesensitive="on" propertyfile="ant.properties" summary="${verbosity}">
+			<replacefilter token="${product.name}.manifest" value="tel.manifest"/>
+			<replacefilter token="@SPECIAL@" value="Telephone Number"/>
+			<replacefilter token="${typetext}" value="${typetel}"/>
+			<replacefilter token="@PLACEHOLDER@" value="8005551212"/>
+			<replacefilter token="@PASTEJS@" property="teljs"/>
+			<replacefilter token="http://mobilemind.net/___" value="http://mobilemind.net/tel"/>
+			<replacefilter token="special_Pastelet" value="Telephone Number Pastelet"/>
+		</replace>
+	</target>
+	
+	<!-- MINIFY-HTML
+	-->
+	<target name="minify-html" depends="make-html" description="Minify HTML including inline javascript and css">
+		<!-- minify to create files that work 'in-place' in src -->
+		<!-- relies on jar files for htmlcompressor (& yuicompressor in ~/bin) -->
+		<echo message="Minifying HTML files for build directory with htmlcompressor"/>
+		<apply executable="java" parallel="false" dest="src" verbose="${verbosity}">
+			<fileset dir="src" includes="*.html" excludes="${iphoneapp}.*,${webapp}.html,index.html,*-x.html"/>
+		    <arg value="-jar"/>
+		    <arg path="lib/htmlcompressor.jar" />
+			<arg line="--type html --charset utf-8 --remove-quotes --remove-intertag-spaces --compress-js --compress-css"/>
+			<srcfile/>
+			<arg value="-o"/>
+			<mapper type="glob" from="*.html" to="*-x.html"/>
+	 	    <targetfile/>
+		</apply>
+	</target>
+	<!-- UPDATE-BUILD
+	-->
+	<target name="update-build" depends="minify-html" description="Copy support files to build">
+		<echo message="Updating build directory"/>
+		<!-- copy/move files and do replaces needed for build directory -->
+		<echo message="Move HTML/CSS and manifest, with text replaces" level="info"/>
+		<move file="src/${product.name}-x.html" tofile="build/${iphoneapp}/___" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<move file="src/email-x.html" tofile="build/${iphoneapp}/email" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<move file="src/tel-x.html" tofile="build/${iphoneapp}/tel" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/${product.name}.manifest" tofile="build/${iphoneapp}/___.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/email.manifest" tofile="build/${iphoneapp}/email.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/tel.manifest" tofile="build/${iphoneapp}/tel.manifest" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<replace dir="build/${iphoneapp}" includes="___,___.manifest,email,email.manifest,tel,tel.manifest" casesensitive="on" summary="${verbosity}">
+			<replacefilter token="${product.name}.manifest" value="___.manifest"/>
+			<replacefilter token="img/" value="${webappdir}/img/"/>
+		</replace>
+		<copy file="src/index.html" tofile="build/${webapp}/${webappdir}/index.html" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<copy file="src/pastelet-history.txt" tofile="build/${webapp}/${webappdir}/pastelet-history.txt" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<replace file="build/${webapp}/${webappdir}/index.html" token="css/mm.css" value="../mm.css" casesensitive="on" summary="${verbosity}"/>
+		<!-- synchronize img -->
+		<echo message="Synchronizing ${webapp}/${webappdir}/img" level="info"/>
+		<sync todir="build/${webapp}/${webappdir}/img" includeemptydirs="no" failonerror="on" verbose="${verbosity}">
+			<fileset dir="src/img"/>
+		</sync>
+		<echo message="  NOTE: ${iphoneapp}/${webappdir}/img is a placeholder link to ${webappdir}/img"/>
+		<!-- copy other files to build directories -->
+		<copy file="src/${product.name}-history.txt" tofile="build/${webapp}/${webappdir}/${product.name}-history.txt" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<echo message="Copying external javascript files to web app build directory" level="info"/>
+		<copy todir="build/${webapp}/${webappdir}/js" verbose="${verbosity}">
+			<fileset dir="src/js" includes="*.js"/>
+		</copy>
+		<echo message="Copying htaccess file to ${iphoneapp}/.htaccess" level="info"/>
+		<copy file="src/htaccess" tofile="build/${iphoneapp}/.htaccess" overwrite="on" failonerror="on" verbose="${verbosity}"/>
+		<!-- update 'web app' on local server, use fileset with an id/refid for possible later use by scp in 'deploy-build' task -->
+		<echo message="Updating local server on filesystem"/>
+		<fileset id="web-buildfiles"  dir="build/${webapp}/${webappdir}"/>
+		<copy todir="${local.root}/${webappdir}" includeemptydirs="no" failonerror="on" verbose="${verbosity}">
+			<fileset refid="web-buildfiles"/>
+		</copy>
+		<!-- update 'iPhone app' on local server, use fileset with an id/refid for possible later use by scp in 'deploy-build' task -->
+		<fileset id="iphone-buildfiles" dir="build/${iphoneapp}" includes="___,___.manifest,email,email.manifest,tel,tel.manifest"/>
+		<copy todir="${local.root}" failonerror="on" verbose="${verbosity}" >
+			<fileset refid="iphone-buildfiles"/>
+		</copy>
+	</target>
+	
+	<!-- ARCHIVE-BUILD
+	-->
+	<target name="archive-build" depends="update-build" description="Create archive of this build version">
+		<echo message="Archiving ${product.name} build as achive/${product.archive}.zip"/>
+		<!-- confirm archive -->
+		<input message="Archive ${product.name} v${product.version}?" validargs="Yes,Cancel" defaultvalue="Yes" addproperty="do.archive"/>
+		<condition property="do.abort">
+		    <equals arg1="Cancel" arg2="${do.archive}"/>
+		</condition>
+		<fail if="do.abort">Archive aborted by user.</fail>
+		<echo message="Preparing to archive" level="info"/>
+		<!-- delete files that are easily regenerated -->
+		<delete verbose="${verbosity}">
+			<fileset dir="src" includes="${product.name}.html,${product.name}.manifest,index.html,*-x.html"/>
+		</delete>
+		<delete verbose="${verbosity}">
+			<fileset dir="src/js" includes="*-x.js"/>
+		</delete>
+		<!-- AdMob: turn off 'test mode' -->
+		<replace dir="build/${iphoneapp}" includes="___,email,tel" casesensitive="on" summary="${verbosity}">
+			<replacefilter token=",test:true}" value=",test:false}"/>
+		</replace>
+		<!-- AdMob: set proper pubid for 'special' email, tel-->
+		<replace file="build/${iphoneapp}/email" token="{pubid:&quot;a1491dd6fb45e4b&quot;" value="{pubid:&quot;a14ccd2aefd017f&quot;" casesensitive="on" summary="${verbosity}"/>
+		<replace file="build/${iphoneapp}/tel" token="{pubid:&quot;a1491dd6fb45e4b&quot;" value="{pubid:&quot;a14ccd2bc892a28&quot;" casesensitive="on" summary="${verbosity}"/>
+		<!-- clean out ant.properties -->
+		<propertyfile file="ant.properties" comment="ant.properties - product.date was dynamically added; admob-urchin.js and paste.js were un-imported">
+			<entry key="admob-urchin" value=""/>
+			<entry key="product.date" type="date" value="now"/>
+			<entry key="pastejs" operation="=" value=""/>
+			<entry key="emailjs" operation="=" value=""/>
+			<entry key="teljs" operation="=" value=""/>
+		</propertyfile>
+		<!-- archive the current build -->
+		<zip destfile="archive/${product.archive}.zip" update="yes" level="9" duplicate="fail">
+			<zipfileset dir="build" prefix="build"/>
+			<zipfileset dir="doc" prefix="doc"/>
+	  		<zipfileset dir="resources" prefix="resources"/>
+			<zipfileset dir="src" prefix="src"/>
+			<zipfileset dir="." includes="ant.*,*.xml,*.txt"/>
+		</zip>
+	</target>
+	
+	<!-- DEPLOY-BUILD
+	-->
+	<target name="deploy-build" depends="archive-build" description="Deploy this build BOTH locally and to ${deploy.server} web server">
+		<!-- get user name and password for scp (also a chance to cancel deployment) -->
+		<input message="Enter username to deploy ${product.name} v${product.version} to ${deploy.server}" defaultvalue="" addproperty="deploy.uname"/>
+		<condition property="do.abort">
+		    <equals arg1="" arg2="${deploy.uname}"/>
+		</condition>
+		<fail if="do.abort">Deployment aborted by user.</fail>
+		<input message="${deploy.uname} password:" defaultvalue="" addproperty="deploy.pwd"/>
+		<condition property="do.abort">
+		    <equals arg1="" arg2="${deploy.pwd}"/>
+		</condition>
+		<fail if="do.abort">Deployment aborted by user.</fail>
+		<!-- scp/deploy generic web version -->
+		<echo message="Deploying generic (web) version of ${product.name} v${product.version}"/>
+		<scp todir="${deploy.uname}@${deploy.server}:${deploy.root}/${webappdir}" password="${deploy.pwd}" trust="yes" failonerror="on" verbose="${verbosity}">
+			<fileset refid="web-buildfiles"/> <!-- from update-build task -->
+		</scp>
+		<!-- scp/deploy iPhone web version -->
+		<echo message="Deploying iPhone version of ${product.name} v${product.version}"/>
+		<scp todir="${deploy.uname}@${deploy.server}:${deploy.root}" password="${deploy.pwd}" trust="yes" failonerror="on" verbose="${verbosity}">
+			<fileset refid="iphone-buildfiles"/> <!-- from update-build task -->
+		</scp>
+		<!-- clean 'test' files from /src -->
+		<antcall target="cleanup"/>
+	</target>
+
+</project>

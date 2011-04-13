@@ -1,0 +1,11 @@
+### HTML 5 manifest & cache settings for it to 5 minutes
+AddType text/cache-manifest cache manifest
+<FilesMatch "\.manifest$">
+Header set Cache-Control "max-age=301, public"
+</FilesMatch>
+### force file named '___' to HTML MIME type and set cache to 10 minutes
+<FilesMatch "^___$"> 
+ForceType 'text/html; charset=UTF-8'
+Header set Cache-Control "max-age=601, public, must-revalidate"
+</FilesMatch>
+

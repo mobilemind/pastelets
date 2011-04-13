@@ -1,0 +1,10 @@
+CACHE MANIFEST
+# @PRODUCT.VERSION@, @PRODUCT.DATE@  Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved.
+img/bkadd.png
+img/bkedit1.png
+img/bkedit2.png
+img/bkopen.png
+img/bksave.png
+img/donate.png
+NETWORK:
+*
