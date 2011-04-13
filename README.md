@@ -25,10 +25,10 @@ The page includes usage instructions. Visit the appropriate bookmarklet generato
 
 The easiest way to use them is visiting the hosted versions
 
-+ Web/Desktop version [http://mobilemind.net/iphone/](http://mobilemind.net/iphone/ "Pastelet Maker (Desktop)")
-+ iOS General purpose version [http://mobilemind.net/___](http://mobilemind.net/___ "Pastelet Maker (iOS)")
-+ iOS Email/Login optimized version [http://mobilemind.net/email](http://mobilemind.net/email "Email/Login Pastelet Maker (iOS)")
-+ iOS Telephone field optimized version [http://mobilemind.net/tel](http://mobilemind.net/tel "Telephone Pastelet Maker (iOS)")
++ Web/Desktop version [http://mobilemind.net/iphone/](http://mobilemind.net/iphone/ "Pastelet Maker - Desktop")
++ iOS General purpose version [http://mobilemind.net/___](http://mobilemind.net/___ "Pastelet Maker - iOS")
++ iOS Email/Login optimized version [http://mobilemind.net/email](http://mobilemind.net/email "Email/Login Pastelet Maker - iOS")
++ iOS Telephone field optimized version [http://mobilemind.net/tel](http://mobilemind.net/tel "Telephone Pastelet Maker - iOS")
 
 Requirements
 ----------
