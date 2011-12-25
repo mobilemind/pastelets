@@ -1,3 +1,7 @@
+
+<!--
+// actually creates bookmarklet given 'u'=user string and 's'=skip confirm true/false
+
 //	pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
 //
 //	Copyright (c) 2008-2010 Tom King. All rights reserved.
@@ -78,3 +82,4 @@ function pastelet(u,s) {
 //				else f[i].value = o
 //		}
 //		void(0) // return void so browser doesn't navigate, etc.
+// -->

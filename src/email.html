@@ -7,7 +7,7 @@
 <meta name=viewport content="width=device-width,user-scalable=no">
 <meta name=format-detection content="telephone=no">
 <link rel=apple-touch-icon href="img/pastelet-icon.png">
-<link rel=canonical href="http://mobilemind.net/___">
+<link rel=canonical href="http://mobilemind.net/email">
 <style type="text/css">
 body {
 	margin: 0;
@@ -80,12 +80,8 @@ div.fig {
 	Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved. -->
 	
 <!-- code w/onLoad handler + function to create bookmarklet string -->
-<script type="text/javascript">
-// listener to dynamically position page for initial or return-trip @LOADERJS@
-
-// actually creates bookmarklet given 'u'=user string @PASTEJS@
-
-</script>
+<script type="text/javascript" src="js/loader.js"></script>
+<script type="text/javascript" src="js/email.js"></script>
 <title>@SPECIAL@ Pastelet</title>
 </head>
 
@@ -107,7 +103,7 @@ div.fig {
 	<p>Enter the @SPECIAL@ to paste. Then tap Make Pastelet to reload this page for Step 2.</p>
 	<form id="pltMkr" onSubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
 		<label for="pStr">@SPECIAL@ to Paste
-				<input type="text" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="@PLACEHOLDER@" autocorrect="off" autocapitalize="off">
+				<input type="email" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocorrect="off" autocapitalize="off">
 		</label>
 		<br><br>       
 		<input type="submit" id="mkPltBtn" value="Make Pastelet" class="btn" style="margin:2px 0px 4px 33px">

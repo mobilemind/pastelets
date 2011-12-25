@@ -1,4 +1,6 @@
 
+<!--
+// listener to dynamically position page for initial or return-trip
 window.addEventListener('load',
 	function() {
 		var q = location.search, p = '', skp;
@@ -45,3 +47,4 @@ function loadpg(p) {
 	  location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?' + p
 	}
 }
+// -->

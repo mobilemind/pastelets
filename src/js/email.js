@@ -1,3 +1,5 @@
+
+<!--
 // EMAIL
 // unique version of pastelet for pasting into email/login input field WITHOUT confirmation
 //
@@ -54,3 +56,4 @@ function pastelet(u) {
 //	else alert('Email field not found');
 //	void(0) // return void so browser doesn't navigate, etc.
 // 
+// -->

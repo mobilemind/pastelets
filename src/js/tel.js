@@ -1,3 +1,5 @@
+
+<!--
 // TEL
 // unique version of Pastelet Maker for NOT confirming and pasting into tel input field
 //
@@ -55,3 +57,4 @@ function pastelet(u) {
 //	else alert('Tel field not found');
 //	void(0) // return void so browser doesn't navigate, etc.
 //
+// -->
