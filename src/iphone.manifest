@@ -1,10 +1,10 @@
 CACHE MANIFEST
 # @PRODUCT.VERSION@, @PRODUCT.DATE@  Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved.
-img/bkadd.png
-img/bkedit1.png
-img/bkedit2.png
-img/bkopen.png
-img/bksave.png
-img/donate.png
+iphone/img/bkadd.png
+iphone/img/bkedit1.png
+iphone/img/bkedit2.png
+iphone/img/bkopen.png
+iphone/img/bksave.png
+iphone/img/donate.png
 NETWORK:
 *
