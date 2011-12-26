@@ -56,5 +56,6 @@ version 2.6.6; January 16, 2011; Tom King; Removed Google Analytics code, revert
 version 2.6.7; April 3, 2011; Tom King; Removed AdMob, updated copyright & buld.xml
 version 2.6.8; April 26, 2011; Tom King; prepared for github, edit manifest
 version 2.6.9; December 25, 2011; Tom King; common manifest, new build process with make Makefile instead of eclipse
+version 2.7.7; December 26, 2011; Tom King; Adjust output for publishing to mmind.me
 
 Copyright (c) 2008-2011 Tom King. All rights reserved.
