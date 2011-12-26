@@ -47,11 +47,12 @@ make_html: replace_generic_tokens replace_email_tokens replace_tel_tokens
 minify_html: make_html
 	@echo '   Apply htmlcompressor to files…'
 	@[[ -d build ]] || mkdir -m 744 build
-	@(rm -f build/$(iphonehtml); cd tmp; $(htmlcompressor) $(compressoroptions) -o ../build $(iphonehtml) )
+	@(rm -f build/$(iphonehtml); cd tmp && $(htmlcompressor) $(compressoroptions) -o ../build $(iphonehtml) )
+	@echo '   gzip minified files…'
+	(cd build && gzip -f9 $(iphonehtml) && mv -f pastelet.html.gz ___; mv -f email.html.gz email; mv -f tel.html.gz tel)
 
 tmp2build: minify_html
 	@echo '   Copy files to build directory…'
-	@(cd build; mv -f pastelet.html ___; mv -f email.html email; mv -f tel.html tel )
 	@(mv -f tmp/index.html build; mv -f tmp/pastelet.manifest build/___.manifest )
 	@(cp -Rf src/css build; cp -Rf src/img build; cp -Rf src/iphone build; cp -Rf src/js build )
 	@chmod -R 744 build

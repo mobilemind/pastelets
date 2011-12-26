@@ -54,6 +54,7 @@ version 2.6.4; December 31, 2010; Tom King; Changes to project and build.xml: ad
 version 2.6.5; January 16, 2011; Tom King; Updates to Google Analytics code, remove HTML file itself from manifests
 version 2.6.6; January 16, 2011; Tom King; Removed Google Analytics code, reverted to 'bkadd.png' (vs data:)
 version 2.6.7; April 3, 2011; Tom King; Removed AdMob, updated copyright & buld.xml
-version 2.6.7; April 13, 2011; Tom King; prepared for github
-TO DO items:
+version 2.6.8; April 26, 2011; Tom King; prepared for github, edit manifest
+version 2.6.9; December 25, 2011; Tom King; common manifest, new build process with make Makefile instead of eclipse
+
 Copyright (c) 2008-2011 Tom King. All rights reserved.
