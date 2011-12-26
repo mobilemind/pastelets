@@ -10,25 +10,25 @@ The bookmarklet generators are available as:
 
 + **build/web/iphone/index.html** - desktop version that pastes into 1st field (or asks successively)
 + **build/iphone/___** - iOS optimized (with brief name) that pastes into 1st field (or asks successively)
-+ **build/iphone/email** - iOS optimized to paste into the first Email/Login field on a page.
-+ **build/iphone/tel** - iOS optimized to paste into the first telephone field on a page
++ **build/iphone/email** - iOS optimized to paste an email into the first Email/Login field on a page.
++ **build/iphone/tel** - iOS optimized to paste a phone number into the first telephone field on a page
 
 Install
 ----------
 
-Copy the appropriate generator(s) to a web server.
+Copy the appropriate bookmarklet generator(s) to a web server.
 
 Usage
 ----------
 
-The page includes usage instructions. Visit the appropriate bookmarklet generator page.
+Each page includes usage instructions. Visit the appropriate bookmarklet generator page.
 
 The easiest way to use them is visiting the hosted versions
 
 + Web/Desktop version [http://mobilemind.net/iphone/](http://mobilemind.net/iphone/ "Pastelet Maker - Desktop")
-+ iOS General purpose version [http://mobilemind.net/___](http://mobilemind.net/___ "Pastelet Maker - iOS")
-+ iOS Email/Login optimized version [http://mobilemind.net/email](http://mobilemind.net/email "Email/Login Pastelet Maker - iOS")
-+ iOS Telephone field optimized version [http://mobilemind.net/tel](http://mobilemind.net/tel "Telephone Pastelet Maker - iOS")
++ iOS General purpose version [http://mmind.me/___](http://mmind.me/___ "Pastelet Maker - iOS")
++ iOS Email/Login optimized version [http://mmind.me/email](http://mmind.me/email "Email/Login Pastelet Maker - iOS")
++ iOS Telephone field optimized version [http://mmind.me/tel](http://mmind.me/tel "Telephone Pastelet Maker - iOS")
 
 Requirements
 ----------
@@ -41,7 +41,7 @@ License
 MIT License - [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
 Pastelets
-Copyright (c) 2008-2011 Tom King <mobilemind@pobox.com>
+Copyright (c) 2008-2011 Tom King  mobilemind@pobox.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -65,45 +65,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Repository Notes
 ----------
 
-The /build directory has the final, optimized HTML/JavaScript and their HTML4 manifest files.
-
-After an ANT build-update the /src directory will have uncompressed 'easier-to-read' HTML files
+The /build directory has the final, optimized HTML/JavaScript and their shared HTML5 manifest file.
 
 
 Deployment Notes
 ----------
 
-For deployment "pastelets" likely needs .htaccess on Apache servers.
-The .htaccess file may not be visible by default, but it is in /src and /build.
+For deployment "pastelets" likely requires web server configuration (e.g., .htaccess on Apache servers). 
+Required configuration items include:
 
-The .htaccess file does the following:
-
-1. Adds the MIME type for the HTML 5 manifest file
-2. Sets a cache directive for manifest files
-3. Forces files named '\_\_\_' or 'email' or 'tel' to be of MIME type 'text/html; charset=UTF-8'
-4. Sets a cache directive for said files
+1. The MIME type for the HTML 5 manifest file. For Apache,
+        AddType text/cache-manifest cache manifest)
+2. Force files named '\_\_\_' or 'email' or 'tel' to be MIME type 'text/html'. For Apache
+        <FilesMatch "^(___|email|tel)$"> 
+            ForceType 'text/html; charset=UTF-8'
+        </FilesMatch>
 
 **Notes**
 
-1. Use CAUTION when copying .htaccess to your server. If the file exists, DO NOT over write it.
-   Instead, add the needed parts of .htaccess to your existing .htaccess file.
-2. The file name '\_\_\_' is used to clarify editing of the bookmarklet and serve as a short filename
-3. For best results .htaccess should be in the same directory as '\_\_\_', '\_\_\_.manifest' and '/img'
-4. Ideally, the files will be in a subdirectory of the web server root with a short name.
+1. The file name '\_\_\_' is used to clarify editing of the bookmarklet and serve as a short filename
+2. Ideally, the files will be in a subdirectory of the web server root with a short name.
 
-I didn't do the ideal, but I'm both cautious and rogue.
 Finally, note that the app will work fine with the manifest directive removed, and/or the HTML file renamed.
 If you rename the HTML file, the instructions in the HTML should probably be changed.
-Likewise, the .htaccess file may need to be edited, or may not even be needed.
+
 
 Build Notes
 ----------
 
-To use the included ant build files, you'll likely want:
-	Eclipse
-	ANT
-	yuicompressor
-	htmlcompressor
-You'll need to modify ant.properties with the proper paths to the jar files for the compressors/compilers on your system.
+The included Makefile requires:
+	perl 5
+	make
+The project has been built successively on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79) with perl 5,
+and GNU Make 3.8.
 
-Tom King, January 19, 2010
+Tom King, December 25, 2011
