@@ -53,9 +53,9 @@ minify_html: make_html
 
 tmp2build: minify_html
 	@echo '   Copy files to build directory…'
-	@(cp -Rf src/img build; mv -f tmp/pastelet.manifest build/___.manifest )
-	@(cp -Rf src/iphone build && mv -f tmp/index.html build/iphone )
-	@([[ -d build/iphone ]] && cp -Rf src/css build/iphone && cp -Rf src/js build/iphone && cp -f src/*.txt build/iphone )
+	@(cp -Rfp src/img build; mv -f tmp/pastelet.manifest build/___.manifest )
+	@[[ ! -d build/desktop ]] && mkdir -m 744 build/desktop || true
+	@(mv -f tmp/index.html build/desktop; cp -Rfp src/css build/desktop; cp -Rfp src/js build/desktop; cp -fp src/*.txt build/desktop )
 	@chmod -R 744 build
 
 build: tmp2build
