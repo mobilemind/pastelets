@@ -20,7 +20,7 @@
 //
 
 function pastelet(u,s) {
-	return ''==u ? u : "javascript:var%20s='" + encodeURIComponent(u) + "',f=document.getElementsByTagName('input'),i=0" + (s ? ";" : ",o;") + "for(;i%3cf.length;i%2b%2b)if(f[i].type%20in{text:1,email:1,login:1,tel:1,url:1,password:1}" + "&&(f[i].id%2bf[i].name%2bf[i].title).indexOf('earch')%3c0){" + (s ? "" : "o=f[i].value;") + "f[i].focus();f[i].value=s;" + (s ? "f[i].blur();break" : "if(confirm('Paste%20Here?%20(field%20'%2b(i%2b1)%2b')')){f[i].blur();break}else%20f[i].value=o") + "}void(0)"
+	return ''==u ? u : "javascript:var%20s%3D'" + encodeURIComponent(u) + "',f%3Ddocument.getElementsByTagName('input'),i%3D0" + (s ? ";" : ",o;") + "for(;i%3cf.length;i%2b%2b)if(f[i].type%20in{text:1,email:1,login:1,tel:1,url:1,password:1}" + "%26%26(f[i].id%2bf[i].name%2bf[i].title).indexOf('earch')%3c0){" + (s ? "" : "o%3Df[i].value;") + "f[i].focus();f[i].value%3Ds;" + (s ? "f[i].blur();break" : "if(confirm('Paste%20Here%3F%20(field%20'%2b(i%2b1)%2b')')){f[i].blur();break}else%20f[i].value%3Do") + "}void(0)"
 }
 
 // Examples below provide samples of the resulting bookmarklet and expanded/commented code of the bookmarklet

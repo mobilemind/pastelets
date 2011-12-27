@@ -7,7 +7,7 @@ window.addEventListener('load',
 		if ('' != q) {
 				// reload form UI from query string
 				try {
-					p = decodeURIComponent(q.match(/^\?javascript:var( |%20)s=('|%27)(.*?)('|%27),f=/)[3]);
+					p = decodeURIComponent(q.match(/^\?javascript:var( |%20)s(=|%3D)('|%27)(.*?)('|%27),f(=|%3D)/)[4]);
 					document.title = 'Paste ' + p;
 					document.getElementById('pStr').value = p;
 					// if generic pastelet maker "Skip...?" exists, set 'skip confirm' accordingly

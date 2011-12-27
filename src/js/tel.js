@@ -17,7 +17,7 @@
 //
 
 function pastelet(u) {
-	return ''==u ? u :"javascript:var%20s='"+encodeURIComponent(u)+"',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,p='tel',k,n,t;for(;j%3cl;j%2b%2b){k=f[j];n=k.id%2bk.name%2bk.title;t=k.type;if(t==p||(t!='hidden'&&(n.indexOf(p)%3e-1||n.indexOf('hone')%3e0))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')%3c0)b=j}" + "if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()}else%20alert('Tel%20field%20not%20found');void(0)"
+	return ''==u ? u :"javascript:var%20s%3D'"+encodeURIComponent(u)+"',f%3Ddocument.getElementsByTagName('input'),x%3D-1,b%3Dx,j%3D0,l%3Df.length,p%3D'tel',k,n,t;for(;j%3cl;j%2b%2b){k%3Df[j];n%3Dk.id%2bk.name%2bk.title;t%3Dk.type;if(t%3D%3Dp||(t!%3D'hidden'%26%26(n.indexOf(p)%3e-1||n.indexOf('hone')%3e0))){x%3Dj;break}if(-1%3D%3Db%26%26'text'%3D%3Dt%26%26n.indexOf('earch')%3c0)b%3Dj}" + "if(-1%3D%3Dx)x%3Db;if(-1!%3Dx){f[x].focus();f[x].value%3Ds;f[x].blur()};void(0)"
 };
 
 //
