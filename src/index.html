@@ -30,7 +30,7 @@
 			var htlinkname = Encoder.htmlEncode(linkname);
 			newlink = '<' + 'a href="' + pastelet + '" title="' + htlinkname + '">' + htlinkname + '<' + '/a>';
 		}
-		else newlink = '<em>ERROR: You must provide <strong>Text to Paste</strong> and a <strong>Link/Bookmark name</strong></em>.';
+		else newlink = '&lt;em&gt;ERROR: You must provide &lt;strong&gt;Text to Paste&lt;/strong&gt; and a &lt;strong&gt;Link/Bookmark name&lt;/strong&gt;&lt;/em&gt;.';
 		// update form fields and hyperlink
 		document.getElementById('lnkStr').value = linkname;
 		document.getElementById('bmrk').value = pastelet;
@@ -44,16 +44,16 @@
 	<script type="text/javascript" src="js/paste.js"></script>
 	<title>Pastelet Maker- Bookmarklet Generator</title>
 </head>
-<!-- version 2.0.1; July 24, 2008; Tom King initial public release 
+<!-- version 2.0.1; July 24, 2008; Tom King initial public release
 	version 2.1.0; December 28, 2009; Tom King; convert to HTML 5, move javascript to head, refactor makepastelet to return a string
 	version 2.1.5; December 29, 2009; Tom King; add text area to show bookmarklet code
 	version 2.2.0; December 29, 2009; Tom King; rebrand as 'Pastelet' (v. iPastelet), overhaul form & update, encode link now, update makePastelet f(n)
 	version 2.2.1; December 30, 2009; Tom King; show version number near form, add favicon, add reminder email link, other text revisions
 	version 2.3.0; January 1, 2010; Tom King; don't reset form, add favicon, accessibility & validation fixes, IE work-arounds added
 	version 2.3.1; January 3, 2010; Tom King; change button to 'submit' and use onSubmit handler, add <noscript> tag
-	
+
 	version @PRODUCT.VERSION@; @PRODUCT.DATE@; Tom King; full history in paste-history.txt
-	
+
 	This page and paste.js are Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved. -->
 <body>
 <div id="header">
@@ -71,35 +71,35 @@
 
 	<h2>Overview of Pastelet Maker </h2>
 	<p>You are seeing this detailed page because you're not using Mobile Safari. Making a Pastelet is <em><strong>much easier</strong></em> when using Mobile Safari on an iPhone or iPod Touch.</p>
-	<p>Come back to this page with your iPhone or Touch. Even better&mdash; 
+	<p>Come back to this page with your iPhone or Touch. Even better&mdash;
 		<a href="mailto:?subject=reminder-%20visit%20Pastelets%20page%20on%20iPhone%2FTouch&amp;body=Visit%20the%20Pastelets%20page%20on%20your%20device-%20%3Chttp%3A%2F%2Fmobilemind.net%2F___%3E%0A%28yes%20the%20URL%20ends%20with%20three%20underscores%29" title="open an email with subject &amp; link provided">
 		send an email to yourself with a reminder and a link to this page</a>.</p>
-	    <p>The prolific coder/blogger <a href="http://www.tuaw.com/bloggers/erica-sadun" title="TUAW: Erica Sadun">Erica Sadun</a> posted a 
-		<a href="http://www.tuaw.com/2007/12/07/tuaw-responds-reader-requests-iphone-javascript-pasting/">Javascript bookmarklet for iPhone</a> 
+	    <p>The prolific coder/blogger <a href="http://www.tuaw.com/bloggers/erica-sadun" title="TUAW: Erica Sadun">Erica Sadun</a> posted a
+		<a href="http://www.tuaw.com/2007/12/07/tuaw-responds-reader-requests-iphone-javascript-pasting/">Javascript bookmarklet for iPhone</a>
 		that pasted text into an HTML field on Mobile Safari on the iPhone. Handy, but <a href="http://pastebin.com/f68207d4b">her example code</a>
-		paste a hard-coded text string. Nonetheless, the bookmarklet is handy to paste text that you commonly use into web forms— 
+		paste a hard-coded text string. Nonetheless, the bookmarklet is handy to paste text that you commonly use into web forms-
 		text like an email address, user ID, IP address, hostname, etc.</p>
-	<p>It was a bit of a pain to carefully change the text literal, especially if you have characters that should be url-encoded 
-		in your text string. After hand coding a few bookmarks I needed, I whipped up this HTML form. I also completely re-wrote the JavaScript to 
-		work with more web pages, including common Google mobile pages. The new form does the text munging with your custom string, <em>and</em> 
-		generates a custom named bookmark that you can easily add to your browser and then sync to iPhone. You can also go the easier route and 
+	<p>It was a bit of a pain to carefully change the text literal, especially if you have characters that should be url-encoded
+		in your text string. After hand coding a few bookmarks I needed, I whipped up this HTML form. I also completely re-wrote the JavaScript to
+		work with more web pages, including common Google mobile pages. The new form does the text munging with your custom string, <em>and</em>
+		generates a custom named bookmark that you can easily add to your browser and then sync to iPhone. You can also go the easier route and
 		use <a href="http://mmind.me/___" title="Pastelets (iPhone version)">Pastelets</a> on your device.</p>
-	<p><strong>UPDATE Janauary 4, 2010</strong>: Pastelets bookmarks now works with Google sign-in and new HTML 5 input types. Also, <em>major</em> updates to 
+	<p><strong>UPDATE Janauary 4, 2010</strong>: Pastelets bookmarks now works with Google sign-in and new HTML 5 input types. Also, <em>major</em> updates to
 		<a href="http://mmind.me/___" title="Pastelets (iPhone version)">Pastelets</a> (easily make Pastelets on iPhone, even offline).</p>
-	
+
 	<h2>How to Use Pastelet Maker with Internet Explorer or Safari (Desktop)</h2>
     <ol>
 		<li>Complete the <em><strong>Text to paste:</strong></em> field <em>and</em>  the <em><strong>Link/Bookmark name:</strong></em> field.</li>
         <li>Press the <strong><em>Make Pastelet</em></strong> button.</li>
-        <li>Right-click the new <strong>Pastelet Link:</strong> text and <em><strong>Add Link to Bookmarks&hellip;</strong></em> (Safari) 
+        <li>Right-click the new <strong>Pastelet Link:</strong> text and <em><strong>Add Link to Bookmarks&hellip;</strong></em> (Safari)
 			or <em><strong>Add to Favorites&hellip;</strong></em> (Internet Explorer)<br>
 			&nbsp;&nbsp;&nbsp;<em>Repeat the steps 1-3 above until you've added a bookmark for each text snippet you'd like to use.</em></li>
         <li>Sync your iPhone using iTunes, making sure iTunes is set to Sync Bookmarks.</li>
     </ol>
-	
+
     <h2 id="pasteletMaker">Pastelet Maker for Desktop Browsers</h2>
 	<br><noscript>&nbsp;&nbsp;&nbsp;&nbsp;This web form application requires Javascript to be enabled.<br></noscript>
-	<form id="pForm" onSubmit="return showLink(document.getElementById('lnkStr').value, pastelet(document.getElementById('pStr').value, document.getElementById('skp').checked))">
+	<form id="pForm" method="GET" action="." onSubmit="return showLink(document.getElementById('lnkStr').value, pastelet(document.getElementById('pStr').value, document.getElementById('skp').checked))">
 		<label for="pStr"><strong>&nbsp;Text to Paste:</strong><input name="PasteString" type="text" id="pStr" tabindex="1" size="68" maxlength="255" required="required" autofocus="autofocus" placeholder="your snippet, string or email"></label>
 		<br>
       	<label for="lnkStr" id="lnkStrlbl"><strong>&nbsp;Link/Bookmarkname:</strong><input name="Linkname" type="text" id="lnkStr" tabindex="2" size="60" maxlength="255"></label>
@@ -117,18 +117,18 @@
 	<p><strong>&nbsp;&nbsp;&nbsp;Pastelet Link:</strong> <span id="result" style="font-style:italic; color:#999">a link will appear here after you make a Pastelet</span></p>
 	<p><em>Note: Just drag or <strong>bookmark</strong> the link above. If you actually click the link to follow it, it will just fill-in a field on this page.</em></p>
 	<div style="font-size:x-small; text-align:right; margin-right:20px">v@PRODUCT.VERSION@</div>
-	
+
 	<h2>Credits and Thanks</h2>
-		<p>Thanks to <a href="http://www.apple.com" title="Apple home page">Apple</a> for the 
-		<a href="http://www.apple.com/macbookpro/" title="Apple:MacBook Pro">MacBook Pro</a> and the 
-		<a href="http://www.apple.com/iphone/" title="Apple:iPhone">iPhone</a> I love to use. Thanks to 
-		<a href="http://www.tuaw.com/">TUAW</a> for keeping me up on all the latest Apple news. Thanks to 
-		<a href="http://ericasadun.com/" title="Erica Sadun (personal home page)">Erica Sadun</a> for the original bookmarklet code and 
+		<p>Thanks to <a href="http://www.apple.com" title="Apple home page">Apple</a> for the
+		<a href="http://www.apple.com/macbookpro/" title="Apple:MacBook Pro">MacBook Pro</a> and the
+		<a href="http://www.apple.com/iphone/" title="Apple:iPhone">iPhone</a> I love to use. Thanks to
+		<a href="http://www.tuaw.com/">TUAW</a> for keeping me up on all the latest Apple news. Thanks to
+		<a href="http://ericasadun.com/" title="Erica Sadun (personal home page)">Erica Sadun</a> for the original bookmarklet code and
 		inspiration. Thanks to Jeff Burton for the years of friendship, years of patience and support (with JavaScript and much much more).</p>
 		<p>Special Thanks to Craig Hockenberry (IconFactory / <a href="http://iconfactory.com/software/twitterrific" title="Twitterific page at Iconfactory">
 		Twitterific</a>, <a href="http://itunes.apple.com/WebObjects/MZStore.woa/wa/browserRedirect?url=itms%253A%252F%252Fitunes.apple.com%252FWebObjects%252FMZStore.woa%252Fwa%252FviewSoftware%253Fid%253D284540316%2526mt%253D8" title="iTunes App Store: Twitterific page">
-		Twitterific for iPhone</a>), Joe Maller (<a href="http://joemaller.com/2008/01/12/itransmogrify/" title="iUI on Google Code">Transmogrify</a>), 
-		Joe Hewitt and the iUI team (<a href="http://code.google.com/p/iui/" title="iUI on Google Code">http://code.google.com/p/iui/</a>), and Ankur Kothari 
+		Twitterific for iPhone</a>), Joe Maller (<a href="http://joemaller.com/2008/01/12/itransmogrify/" title="iUI on Google Code">Transmogrify</a>),
+		Joe Hewitt and the iUI team (<a href="http://code.google.com/p/iui/" title="iUI on Google Code">http://code.google.com/p/iui/</a>), and Ankur Kothari
 		(<a href="http://lipidity.com/apple/iphone-webkit-css-3/">Make the most of the iPhone SDK</a>) for inspiration and examples.</p>
 		<br><hr><br>
 
@@ -140,12 +140,12 @@
 		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 	</div>
 	<br>
-	<p class="byline">Views I express on this site are mine, period. My views and opinions do not necessarily reflect the views of my employer, 
-		my clients or anyone else for that matter.  My opinions are my own. Likewise, you're all grown up and should understand this is free code, 
+	<p class="byline">Views I express on this site are mine, period. My views and opinions do not necessarily reflect the views of my employer,
+		my clients or anyone else for that matter.  My opinions are my own. Likewise, you're all grown up and should understand this is free code,
 		worth everything you pay for it. Lets keep the lawyers out of it, OK.<br>
 		<br>Copyright&nbsp;&copy;&nbsp;2004-2011&nbsp;Tom King</p>
 </div> <!-- mainClm -->
-  
+
 <div id="sideBar">
 	<div class='adsense' style='text-align:left; padding: 0px 3px 0.5em 8px;'>
 		<script type="application/javascript"><!--

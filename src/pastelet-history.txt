@@ -58,5 +58,6 @@ version 2.6.8; April 26, 2011; Tom King; prepared for github, edit manifest
 version 2.6.9; December 25, 2011; Tom King; common manifest, new build process with make Makefile instead of eclipse
 version 2.7.0; December 26, 2011; Tom King; Adjust output for publishing to mmind.me
 version 2.7.1; December 26, 2011; Tom King; improve pastelet URI encoding, remove alert due to "Atomicorp.com - FREE UNSUPPORTED DELAYED FEED - WAF Rules: Cross Site Scripting Attack"
+version 2.7.2; December 27, 2011; Tom King; copy of manifest made for each pastelet, add EOL to files for improved formatting
 
 Copyright (c) 2008-2011 Tom King. All rights reserved.

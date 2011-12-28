@@ -2,7 +2,7 @@
 
 product_copyright = '2008-2011'
 iphonehtml = pastelet.html email.html tel.html
-htmlfiles = $(iphonehtml) index.html 
+htmlfiles = $(iphonehtml) index.html
 srcfiles = $(htmlfiles) pastelet.manifest
 htmlcompressor = java -jar ../lib/htmlcompressor-1.5.2.jar
 compressoroptions = -t html -c utf-8 --remove-quotes --remove-intertag-spaces  --remove-surrounding-spaces min --compress-js --compress-css
@@ -13,18 +13,18 @@ src2tmp:
 	@echo "   Copy pastelet HTML and manifest from source to tmp working directory…"
 	@[[ -d tmp ]] || mkdir -m 744 tmp
 	@(cp -fp src/*.html tmp; cp -fp src/email.html tmp/tel.html; cp -fp src/pastelet.manifest tmp )
-	
+
 replace_common_tokens: src2tmp
 	@echo '   Replace common tokens across sub-projects…'
 	@(cd tmp; perl -p -i -e "s/\@PRODUCT.VERSION\@/`head -1 ../src/VERSION`/g;" $(srcfiles) )
 	@(cd tmp; perl -p -i -e "s/\@PRODUCT.DATE\@/`date`/g;" $(srcfiles) )
 	@(cd tmp; perl -p -i -e "s/\@PRODUCT.COPYRIGHT\@/$(product_copyright)/g;" $(srcfiles) )
 	@(cd tmp; perl -p -i -e 'BEGIN{open F,"../src/js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(htmlfiles) )
-	
+
 replace_generic_tokens: src2tmp replace_common_tokens
 	@echo '   Replace tokens for GENERIC pastelet…'
 	@(cd tmp; perl -p -i -e "s/pastelet\.manifest/___.manifest/g;" pastelet.html )
-	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmmind.me\/)pastelet/\\1___/g;" pastelet.html )
+	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;" pastelet.html )
 	@(cd tmp; perl -p -i -e 'BEGIN{open F,"../src/js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html )
 
 replace_email_tokens: src2tmp replace_common_tokens
@@ -36,7 +36,7 @@ replace_email_tokens: src2tmp replace_common_tokens
 replace_tel_tokens: src2tmp replace_common_tokens
 	@echo '   Replace tokens from templates for TEL pastelet…'
 	@(cd tmp; perl -p -i -e "s/email.manifest/tel.manifest/g;" tel.html )
-	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmmind.me\/)email/\\1tel/g;" tel.html )
+	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;" tel.html )
 	@(cd tmp; perl -p -i -e "s/(\@SPECIAL\@)/Telephone Number/g;" tel.html )
 	@(cd tmp; perl -p -i -e "s/type=\"email/type=\"tel/g;" tel.html )
 	@(cd tmp; perl -p -i -e "s/email\@abc\.com/8005551212/g;" tel.html )
@@ -44,6 +44,11 @@ replace_tel_tokens: src2tmp replace_common_tokens
 	@(cd tmp; perl -p -i -e "s/special_Pastelet/Telephone Number Pastelet/g;" tel.html )
 
 make_html: replace_generic_tokens replace_email_tokens replace_tel_tokens
+	@echo "   Validating HTML…\n"
+	@(hash tidy && cd tmp && ($(foreach html,$(htmlfiles), echo "$(html)"; tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)))
+# 	@echo "   Validating JavaScript…\n"
+# 	@(hash jsl && cd tmp && ($(foreach html,$(htmlfiles), echo "$(html)"; jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo)
+
 
 minify_html: make_html
 	@echo '   Apply htmlcompressor to files…'
@@ -61,8 +66,8 @@ tmp2build: minify_html
 	@chmod -R 744 build
 
 build: tmp2build
-# 	@(cd tmp; rm -f $(iphonehtml) )
-	@echo 'Done.' 
+	@(cd tmp; rm -f $(iphonehtml) )
+	@echo 'Done.'
 
 clean:
 	@echo '   Removing temporary files and cleaning out build directory…'

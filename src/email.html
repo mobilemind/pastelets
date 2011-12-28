@@ -76,9 +76,9 @@ div.fig {
 </style>
 <!-- version @PRODUCT.VERSION@; @PRODUCT.DATE@; Tom King; full history in iphone/paste-history.txt
 
-	a Pastelet URL first displays as http://mobilemind.net/–––?javascript:var%20s='…
+	a Pastelet URL first displays as http://mobilemind.net/email?javascript:var%20s='...
 	Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved. -->
-	
+
 <!-- code w/onLoad handler + function to create bookmarklet string -->
 <script type="text/javascript" src="js/loader.js"></script>
 <script type="text/javascript" src="js/email.js"></script>
@@ -92,8 +92,8 @@ div.fig {
 <h1>@SPECIAL@ Pastelet Setup</h1>
 <div class="grp">
 	<p>These steps add a <i>Pastelet</i> bookmark to Mobile Safari that is optimized to paste text into the first @SPECIAL@ field on a page.</p>
-	<p>Versions are available for <a href="http://mmind.me/___" title="Make Pastelet">Make Pastelet</a> (generic) or  
-	<a href="http://mmind.me/email" title="Email/Login Pastelet">Email/Login</a> or 
+	<p>Versions are available for <a href="http://mmind.me/___" title="Make Pastelet">Make Pastelet</a> (generic) or
+	<a href="http://mmind.me/email" title="Email/Login Pastelet">Email/Login</a> or
 	<a href="http://mmind.me/tel" title="Telephone Number Pastelet">Telephone</a> strings.</p>
 	<p><i>Like 'em? Consider <a href="#don8">donating</a></i>.</p>
 </div>
@@ -101,18 +101,18 @@ div.fig {
 <h1>Step 1: Enter the text</h1>
 <div class="grp">
 	<p>Enter the @SPECIAL@ to paste. Then tap Make Pastelet to reload this page for Step 2.</p>
-	<form id="pltMkr" method="POST" onSubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
+	<form id="pltMkr" method="GET" action="." onSubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
 		<label for="pStr">@SPECIAL@ to Paste
 				<input type="email" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocapitalize="off">
 		</label>
-		<br><br>       
+		<br><br>
 		<input type="submit" id="mkPltBtn" value="Make Pastelet" class="btn" style="margin:2px 0px 4px 33px">
 		<br><br>
 		<label id=yp for="bmrk" style="vertical-align:top">Your Pastelet&nbsp;
 			<textarea id="bmrk" cols="41" rows="4"  style="vertical-align:top" wrap="soft">No Pastelet yet. View Step 1 for instructions.</textarea>
 		</label>
 	</form>
-	<p id=pal style="display:none">Pastelet as link: <a id=pl href="" title="Pastelet">Pastelet</a><br><br></p>
+	<p id=pal style="display:none">Pastelet as link: <a id=pl href="." title="Pastelet">Pastelet</a><br><br></p>
 </div>
 
 <h1>Step 2: Add a Bookmark</h1>
@@ -129,10 +129,10 @@ div.fig {
 	<div class="fig"><img src="img/bkopen.png" alt="open bookmarks" width="276" height="37"></div>
 	<p>Navigate to the bookmark you just saved. <i>Do not select the bookmark.</i></p>
 	<p>Tap <b>Edit</b> to modify the list and <i>then</i> tap on the bookmark itself.</p>
-	<p>In the Edit Bookmark panel, tap in the field that begins with &ldquo;<code><b>http:</b></code>&rdquo;. 
+	<p>In the Edit Bookmark panel, tap in the field that begins with &ldquo;<code><b>http:</b></code>&rdquo;.
 	You need to edit the start of the text, so tap and drag all the way to the left.</p>
 	<div class="fig"><img src="img/bkedit1.png" alt="edit bookmark start" width="276" height="135"></div>
-	<p>Place the edit point between the &ldquo;<code><b>?</b></code>&rdquo; and the &ldquo;<code><b>j</b></code>&rdquo;. 
+	<p>Place the edit point between the &ldquo;<code><b>?</b></code>&rdquo; and the &ldquo;<code><b>j</b></code>&rdquo;.
 	Then tap delete until the edit point is at the start of the line. When done, the bookmark should look like:</p>
 	<div class="fig"><img src="img/bkedit2.png" alt="edit bookmark finish" width="276" height="84"></div>
 </div>
