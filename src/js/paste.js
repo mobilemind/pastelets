@@ -3,8 +3,9 @@
 // actually creates bookmarklet given 'u'=user string and 's'=skip confirm true/false
 
 //	pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
+//  @VERSION@
 //
-//	Copyright (c) 2008-2010 Tom King. All rights reserved.
+//	Copyright (c) 2008-2011 Tom King. All rights reserved.
 //
 // Comments- Generated bookmarklet is carefully constructed.
 // *	The 'paste string' variable ('n') is defined first to make it more visible and ease editing the bookmark itself.
@@ -20,7 +21,7 @@
 //
 
 function pastelet(u,s) {
-	return ''==u ? u : "javascript:var%20s%3D'" + encodeURIComponent(u) + "',f%3Ddocument.getElementsByTagName('input'),i%3D0" + (s ? ";" : ",o;") + "for(;i%3cf.length;i%2b%2b)if(f[i].type%20in{text:1,email:1,login:1,tel:1,url:1,password:1}" + "%26%26(f[i].id%2bf[i].name%2bf[i].title).indexOf('earch')%3c0){" + (s ? "" : "o%3Df[i].value;") + "f[i].focus();f[i].value%3Ds;" + (s ? "f[i].blur();break" : "if(confirm('Paste%20Here%3F%20(field%20'%2b(i%2b1)%2b')')){f[i].blur();break}else%20f[i].value%3Do") + "}void(0)"
+	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),i=0" + (s ? ";" : ",o;") + "for(;i<f.length;i++)if(f[i].type in{text:1,email:1,login:1,tel:1,url:1,password:1}&&(f[i].id+f[i].name+f[i].title).indexOf('earch')<0){" + (s ? "" : "o=f[i].value;")  + "f[i].focus();f[i].value=s;" + (s ? "f[i].blur();break" : "if(confirm('Paste Here? (field '+(i+1)+')')){f[i].blur();break}else f[i].value=o") + "}void('@VERSION@')";
 }
 
 // Examples below provide samples of the resulting bookmarklet and expanded/commented code of the bookmarklet

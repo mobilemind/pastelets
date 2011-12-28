@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/mm.css" type="text/css">
 	<link rel="shortcut icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
 	<link rel="icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
-	<script type="text/javascript" async="async">
+	<script type="text/javascript" async="async"><!--
 		var _gaq = _gaq || [];
 		_gaq.push(['_setAccount', 'UA-3189666-1']);
 		_gaq.push(['_trackPageview']);
@@ -18,22 +18,23 @@
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
-	</script>
+	//--></script>
 	<script src="js/encoder.js" type="text/javascript" async="async"></script>
 	<script type="text/javascript"><!--
 	function showLink(linkname, pastelet) {
 		var newlink='';
 		// build text + link (or error message) for result div
-		if ('' != pastelet) {
-			if ('' == linkname && pastelet.match(/^javascript:var( |%20)s=('|%27)(.*?)('|%27),f=/)[3]) linkname = 'paste ' + decodeURIComponent(pastelet.match(/^javascript:var( |%20)s=('|%27)(.*?)('|%27),f=/)[3]);
+		if (!pastelet) newlink = '&lt;em&gt;ERROR: You must provide &lt;strong&gt;Text to Paste&lt;/strong&gt; and a &lt;strong&gt;Link/Bookmark name&lt;/strong&gt;&lt;/em&gt;.';
+		else {
+			var m = pastelet.match(/var s='(.*?)'/);
+			if (!linkname && m) linkname = 'paste ' + m[1];
 			Encoder.EncodeType = "entity";
 			var htlinkname = Encoder.htmlEncode(linkname);
-			newlink = '<' + 'a href="' + pastelet + '" title="' + htlinkname + '">' + htlinkname + '<' + '/a>';
+			newlink = '<' + 'a href="javascript:' + encodeURIComponent(pastelet) + '" title="' + htlinkname + '">' + htlinkname + '<' + '/a>';
 		}
-		else newlink = '&lt;em&gt;ERROR: You must provide &lt;strong&gt;Text to Paste&lt;/strong&gt; and a &lt;strong&gt;Link/Bookmark name&lt;/strong&gt;&lt;/em&gt;.';
 		// update form fields and hyperlink
 		document.getElementById('lnkStr').value = linkname;
-		document.getElementById('bmrk').value = pastelet;
+		document.getElementById('bmrk').value = encodeURI(pastelet);
 		document.getElementById('result').setAttribute('style','font-style:normal;color:#000');
 		document.getElementById('result').innerHTML = newlink;
 		location.hash = 'pasteletMaker';
@@ -52,9 +53,9 @@
 	version 2.3.0; January 1, 2010; Tom King; don't reset form, add favicon, accessibility & validation fixes, IE work-arounds added
 	version 2.3.1; January 3, 2010; Tom King; change button to 'submit' and use onSubmit handler, add <noscript> tag
 
-	version @PRODUCT.VERSION@; @PRODUCT.DATE@; Tom King; full history in paste-history.txt
+	version @VERSION@; @BUILDDATE@; Tom King; full history in paste-history.txt
 
-	This page and paste.js are Copyright (c) @PRODUCT.COPYRIGHT@ Tom King. All rights reserved. -->
+	This page and paste.js are Copyright (c) @COPYRIGHT@ Tom King. All rights reserved. -->
 <body>
 <div id="header">
     <h1><a href="http://mobilemind.net/"><img alt="Authors photo" src="http://mobilemind.net/images/blogger.jpg" height="80" width="60" style="border:0"></a>Mobilemind</h1>
@@ -116,7 +117,7 @@
 	</form>
 	<p><strong>&nbsp;&nbsp;&nbsp;Pastelet Link:</strong> <span id="result" style="font-style:italic; color:#999">a link will appear here after you make a Pastelet</span></p>
 	<p><em>Note: Just drag or <strong>bookmark</strong> the link above. If you actually click the link to follow it, it will just fill-in a field on this page.</em></p>
-	<div style="font-size:x-small; text-align:right; margin-right:20px">v@PRODUCT.VERSION@</div>
+	<div style="font-size:x-small; text-align:right; margin-right:20px">v@VERSION@</div>
 
 	<h2>Credits and Thanks</h2>
 		<p>Thanks to <a href="http://www.apple.com" title="Apple home page">Apple</a> for the

@@ -1,12 +1,12 @@
 
 <!--
-// EMAIL
+// EMAIL @VERSION@
 // unique version of pastelet for pasting into email/login input field WITHOUT confirmation
 //
 
 //	pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
 //
-//	Copyright (c) 2008-2010 Tom King. All rights reserved.
+//	Copyright (c) 2008-2011 Tom King. All rights reserved.
 //
 // Comments- Generated bookmarklet is carefully constructed.
 // *	The 'paste string' variable ('n') is defined first to make it more visible and ease editing the bookmark itself.
@@ -17,7 +17,7 @@
 //
 
 function pastelet(u) {
-	return '' == u ? u : "javascript:var%20s%3D'" + encodeURIComponent(u) + "',f%3Ddocument.getElementsByTagName('input'),x%3D-1,b%3Dx,j%3D0,l%3Df.length,k,n,t;for(;j%3cl;j%2b%2b){k%3Df[j];n%3Dk.id%2bk.name%2bk.title;t%3Dk.type;if(t%20in{email:1,login:1}||(t!%3D'hidden'%26%26(n.indexOf('email')%3e-1||n.indexOf('ogin')%3e0||n.indexOf('user')%3e-1))){x%3Dj;break}if(-1%3D%3Db%26%26'text'%3D%3Dt%26%26n.indexOf('earch')%3c0)b%3Dj}" + "if(-1%3D%3Dx)x%3Db;if(-1!%3Dx){f[x].focus();f[x].value%3Ds;f[x].blur()};void(0)"
+	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void('@VERSION@')";
 }
 
 //
@@ -55,5 +55,5 @@ function pastelet(u) {
 //	}
 //	else alert('Email field not found');
 //	void(0) // return void so browser doesn't navigate, etc.
-// 
+//
 // -->

@@ -1,5 +1,5 @@
 
-<!--
+<!-- loader @VERSION@, @BUILDDATE@
 // listener to dynamically position page for initial or return-trip
 window.addEventListener('load',
 	function() {
