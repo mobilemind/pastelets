@@ -7,7 +7,7 @@ jsfiles = js/email.js js/loader.js js/paste.js js/tel.js
 srcfiles = $(htmlfiles) pastelet.manifest $(jsfiles)
 htmlcompressor := java -jar ../lib/htmlcompressor-1.5.2.jar
 compressoroptions := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-growl := $(shell ! hash growlnotify &>- && echo 'true\c' || (echo 'growlnotify \c' && [[ 'darwin11' == $$OSTYPE ]] && echo "-t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo "/t:$(projname)\c" || echo '\c')) )
+growl := $(shell ! hash growlnotify &>/dev/null && echo 'true\c' || (echo 'growlnotify \c' && [[ 'darwin11' == $$OSTYPE ]] && echo "-t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo "/t:$(projname)\c" || echo '\c')) )
 version := $(shell head -1 src/VERSION)
 builddate := $(shell date)
 copyright := 2008-2011
