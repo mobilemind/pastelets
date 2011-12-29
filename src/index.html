@@ -34,7 +34,7 @@
 		}
 		// update form fields and hyperlink
 		document.getElementById('lnkStr').value = linkname;
-		document.getElementById('bmrk').value = encodeURI(pastelet);
+		document.getElementById('bmrk').value = 'javascript:' + encodeURI(pastelet);
 		document.getElementById('result').setAttribute('style','font-style:normal;color:#000');
 		document.getElementById('result').innerHTML = newlink;
 		location.hash = 'pasteletMaker';
