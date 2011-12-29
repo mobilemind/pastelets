@@ -19,7 +19,7 @@ src2tmp:
 	@$(growl) "Make started"
 	@echo '   Copy pastelet HTML and manifest from source to tmp working directory…'
 	@[[ -d tmp ]] || mkdir -m 744 tmp
-	@(cp -fp src/*.html tmp; cp -fp src/email.html tmp/tel.html; cp -Rfp src/js tmp; cp -fp src/mm.css tmp; cp -fp src/pastelet.manifest tmp)
+	@(cp -fp src/*.html tmp; cp -fp src/email.html tmp/tel.html; cp -Rfp src/js tmp; cp -Rfp src/img tmp; cp -fp src/mm.css tmp; cp -fp src/pastelet.manifest tmp)
 	@echo '   Setting version and build date…'
 	@(cd tmp; perl -p -i -e "s/\@VERSION\@/$(version)/g;" $(srcfiles) )
 	@(cd tmp; perl -p -i -e "s/\@BUILDDATE\@/$(builddate)/g;" $(srcfiles) )
