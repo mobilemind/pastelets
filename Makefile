@@ -7,7 +7,8 @@ jsfiles = js/email.js js/loader.js js/paste.js js/tel.js
 srcfiles = $(htmlfiles) pastelet.manifest $(jsfiles)
 htmlcompressor := java -jar ../lib/htmlcompressor-1.5.2.jar
 compressoroptions := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-growl := $(shell ! hash growlnotify &>/dev/null && echo -e 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo -e "growlnotify -t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(projname)\c" || echo -e '\c')) )
+echoe := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
+growl := $(shell ! hash growlnotify &>/dev/null && $(echoe) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(projname)\c" || $(echoe) '\c')) )
 version := $(shell head -1 src/VERSION)
 builddate := $(shell date)
 copyright := 2008-2011
@@ -21,9 +22,11 @@ src2tmp:
 	@[[ -d tmp ]] || mkdir -m 744 tmp
 	@(cp -fp src/*.html tmp; cp -fp src/email.html tmp/tel.html; cp -Rfp src/js tmp; cp -Rfp src/img tmp; cp -fp src/mm.css tmp; cp -fp src/pastelet.manifest tmp)
 	@echo '   Setting version and build date…'
-	@(cd tmp; perl -p -i -e "s/\@VERSION\@/$(version)/g;" $(srcfiles) )
-	@(cd tmp; perl -p -i -e "s/\@BUILDDATE\@/$(builddate)/g;" $(srcfiles) )
-	@(cd tmp; perl -p -i -e "s/\@COPYRIGHT\@/$(copyright)/g;" $(srcfiles) )
+	@(cd tmp; \
+		perl -p -i -e "s/\@VERSION\@/$(version)/g;" $(srcfiles); \
+		perl -p -i -e "s/\@BUILDDATE\@/$(builddate)/g;" $(srcfiles); \
+		perl -p -i -e "s/\@COPYRIGHT\@/$(copyright)/g;" $(srcfiles) \
+	)
 
 replace_common_tokens: src2tmp
 	@$(growl) "Replaces started"
@@ -32,31 +35,37 @@ replace_common_tokens: src2tmp
 
 replace_generic_tokens: src2tmp replace_common_tokens
 	@echo '   Replace tokens for GENERIC pastelet…'
-	@(cd tmp; perl -p -i -e "s/pastelet\.manifest/___.manifest/g;" pastelet.html )
-	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;" pastelet.html )
-	@(cd tmp; perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html )
+	@(cd tmp; \
+		perl -p -i -e "s/pastelet\.manifest/___.manifest/g;" pastelet.html; \
+		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;" pastelet.html; \
+		perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html \
+	)
 
 replace_email_tokens: src2tmp replace_common_tokens
 	@echo '   Replace tokens from templates for EMAIL pastelet…'
-	@(cd tmp; perl -p -i -e "s/\@SPECIAL\@/Email\/Login/g;" email.html )
-	@(cd tmp; perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html )
-	@(cd tmp; perl -p -i -e "s/special_Pastelet/Email\/Login Pastelet/g;" email.html )
+	@(cd tmp; \
+		perl -p -i -e "s/\@SPECIAL\@/Email\/Login/g;" email.html; \
+		perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html; \
+		perl -p -i -e "s/special_Pastelet/Email\/Login Pastelet/g;" email.html \
+	)
 
 replace_tel_tokens: src2tmp replace_common_tokens
 	@echo '   Replace tokens from templates for TEL pastelet…'
-	@(cd tmp; perl -p -i -e "s/email.manifest/tel.manifest/g;" tel.html )
-	@(cd tmp; perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;" tel.html )
-	@(cd tmp; perl -p -i -e "s/(\@SPECIAL\@)/Telephone Number/g;" tel.html )
-	@(cd tmp; perl -p -i -e "s/type=\"email/type=\"tel/g;" tel.html )
-	@(cd tmp; perl -p -i -e "s/email\@abc\.com/8005551212/g;" tel.html )
-	@(cd tmp; perl -p -i -e 'BEGIN{open F,"js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' tel.html )
-	@(cd tmp; perl -p -i -e "s/special_Pastelet/Telephone Number Pastelet/g;" tel.html )
+	@(cd tmp; \
+		perl -p -i -e "s/email.manifest/tel.manifest/g;" tel.html; \
+		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;" tel.html; \
+		perl -p -i -e "s/(\@SPECIAL\@)/Telephone Number/g;" tel.html; \
+		perl -p -i -e "s/type=\"email/type=\"tel/g;" tel.html; \
+		perl -p -i -e "s/email\@abc\.com/8005551212/g;" tel.html; \
+		perl -p -i -e 'BEGIN{open F,"js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' tel.html; \
+		perl -p -i -e "s/special_Pastelet/Telephone Number Pastelet/g;" tel.html \
+	)
 
 make_html: replace_generic_tokens replace_email_tokens replace_tel_tokens
 	@$(growl) "Validation started"
-	@echo -e "   Validating HTML…\n"
+	@$(echoe) "   Validating HTML…\n"
 	@(hash tidy && cd tmp && ($(foreach html,$(htmlfiles), echo "$(html)"; tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)))
-	@echo -e "   Validating JavaScript…\n"
+	@$(echoe) "   Validating JavaScript…\n"
 	@(hash jsl && cd tmp && ($(foreach html,$(iphonehtml), echo "$(html)"; jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo)
 
 minify_html: make_html
@@ -76,8 +85,8 @@ tmp2build: minify_html
 	@chmod -R 744 build
 
 build: tmp2build
-	@(cd tmp; rm -f $(iphonehtml) )
-	@echo -e "Done.\n"
+	@rm -f tmp/$(iphonehtml)
+	@$(echoe) "Done.\n"
 	@$(growl) "Done."
 
 clean:
