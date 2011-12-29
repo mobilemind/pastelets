@@ -64,9 +64,15 @@ replace_tel_tokens: src2tmp replace_common_tokens
 make_html: replace_generic_tokens replace_email_tokens replace_tel_tokens
 	@$(growl) "Validation started"
 	@$(echoe) "   Validating HTML…\n"
-	@(hash tidy && cd tmp && ($(foreach html,$(htmlfiles), echo "$(html)"; tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)))
+	@(hash tidy && cd tmp && ($(foreach html,$(htmlfiles), \
+		echo "$(html)"; \
+		tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)) \
+	)
 	@$(echoe) "   Validating JavaScript…\n"
-	@(hash jsl && cd tmp && ($(foreach html,$(iphonehtml), echo "$(html)"; jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo)
+	@(hash jsl && cd tmp && ($(foreach html,$(iphonehtml), \
+		echo "$(html)"; \
+		jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo \
+	)
 
 minify_html: make_html
 	@$(growl) "Compression started"
@@ -74,14 +80,21 @@ minify_html: make_html
 	@[[ -d build ]] || mkdir -m 744 build
 	@(rm -f build/$(iphonehtml); cd tmp && $(htmlcompressor) $(compressoroptions) -o ../build $(iphonehtml) )
 	@echo '   gzip minified files…'
-	@(cd build && gzip -f9 $(iphonehtml) && mv -f pastelet.html.gz ___; mv -f email.html.gz email; mv -f tel.html.gz tel)
+	@(cd build && gzip -f9 $(iphonehtml) && mv -f pastelet.html.gz ___; \
+		mv -f email.html.gz email; \
+		mv -f tel.html.gz tel \
+	)
 
 tmp2build: minify_html
 	@echo '   Copy files to build directory…'
 	@cp -Rfp src/img build
 	@(cd build && mv -f ../tmp/pastelet.manifest ___.manifest && cp -fp ___.manifest email.manifest && cp -fp ___.manifest tel.manifest )
 	@[[ -d build/desktop ]] || mkdir -m 744 build/desktop
-	@(mv -f tmp/index.html build/desktop; cp -fp src/mm.css build/desktop; cp -Rfp src/js build/desktop; cp -fp src/*.txt build/desktop )
+	@(mv -f tmp/index.html build/desktop; \
+		cp -fp src/mm.css build/desktop; \
+		cp -Rfp src/js build/desktop; \
+		cp -fp src/*.txt build/desktop \
+	)
 	@chmod -R 744 build
 
 build: tmp2build
