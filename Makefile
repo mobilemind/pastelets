@@ -7,7 +7,7 @@ jsfiles = js/email.js js/loader.js js/paste.js js/tel.js
 srcfiles = $(htmlfiles) pastelet.manifest $(jsfiles)
 htmlcompressor := java -jar ../lib/htmlcompressor-1.5.2.jar
 compressoroptions := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-growl := $(shell ! hash growlnotify &>/dev/null && echo 'true\c' || (echo 'growlnotify \c' && [[ 'darwin11' == $$OSTYPE ]] && echo "-t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo "/t:$(projname)\c" || echo '\c')) )
+growl := $(shell ! hash growlnotify &>/dev/null && echo -e 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo -e "growlnotify -t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(projname)\c" || echo -e '\c')) )
 version := $(shell head -1 src/VERSION)
 builddate := $(shell date)
 copyright := 2008-2011
@@ -54,9 +54,9 @@ replace_tel_tokens: src2tmp replace_common_tokens
 
 make_html: replace_generic_tokens replace_email_tokens replace_tel_tokens
 	@$(growl) "Validation started"
-	@echo "   Validating HTML…\n"
+	@echo -e "   Validating HTML…\n"
 	@(hash tidy && cd tmp && ($(foreach html,$(htmlfiles), echo "$(html)"; tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)))
-	@echo "   Validating JavaScript…\n"
+	@echo -e "   Validating JavaScript…\n"
 	@(hash jsl && cd tmp && ($(foreach html,$(iphonehtml), echo "$(html)"; jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo)
 
 minify_html: make_html
@@ -72,12 +72,12 @@ tmp2build: minify_html
 	@cp -Rfp src/img build
 	@(cd build && mv -f ../tmp/pastelet.manifest ___.manifest && cp -fp ___.manifest email.manifest && cp -fp ___.manifest tel.manifest )
 	@[[ -d build/desktop ]] || mkdir -m 744 build/desktop
-	@(mv -f tmp/index.html build/desktop; cp -Rfp src/css build/desktop; cp -Rfp src/js build/desktop; cp -fp src/*.txt build/desktop )
+	@(mv -f tmp/index.html build/desktop; cp -fp src/mm.css build/desktop; cp -Rfp src/js build/desktop; cp -fp src/*.txt build/desktop )
 	@chmod -R 744 build
 
 build: tmp2build
 	@(cd tmp; rm -f $(iphonehtml) )
-	@echo "Done.\n"
+	@echo -e "Done.\n"
 	@$(growl) "Done."
 
 clean:
