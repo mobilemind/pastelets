@@ -71,13 +71,13 @@ The /build directory has the final, optimized HTML/JavaScript and their shared H
 Deployment Notes
 ----------
 
-For deployment "pastelets" likely requires web server configuration (e.g., .htaccess on Apache servers). 
+For deployment "pastelets" likely requires web server configuration (e.g., .htaccess on Apache servers).
 Required configuration items include:
 
 1. The MIME type for the HTML 5 manifest file. For Apache,
         AddType text/cache-manifest cache manifest)
 2. Force files named '\_\_\_' or 'email' or 'tel' to be MIME type 'text/html'. For Apache
-        <FilesMatch "^(___|email|tel)$"> 
+        <FilesMatch "^(___|email|tel)$">
             ForceType 'text/html; charset=UTF-8'
         </FilesMatch>
 
@@ -93,10 +93,10 @@ If you rename the HTML file, the instructions in the HTML should probably be cha
 Build Notes
 ----------
 
-The included Makefile requires:
-	perl 5
-	make
-The project has been built successively on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79) with perl 5,
-and GNU Make 3.8.
+The make file requires the Java-based htmlcompressor and yuicompressor included in the lib folder. It also requires
+the bash shell, make, perl, tidy, jsl, gzip and optionally uses growlnotify.
+
+The project has been built successfully on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79) with GNU Make 3.8,
+perl 5, tidy, JavaScript Lint 0.3.0, and growlnotify 1.3.
 
 Tom King, December 25, 2011
