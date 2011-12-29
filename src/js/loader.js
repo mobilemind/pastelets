@@ -8,7 +8,7 @@ window.addEventListener('load',
 				try {
 					var q = location.search, m = [];
 					q = decodeURIComponent(q.substr(1));
-					m = q.match(/^javascript:s='(.*?)';,f'/);
+					m = q.match(/^javascript:var s='(.*?)',f/);
 					if (!m) throw 'No match in ' + q;
 					else {
 						var p = m[1], skp;
@@ -39,7 +39,7 @@ window.addEventListener('load',
 				catch (e) {
 					console.log('error: ' + e);
 					alert("Unable to decode pastelet.\r\nForm will be reset.");
-					location.href=location.href.substring(0,location.href.indexOf('?'));
+					location.href = location.protocol + '//' + location.host + location.port + location.pathname;
 					return;
 				}
 		}
@@ -51,7 +51,7 @@ window.addEventListener('load',
 function loadpg(p) {
 	if (p) {
 	  document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
-	  location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?' + '?javascript:' + encodeURIComponent(p);
+	  location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p);
 	}
 }
 // -->
