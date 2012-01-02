@@ -1,112 +1,129 @@
 #!/usr/bin/make -f
 
-projname := pastelets
-iphonehtml := pastelet.html email.html tel.html
-htmlfiles = $(iphonehtml) index.html
-jsfiles = js/email.js js/loader.js js/paste.js js/tel.js
-srcfiles = $(htmlfiles) pastelet.manifest $(jsfiles)
-htmlcompressor := java -jar ../lib/htmlcompressor-1.5.2.jar
-compressoroptions := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-echoe := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
-growl := $(shell ! hash growlnotify &>/dev/null && $(echoe) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(projname) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(projname)\c" || $(echoe) '\c')) )
-version := $(shell head -1 src/VERSION)
-builddate := $(shell date)
-copyright := 2008-2011
+##
+# PASTELETS PROJECT
+##
+PROJ := pastelets
+# directories/paths
+SRCDIR := src
+BUILDDIR := build
+TMPDIR := tmp
+COMMONLIB := $$HOME/common/lib
+WEBDIR := web
+IMGDIR := img
+VPATH := $(WEBDIR):$(BUILDDIR)
+# files
+IPHONEHTML := pastelet.html email.html tel.html
+HTMLFILES = $(IPHONEHTML) index.html
+JSFILES := js/email.js js/loader.js js/paste.js js/tel.js
+SRCFILES = $(HTMLFILES) pastelet.manifest $(JSFILES)
+VERSIONTXT := $(SRCDIR)/VERSION.txt
+# macros/utils
+MMBUILDDATE := _MmBUILDDATE_
+BUILDDATE := $(shell date)
+MMVERSION := _MmVERSION_
+VERSION := $(shell head -1 $(VERSIONTXT))
+MMCOPYRIGHT := _MmCOPYRIGHT_
+COPYRIGHT := 2008, 2009, 2010, 2011, 2012
+MMSPECIAL := _MmSPECIAL_
+HTMLCOMPRESSOR := java -jar $(COMMONLIB)/htmlcompressor-1.5.2.jar
+COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
+ECHOE := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
+GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(PROJ) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
 
 
-default: clean build
+build: minify
+	@(echo '   Copy files to build directory…'; \
+		cp -Rfp $(SRCDIR)/img build; \
+		cd $(BUILDDIR); \
+		mv -f ../$(TMPDIR)/pastelet.manifest ___.manifest; \
+		cp -fp ___.manifest email.manifest; \
+		cp -fp ___.manifest tel.manifest; \
+		[[ -d desktop ]] || mkdir -m 744 desktop; \
+		mv -f ../$(TMPDIR)/index.html desktop; \
+		cp -fp ../$(SRCDIR)/mm.css desktop; \
+		cp -Rfp ../$(SRCDIR)/js desktop; \
+		cp -fp ../$(SRCDIR)/*.txt desktop; \
+		chmod -R 744 ../$(BUILDDIR); \
+		rm -rf ../$(TMPDIR) \
+	)
+	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
 
-src2tmp:
-	@$(growl) "Make started"
-	@(echo '   Copy pastelet HTML and manifest from source to tmp working directory…'; \
-		[[ -d tmp ]] || mkdir -m 744 tmp; \
-		cp -fp src/*.html tmp; \
-		cp -fp src/email.html tmp/tel.html; \
-		cp -Rfp src/js tmp; \
-		cp -Rfp src/img tmp; \
-		cp -fp src/mm.css tmp; \
-		cp -fp src/pastelet.manifest tmp; \
-		echo '   Setting version and build date…' ;\
-		cd tmp; \
-		perl -p -i -e "s/\@VERSION\@/$(version)/g;" $(srcfiles); \
-		perl -p -i -e "s/\@BUILDDATE\@/$(builddate)/g;" $(srcfiles); \
-		perl -p -i -e "s/\@COPYRIGHT\@/$(copyright)/g;" $(srcfiles) \
+minify: validate
+	@$(GROWL) "Compression started"
+	@(echo '   Apply HTMLCOMPRESSOR to files…'; \
+		[[ -d $(BUILDDIR) ]] || mkdir -m 744 $(BUILDDIR); \
+		rm -f $(BUILDDIR)/$(IPHONEHTML); \
+		cd $(TMPDIR); \
+		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../build $(IPHONEHTML) \
+	)
+	@(echo '   gzip minified files…'; \
+		cd $(BUILDDIR); \
+		gzip -f9 $(IPHONEHTML); \
+		mv -f pastelet.html.gz ___; \
+		mv -f email.html.gz email; \
+		mv -f tel.html.gz tel \
+	)
+
+validate: html
+	@$(GROWL) "Validation started";
+	@($(ECHOE) "   Validating HTML…\n"; \
+		hash tidy && cd $(TMPDIR) && ($(foreach html,$(HTMLFILES), \
+			echo "$(html)"; \
+			tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)) \
+	)
+	@($(ECHOE) "   Validating JavaScript…\n"; \
+		hash jsl && cd $(TMPDIR) && ($(foreach html,$(IPHONEHTML), \
+			echo "$(html)"; \
+			jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo \
 	)
 
 html: src2tmp
 # build src to tmp
-	@$(growl) "Replaces started"
+	@$(GROWL) "Replaces started"
 	@(echo '   Replace common tokens across sub-projects…'; \
-		cd tmp; \
-		perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(htmlfiles) ;\
+		cd $(TMPDIR); \
+		perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) ;\
 		echo '   Replace tokens for GENERIC pastelet…'; \
 		perl -p -i -e "s/pastelet\.manifest/___.manifest/g;" pastelet.html; \
 		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;" pastelet.html; \
 		perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html \
 	)
 	@(echo '   Replace tokens from templates for EMAIL pastelet…'; \
-		cd tmp; \
-		perl -p -i -e "s/\@SPECIAL\@/Email\/Login/g;" email.html; \
+		cd $(TMPDIR); \
+		perl -p -i -e "s/$(MMSPECIAL)/Email\/Login/g;" email.html; \
 		perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html; \
 		perl -p -i -e "s/special_Pastelet/Email\/Login Pastelet/g;" email.html \
 	)
 	@(echo '   Replace tokens from templates for TEL pastelet…'; \
-		cd tmp; \
+		cd $(TMPDIR); \
 		perl -p -i -e "s/email.manifest/tel.manifest/g;" tel.html; \
 		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;" tel.html; \
-		perl -p -i -e "s/(\@SPECIAL\@)/Telephone Number/g;" tel.html; \
+		perl -p -i -e "s/$(MMSPECIAL)/Telephone Number/g;" tel.html; \
 		perl -p -i -e "s/type=\"email/type=\"tel/g;" tel.html; \
 		perl -p -i -e "s/email\@abc\.com/8005551212/g;" tel.html; \
 		perl -p -i -e 'BEGIN{open F,"js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' tel.html; \
 		perl -p -i -e "s/special_Pastelet/Telephone Number Pastelet/g;" tel.html \
 	)
 
-validate: html
-	@$(growl) "Validation started";
-	@($(echoe) "   Validating HTML…\n"; \
-		hash tidy && cd tmp && ($(foreach html,$(htmlfiles), \
-			echo "$(html)"; \
-			tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)) \
-	)
-	@($(echoe) "   Validating JavaScript…\n"; \
-		hash jsl && cd tmp && ($(foreach html,$(iphonehtml), \
-			echo "$(html)"; \
-			jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo \
-	)
-
-minify: validate
-	@$(growl) "Compression started"
-	@(echo '   Apply htmlcompressor to files…'; \
-		[[ -d build ]] || mkdir -m 744 build; \
-		rm -f build/$(iphonehtml); \
-		cd tmp; \
-		$(htmlcompressor) $(compressoroptions) -o ../build $(iphonehtml) \
-	)
-	@(echo '   gzip minified files…'; \
-		cd build; \
-		gzip -f9 $(iphonehtml); \
-		mv -f pastelet.html.gz ___; \
-		mv -f email.html.gz email; \
-		mv -f tel.html.gz tel \
+src2tmp:
+	@$(GROWL) "Make started"
+	(echo '   Copy pastelet HTML and manifest from source to tmp working directory…'; \
+		[[ -d $(TMPDIR) ]] || mkdir -m 744 $(TMPDIR); \
+		cp -fp $(SRCDIR)/*.html $(TMPDIR); \
+		cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html; \
+		cp -Rfp $(SRCDIR)/js $(TMPDIR); \
+		cp -Rfp $(SRCDIR)/img $(TMPDIR); \
+		cp -fp $(SRCDIR)/mm.css $(TMPDIR); \
+		cp -fp $(SRCDIR)/pastelet.manifest $(TMPDIR); \
+		echo '   Setting VERSION and build date…' ;\
+		cd $(TMPDIR); \
+		perl -p -i -e "s/$(MMVERSION)/$(VERSION)/g;" $(SRCFILES); \
+		perl -p -i -e "s/$(MMBUILDDATE)/$(BUILDDATE)/g;" $(SRCFILES); \
+		perl -p -i -e "s/$(MMCOPYRIGHT)/$(COPYRIGHT)/g;" $(SRCFILES) \
 	)
 
-build: minify
-	@(echo '   Copy files to build directory…'; \
-		cp -Rfp src/img build; \
-		cd build; \
-		mv -f ../tmp/pastelet.manifest ___.manifest; \
-		cp -fp ___.manifest email.manifest; \
-		cp -fp ___.manifest tel.manifest; \
-		[[ -d desktop ]] || mkdir -m 744 desktop; \
-		mv -f ../tmp/index.html desktop; \
-		cp -fp ../src/mm.css desktop; \
-		cp -Rfp ../src/js desktop; \
-		cp -fp ../src/*.txt desktop; \
-		chmod -R 744 ../build; \
-		rm -rf ../tmp \
-	)
-	@$(echoe) "Done.\n"; $(growl) "Done."
-
+.PHONY: clean
 clean:
 	@echo '   Removing temporary files and cleaning out build directory…'
-	@rm -rf tmp; rm -rf build/*
+	@rm -rf $(TMPDIR) $(BUILDDIR)/*
