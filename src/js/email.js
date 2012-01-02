@@ -1,12 +1,12 @@
 
 <!--
-// EMAIL @VERSION@
+// EMAIL _MmVERSION_
 // unique version of pastelet for pasting into email/login input field WITHOUT confirmation
 //
 
 //	pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
 //
-//	Copyright (c) 2008-2011 Tom King. All rights reserved.
+//	Copyright (c) _MmCOPYRIGHT_ Tom King. All rights reserved.
 //
 // Comments- Generated bookmarklet is carefully constructed.
 // *	The 'paste string' variable ('n') is defined first to make it more visible and ease editing the bookmark itself.
@@ -17,7 +17,7 @@
 //
 
 function pastelet(u) {
-	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void('@VERSION@')";
+	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void('_MmVERSION_')";
 }
 
 //
