@@ -55,7 +55,7 @@ default: minify | $(DESKTOPDIR) $(IMGDIR)
 	)
 	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
 
-minify: validate | $(BUILDDIR)
+minify: validatehtml | $(BUILDDIR)
 	@$(GROWL) "Compression started"
 	@(echo '   Compress files with htmlcompressor + gzip…'; \
 		cd $(BUILDDIR); rm -f $(IPHONEHTML); \
@@ -68,7 +68,7 @@ minify: validate | $(BUILDDIR)
 		mv -f tel.html.gz tel \
 	)
 
-validate: html
+validatehtml: makehtml
 	@$(GROWL) "Validation started";
 	@($(ECHOE) "   Validate HTML & JavaScript…\n"; \
 		cd $(TMPDIR); \
@@ -82,7 +82,7 @@ validate: html
 		) \
 	)
 
-html: src2tmp | $(TMPDIR)
+makehtml: src2tmp | $(TMPDIR)
 	@$(GROWL) 'Replaces started'
 	@echo '   Replace tokens…'
 	@(cd $(TMPDIR); \
