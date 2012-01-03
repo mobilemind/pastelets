@@ -41,75 +41,27 @@ REPLACETOKENS = (perl -p -i -e "s/$(MMVERSION)/$(VERSION)/g;" $@; \
 
 
 default: minify | $(DESKTOPDIR) $(IMGDIR)
-	@(echo '   Copy files to build directory…'; \
-		cp -Rfp $(SRCDIR)/img build; \
-		cd $(BUILDDIR); \
-		mv -f ../$(TMPDIR)/pastelet.manifest ___.manifest; \
-		cp -fp ___.manifest email.manifest; \
-		cp -fp ___.manifest tel.manifest; \
-		mv -f ../$(TMPDIR)/index.html desktop; \
-		cp -fp ../$(SRCDIR)/mm.css desktop; \
-		cp -Rfp ../$(SRCDIR)/js desktop; \
-		cp -fp ../$(SRCDIR)/*.txt desktop; \
-		chmod -R 744 .; \
-		rm -rf ../$(TMPDIR) \
+	@(echo '   Copy files to $(WEBDIR) directory…'; \
+		cp -Rfp $(SRCDIR)/$(IMGDIR) $(WEBDIR); \
+		cp -f $(TMPDIR)/pastelet.manifest $(WEBDIR)/___.manifest; \
+		cp -fp $(TMPDIR)/pastelet.manifest $(WEBDIR)/email.manifest; \
+		cp -fp $(TMPDIR)/pastelet.manifest $(WEBDIR)/tel.manifest; \
+		mv -f $(TMPDIR)/index.html $(WEBDIR)/$(DESKTOPDIR); \
+		cp -fp $(SRCDIR)/mm.css $(WEBDIR)/$(DESKTOPDIR); \
+		cp -Rfp $(SRCDIR)/js $(WEBDIR)/$(DESKTOPDIR); \
+		cp -fp $(SRCDIR)/*.txt $(WEBDIR)/$(DESKTOPDIR); \
+		chmod -R 744 $(WEBDIR); \
+		rm -rf $(TMPDIR) \
 	)
 	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
 
-# default: $(MANIFESTS) $(COMPRESSEDFILES)
-# default: $(WEBIPHONE) $(WEBDESK) $(BUILDDIR) $(DESKTOPDIR) $(WEBDIR) $(IMGDIR)
-# 	@(chmod -R 744 $(WEBDIR); \
-# 		$(GROWL) "Done. See $(PROJ)/$(WEBDIR) directory."; echo; \
-# 		echo "Done. See $(PROJ)/$(WEBDIR) directory"; echo )
-
-# copy manifest to $(BUILDDIR) and replace tokens
-# %.manifest: $(SRCDIR)/%.manifest $(VERSIONTXT) | $(BUILDDIR)
-# 	@(echo; echo $@; \
-# 		cp -fp $(SRCDIR)/$@ $(BUILDDIR); \
-# 		cd $(BUILDDIR); \
-# 		$(REPLACETOKENS) )
-
-# $(DESKTOPDIR)/%.txt: | $(DESKTOPDIR)
-#	cp something $@
-
-# Example of a Conditional
-#
-# The following example of a conditional tells make to use one set of libraries if the CC variable is ‘gcc’, and a different set of libraries otherwise. It works by controlling which of two recipe lines will be used for the rule. The result is that ‘CC=gcc’ as an argument to make changes not only which compiler is used but also which libraries are linked.
-#
-#      libs_for_gcc = -lgnu
-#      normal_libs =
-#
-#      foo: $(objects)
-#      ifeq ($(CC),gcc)
-#              $(CC) -o foo $(objects) $(libs_for_gcc)
-#      else
-#              $(CC) -o foo $(objects) $(normal_libs)
-#      endif
-
-
-# run JSLINT then prepend with 'javascript:' and encodeURI (preserving Firefox '%s' token)
-# $(WEB)/%.js: $(BUILD)/%.js | $(BUILD) $(WEB)
-# 	@echo "   $@"
-# 	@$(JSLINT) -process $< $(JSLINTOPTIONS) > /dev/null ; [ $$? -lt 2 ] || ( \
-# 		echo "*** ERROR: $^"; $(JSLINT) -process $< $(JSLINTOPTIONS); \
-# 		exit 1)
-# 	@[[ "$(@F)" == "fyi-firefox.com.js" ]] && ( \
-# 		perl -pe "s/\%s\"\)/_PERCENT_S_\"\)/g;" < $^ > $^.tmp; \
-# 		$(NODEJS) $(MAKEBOOKMARK) $^.tmp | perl -pe "s/_PERCENT_S_/\%s/g;" > $@ && \
-# 		rm -f $^.tmp ) \
-# 	|| $(NODEJS) $(MAKEBOOKMARK) $^ > $@
-
-
-
 minify: validate | $(BUILDDIR)
 	@$(GROWL) "Compression started"
-	@(echo '   Apply HTMLCOMPRESSOR to files…'; \
-		rm -f $(BUILDDIR)/$(IPHONEHTML); \
-		cd $(TMPDIR); \
-		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../build $(IPHONEHTML) \
-	)
-	@(echo '   gzip minified files…'; \
-		cd $(BUILDDIR); \
+	@(echo '   Compress files with htmlcompressor + gzip…'; \
+		cd $(BUILDDIR); rm -f $(IPHONEHTML); \
+		cd ../$(TMPDIR); \
+		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML); \
+		cd ../$(BUILDDIR); \
 		gzip -f9 $(IPHONEHTML); \
 		mv -f pastelet.html.gz ___; \
 		mv -f email.html.gz email; \
@@ -118,36 +70,29 @@ minify: validate | $(BUILDDIR)
 
 validate: html
 	@$(GROWL) "Validation started";
-	@($(ECHOE) "   Validating HTML…\n"; \
-		hash tidy && cd $(TMPDIR) && ($(foreach html,$(HTMLFILES), \
+	@($(ECHOE) "   Validate HTML & JavaScript…\n"; \
+		cd $(TMPDIR); \
+		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
-			tidy -eq $(html); [[ $$? -lt 2 ]] && echo;)) \
-	)
-	@($(ECHOE) "   Validating JavaScript…\n"; \
-		hash jsl && cd $(TMPDIR) && ($(foreach html,$(IPHONEHTML), \
-			echo "$(html)"; \
-			jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' OK';)) && echo \
+			tidy -eq $(html); [[ $$? -lt 2 ]] && true; \
+			[[ $(html) != "index.html" ]] && ( \
+				jsl -process $(html) -nologo -nofilelisting -nosummary && echo ' JavaScript: OK') \
+			|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).'; \
+			echo ; \
+		) \
 	)
 
 html: src2tmp | $(TMPDIR)
-# build src to tmp
-	@$(GROWL) "Replaces started"
-	@(echo '   Replace common tokens across sub-projects…'; \
-		cd $(TMPDIR); \
+	@$(GROWL) 'Replaces started'
+	@echo '   Replace tokens…'
+	@(cd $(TMPDIR); \
 		perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) ;\
-		echo '   Replace tokens for GENERIC pastelet…'; \
 		perl -p -i -e "s/pastelet\.manifest/___.manifest/g;" pastelet.html; \
 		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;" pastelet.html; \
-		perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html \
-	)
-	@(echo '   Replace tokens from templates for EMAIL pastelet…'; \
-		cd $(TMPDIR); \
+		perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html ;\
 		perl -p -i -e "s/$(MMSPECIAL)/Email\/Login/g;" email.html; \
 		perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html; \
-		perl -p -i -e "s/special_Pastelet/Email\/Login Pastelet/g;" email.html \
-	)
-	@(echo '   Replace tokens from templates for TEL pastelet…'; \
-		cd $(TMPDIR); \
+		perl -p -i -e "s/special_Pastelet/Email\/Login Pastelet/g;" email.html ;\
 		perl -p -i -e "s/email.manifest/tel.manifest/g;" tel.html; \
 		perl -p -i -e "s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;" tel.html; \
 		perl -p -i -e "s/$(MMSPECIAL)/Telephone Number/g;" tel.html; \
@@ -159,13 +104,12 @@ html: src2tmp | $(TMPDIR)
 
 src2tmp:	| $(TMPDIR) $(IMGDIR)
 	@$(GROWL) "Make started"
-	@(echo '   Copy pastelet HTML and manifest from source to tmp working directory…'; \
+	@(echo '   Copy files from source to tmp directory…'; \
 		cp -fp $(SRCDIR)/*.html $(TMPDIR); \
 		cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html; \
 		cp -Rfp $(SRCDIR)/js $(TMPDIR); \
 		cp -fp $(SRCDIR)/mm.css $(TMPDIR); \
 		cp -fp $(SRCDIR)/pastelet.manifest $(TMPDIR); \
-		echo '   Setting VERSION and build date…' ;\
 		cd $(TMPDIR); \
 		perl -p -i -e "s/$(MMVERSION)/$(VERSION)/g;" $(SRCFILES); \
 		perl -p -i -e "s/$(MMBUILDDATE)/$(BUILDDATE)/g;" $(SRCFILES); \
@@ -177,8 +121,9 @@ $(BUILDDIR):
 	@[[ -d $(BUILDDIR) ]] || mkdir -m 744 $(BUILDDIR)
 
 .PHONY: $(DESKTOPDIR)
-$(DESKTOPDIR):	| $(BUILDDIR)
+$(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
 	@[[ -d $(BUILDDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)
+	@[[ -d $(WEBDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)
 
 .PHONY: $(WEBDIR)
 $(WEBDIR):
@@ -195,5 +140,5 @@ $(TMPDIR):
 
 .PHONY: clean
 clean:
-	@echo '   Removing temporary files and cleaning out build directory…'
-	@rm -rf $(TMPDIR) $(BUILDDIR)/*
+	@rm -rf $(TMPDIR) $(BUILDDIR)/* $(WEBDIR)/*
+	@echo '   Removed temporary files and cleaned out $(BUILDDIR)/ and $(WEBDIR)/'
