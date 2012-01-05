@@ -33,7 +33,7 @@ COPYRIGHT := 2008, 2009, 2010, 2011, 2012
 MMSPECIAL := _MmSPECIAL_
 HTMLCOMPRESSORJAR := htmlcompressor-1.5.2.jar
 HTMLCOMPRESSORPATH := $(shell [[ 'cygwin' == $$OSTYPE ]] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo '$(COMMONLIB)/')
-HTMLCOMPRESSOR := java -jar $(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)
+HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
 ECHOE := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
 GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(PROJ) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
@@ -60,10 +60,15 @@ default: minify | $(DESKTOPDIR) $(IMGDIR)
 minify: validatehtml | $(BUILDDIR)
 	@$(GROWL) "Compression started"
 	@(echo '   Compress files with htmlcompressor + gzip...'; \
+		pwd; \
 		cd $(BUILDDIR); rm -f $(IPHONEHTML); \
+		pwd; \
 		cd ../$(TMPDIR); \
+		pwd; \
 		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML); \
+		pwd; \
 		cd ../$(BUILDDIR); \
+		pwd; \
 		gzip -f9 $(IPHONEHTML); \
 		mv -f pastelet.html.gz ___; \
 		mv -f email.html.gz email; \
