@@ -60,15 +60,10 @@ default: minify | $(DESKTOPDIR) $(IMGDIR)
 minify: validatehtml | $(BUILDDIR)
 	@$(GROWL) "Compression started"
 	@(echo '   Compress files with htmlcompressor + gzip...'; \
-		pwd; \
 		cd $(BUILDDIR); rm -f $(IPHONEHTML); \
-		pwd; \
 		cd ../$(TMPDIR); \
-		pwd; \
 		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML); \
-		pwd; \
 		cd ../$(BUILDDIR); \
-		pwd; \
 		gzip -f9 $(IPHONEHTML); \
 		mv -f pastelet.html.gz ___; \
 		mv -f email.html.gz email; \
