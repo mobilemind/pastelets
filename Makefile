@@ -40,11 +40,12 @@ GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([[ 'dar
 REPLACETOKENS = (perl -p -i -e 's/$(MMVERSION)/$(VERSION)/g;' $@; \
 		perl -p -i -e 's/$(MMBUILDDATE)/$(BUILDDATE)/g;' $@; \
 		perl -p -i -e 's/$(MMCOPYRIGHT)/$(COPYRIGHT)/g;' $@ )
+GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
 
 
 default: mkweb
 	@rm -rf $(TMPDIR)
-	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
+	@$(GRECHO) 'make:' "Done.\n"
 
 mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 	@(echo '   Copy files to $(WEBDIR) directory...'; \
@@ -61,12 +62,11 @@ mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 		cp -fp $(SRCDIR)/mm.css $(WEBDIR)/$(DESKTOPDIR)/css; \
 		cp -Rfp $(SRCDIR)/js $(WEBDIR)/$(DESKTOPDIR); \
 		cp -fp $(SRCDIR)/*.txt $(WEBDIR)/$(DESKTOPDIR); \
-		chmod -R 744 $(WEBDIR) \
+		chmod -R 755 $(WEBDIR) \
 	)
 
 
 minify: validatehtml | $(BUILDDIR)
-	@$(GROWL) "Compression started"
 	@(echo '   Compress files with htmlcompressor + gzip...'; \
 		cd $(BUILDDIR); rm -f $(IPHONEHTML); \
 		cd ../$(TMPDIR); \
@@ -79,8 +79,7 @@ minify: validatehtml | $(BUILDDIR)
 	)
 
 validatehtml: makehtml
-	@$(GROWL) "Validation started";
-	@($(ECHOE) "   Validate HTML & JavaScript...\n"; \
+	@($(GRECHO) 'make:' "Validation started"; \
 		cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
@@ -93,7 +92,6 @@ validatehtml: makehtml
 	)
 
 makehtml: src2tmp | $(TMPDIR)
-	@$(GROWL) 'Replaces started'
 	@echo '   Replace tokens...'
 	@(cd $(TMPDIR); \
 		perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) ;\
@@ -113,8 +111,7 @@ makehtml: src2tmp | $(TMPDIR)
 	)
 
 src2tmp:	| $(TMPDIR) $(IMGDIR)
-	@$(GROWL) "Make started"
-	@(echo '   Copy files from source to tmp directory...'; \
+	@($(GRECHO) 'make:' "Copy files from source to tmp directory..."; \
 		cp -fp $(SRCDIR)/*.html $(TMPDIR); \
 		cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html; \
 		cp -Rfp $(SRCDIR)/js $(TMPDIR); \
@@ -130,18 +127,19 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 .PHONY: deploy
 deploy: mkweb
 	@printf "\n\tDeploy to: $$MYSERVER/me\n"
-	scp -p $(WEBDIR)/*.manifest $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
-	scp -p $(WEBDIR)/___ $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
-	scp -p $(WEBDIR)/email $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
-	scp -p $(WEBDIR)/tel $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
-	scp -p $(WEBDIR)/img/* $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img
+	@scp -p $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel \
+		"$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
+	@scp -p $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img"
 	@printf "\n\tDeploy to: $$MYSERVER\n"
-	scp -rp $(WEBDIR)/desktop/* $$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone
-	@printf "\nDone. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n\n"
+	@scp -p $(WEBDIR)/desktop/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
+	@scp -pr web/desktop/css web/desktop/js "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
+	@scp -p $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone/img"
+	@echo
+	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
 
 .PHONY: $(BUILDDIR)
 $(BUILDDIR):
-	@[[ -d $(BUILDDIR) ]] || mkdir -m 744 $(BUILDDIR)
+	@[[ -d $(BUILDDIR) ]] || mkdir -m 755 $(BUILDDIR)
 
 .PHONY: $(DESKTOPDIR)
 $(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
@@ -152,7 +150,7 @@ $(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
 
 .PHONY: $(WEBDIR)
 $(WEBDIR):
-	@[[ -d $(WEBDIR) ]] || mkdir -m 744 $(WEBDIR)
+	@[[ -d $(WEBDIR) ]] || mkdir -m 755 $(WEBDIR)
 
 .PHONY: $(IMGDIR)
 $(IMGDIR):	| $(BUILDDIR) $(TMPDIR)
