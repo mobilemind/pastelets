@@ -61,5 +61,6 @@ version 2.7.1; December 26, 2011; Tom King; improve pastelet URI encoding, remov
 version 2.7.2; December 27, 2011; Tom King; copy of manifest made for each pastelet, add EOL to files for improved formatting
 version 2.7.3; December 28, 2011; Tom King; updated URIencoding, changes to Makefile & ReadMe, resolve HTML tidy and jsl warnings
 version 2.7.4; January 10, 2012; Tom King; update pastelet.html & email.html source to quote all attributes in <head>
+version 2.7.5; February 18, 2012; Tom King; strip leading/trailing spaces from strings to help w/use of iOS 5 shortcut text
 
 Copyright (c) 2008-2012 Tom King. All rights reserved.
