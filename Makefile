@@ -42,20 +42,28 @@ REPLACETOKENS = (perl -p -i -e 's/$(MMVERSION)/$(VERSION)/g;' $@; \
 		perl -p -i -e 's/$(MMCOPYRIGHT)/$(COPYRIGHT)/g;' $@ )
 
 
-default: minify | $(DESKTOPDIR) $(IMGDIR)
+default: mkweb
+	@rm -rf $(TMPDIR)
+	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
+
+mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 	@(echo '   Copy files to $(WEBDIR) directory...'; \
-		cp -Rfp $(SRCDIR)/$(IMGDIR) $(WEBDIR); \
-		cp -f $(TMPDIR)/pastelet.manifest $(WEBDIR)/___.manifest; \
+		cp -fp $(TMPDIR)/pastelet.manifest $(WEBDIR)/___.manifest; \
 		cp -fp $(TMPDIR)/pastelet.manifest $(WEBDIR)/email.manifest; \
 		cp -fp $(TMPDIR)/pastelet.manifest $(WEBDIR)/tel.manifest; \
-		mv -f $(TMPDIR)/index.html $(WEBDIR)/$(DESKTOPDIR); \
-		cp -fp $(SRCDIR)/mm.css $(WEBDIR)/$(DESKTOPDIR); \
+		cp -fp $(BUILDDIR)/___ $(WEBDIR); \
+		cp -fp $(BUILDDIR)/email $(WEBDIR); \
+		cp -fp $(BUILDDIR)/tel $(WEBDIR); \
+		cp -Rfp $(BUILDDIR)/$(IMGDIR) $(WEBDIR); \
+		cp -Rfp $(BUILDDIR)/desktop $(WEBDIR); \
+		cp -Rfp $(SRCDIR)/$(IMGDIR) $(WEBDIR); \
+		cp -fp $(TMPDIR)/index.html $(WEBDIR)/$(DESKTOPDIR); \
+		cp -fp $(SRCDIR)/mm.css $(WEBDIR)/$(DESKTOPDIR)/css; \
 		cp -Rfp $(SRCDIR)/js $(WEBDIR)/$(DESKTOPDIR); \
 		cp -fp $(SRCDIR)/*.txt $(WEBDIR)/$(DESKTOPDIR); \
-		chmod -R 744 $(WEBDIR); \
-		rm -rf $(TMPDIR) \
+		chmod -R 744 $(WEBDIR) \
 	)
-	@$(ECHOE) "Done.\n"; $(GROWL) "Done."
+
 
 minify: validatehtml | $(BUILDDIR)
 	@$(GROWL) "Compression started"
@@ -118,6 +126,19 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 		perl -p -i -e 's/$(MMCOPYRIGHT)/$(COPYRIGHT)/g;' $(SRCFILES) \
 	)
 
+# deploy
+.PHONY: deploy
+deploy: mkweb
+	@printf "\n\tDeploy to: $$MYSERVER/me\n"
+	scp -p $(WEBDIR)/*.manifest $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
+	scp -p $(WEBDIR)/___ $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
+	scp -p $(WEBDIR)/email $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
+	scp -p $(WEBDIR)/tel $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me
+	scp -p $(WEBDIR)/img/* $$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img
+	@printf "\n\tDeploy to: $$MYSERVER\n"
+	scp -rp $(WEBDIR)/desktop/* $$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone
+	@printf "\nDone. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n\n"
+
 .PHONY: $(BUILDDIR)
 $(BUILDDIR):
 	@[[ -d $(BUILDDIR) ]] || mkdir -m 744 $(BUILDDIR)
@@ -125,7 +146,9 @@ $(BUILDDIR):
 .PHONY: $(DESKTOPDIR)
 $(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
 	@[[ -d $(BUILDDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)
+	@[[ -d $(BUILDDIR)/$(DESKTOPDIR)/css ]] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)/css
 	@[[ -d $(WEBDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)
+	@[[ -d $(WEBDIR)/$(DESKTOPDIR)/css ]] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)/css
 
 .PHONY: $(WEBDIR)
 $(WEBDIR):
