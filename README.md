@@ -93,10 +93,13 @@ If you rename the HTML file, the instructions in the HTML should probably be cha
 Build Notes
 ----------
 
-The make file requires the Java-based htmlcompressor and yuicompressor included in the lib folder. It also requires
-the bash shell, make, perl, tidy, jsl, gzip and optionally uses growlnotify.
+The make file requires the Java-based htmlcompressor and yuicompressor included in the lib
+folder. It also requires the bash shell, make, perl, tidy (or tidy-html5), jsl, gzip and
+optionally uses growlnotify.
 
-The project has been built successfully on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79) with GNU Make 3.8,
-perl 5, tidy, JavaScript Lint 0.3.0, and growlnotify 1.3.
+The W3C tidy-html5 is available here: <http://w3c.github.com/tidy-html5/>
 
-Tom King, December 25, 2011
+The project has been built successfully on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79)
+with GNU Make 3.8, perl 5, tidy (tidy-html5), JavaScript Lint 0.3.0, and growlnotify 1.3.
+
+Tom King, March 16, 2012
