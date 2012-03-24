@@ -35,7 +35,7 @@ HTMLCOMPRESSORJAR := htmlcompressor-1.5.2.jar
 HTMLCOMPRESSORPATH := $(shell [[ 'cygwin' == $$OSTYPE ]] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo "$(COMMONLIB)/")
 HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-TIDY := $(shell hash tidy-htmlX 2>/dev/null && echo 'tidy-html5' || (hash tidy && hash 2>/dev/null && echo 'tidy' || exit 1))
+TIDY := $(shell hash tidy-html5 2>/dev/null && echo 'tidy-html5' || (hash tidy 2>/dev/null && echo 'tidy' || exit 1))
 JSL := $(shell hash jsl 2>/dev/null && echo 'jsl' || exit 1)
 ECHOE := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
 GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(PROJ) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
@@ -81,7 +81,7 @@ minify: validatehtml | $(BUILDDIR)
 	)
 
 validatehtml: makehtml
-	@($(GRECHO) 'make:' "Validation started"; \
+	@($(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSL)"; \
 		cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
