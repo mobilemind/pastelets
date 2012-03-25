@@ -71,15 +71,22 @@ The /build directory has the final, optimized HTML/JavaScript and their shared H
 Deployment Notes
 ----------
 
-For deployment "pastelets" likely requires web server configuration (e.g., .htaccess on Apache servers).
+For deployment "pastelets" likely requires web server configuration (e.g., ````.htaccess```` on Apache servers).
 Required configuration items include:
 
-1. The MIME type for the HTML 5 manifest file. For Apache,
-        AddType text/cache-manifest cache manifest)
-2. Force files named '\_\_\_' or 'email' or 'tel' to be MIME type 'text/html'. For Apache
-        <FilesMatch "^(___|email|tel)$">
-            ForceType 'text/html; charset=UTF-8'
-        </FilesMatch>
+1. The MIME type for the HTML 5 manifest file. For Apache that looks like:   
+  ````AddType text/cache-manifest cache manifest````
+
+2. With files named '\_\_\_' or 'email' or 'tel':   
+    a) Force to be MIME type 'text/html'   
+    b) Set encoding to zip   
+    c) Set cache options to enable caching for a few minutes at least   
+For Apache that looks like:   
+````<FilesMatch "^(___|email|tel)$">   
+   ForceType "text/html; charset=utf-8"   
+   Header set Content-Encoding "gzip"   
+   Header set Cache-Control "max-age=361, public, proxy-revalidate"   
+</FilesMatch>````   
 
 **Notes**
 
@@ -94,8 +101,8 @@ Build Notes
 ----------
 
 The make file requires the Java-based htmlcompressor and yuicompressor included in the lib
-folder. It also requires the bash shell, make, perl, tidy (or tidy-html5), jsl, gzip and
-optionally uses growlnotify.
+folder. It also requires the bash shell, ````make````, ````perl````, ````tidy```` (or tidy-html5),
+````jsl````, ````gzip```` and optionally uses ````growlnotify````.
 
 The W3C tidy-html5 is available here: <http://w3c.github.com/tidy-html5/>
 
