@@ -101,7 +101,7 @@
     <h2 id="pasteletMaker">Pastelet Maker for Desktop Browsers</h2>
 	<br><noscript>&nbsp;&nbsp;&nbsp;&nbsp;This web form application requires Javascript to be enabled.<br></noscript>
 	<form id="pForm" method="GET" action="." onSubmit="return showLink(document.getElementById('lnkStr').value, pastelet(document.getElementById('pStr').value, document.getElementById('skp').checked))">
-		<label for="pStr"><strong>&nbsp;Text to Paste:</strong><input name="PasteString" type="text" id="pStr" tabindex="1" size="68" maxlength="255" required="required" autofocus="autofocus" placeholder="your snippet, string or email"></label>
+		<label for="pStr"><strong>&nbsp;Text to Paste:</strong><input name="PasteString" type="text" id="pStr" tabindex="1" size="68" maxlength="255" required="required" autocomplete="on" placeholder="your snippet, string or email" autofocus="autofocus"></label>
 		<br>
       	<label for="lnkStr" id="lnkStrlbl"><strong>&nbsp;Link/Bookmarkname:</strong><input name="Linkname" type="text" id="lnkStr" tabindex="2" size="60" maxlength="255"></label>
         <br>&nbsp;&nbsp;

@@ -102,7 +102,7 @@ div.fig {
 	<p>Enter the _MmSPECIAL_ to paste. Then tap Make Pastelet to reload this page for Step 2.</p>
 	<form id="pltMkr" method="GET" action="." onSubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
 		<label for="pStr">_MmSPECIAL_ to Paste
-				<input type="email" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocapitalize="off" autocorrect="on">
+				<input type="email" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocapitalize="off" autocorrect="on"  autocomplete="on" required="required" autofocus="autofocus">
 		</label>
 		<br><br>
 		<input type="submit" id="mkPltBtn" value="Make Pastelet" class="btn" style="margin:2px 0px 4px 33px">
