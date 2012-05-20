@@ -70,7 +70,7 @@ validatehtml: makehtml
 	@(	cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
-			$(TIDY) -eq $(html); [[ $$? -lt 2 ]] && -; \
+			$(TIDY) -eq $(html); [[ $$? -lt 2 ]] && true; \
 			[[ $(html) != "index.html" ]] && ( \
 				$(JSL) -process $(html) -nologo -nofilelisting -nosummary && echo ' JavaScript: OK') \
 			|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).'; \
