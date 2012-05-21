@@ -41,7 +41,7 @@ GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
 
 default: mkweb
 	@rm -rf $(TMPDIR)
-	@$(GRECHO) 'make:' "Done.\n"
+	@$(GRECHO) 'make $(PROJ):' "Done.\n"
 
 mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 	@echo '   Copy files to $(WEBDIR) directory...'
@@ -111,7 +111,7 @@ deploy: mkweb
 	@rsync -ptu web/desktop/css web/desktop/js "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
 	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone/img"
 	@echo
-	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
+	@$(GRECHO) 'make $(PROJ):' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
 
 .PHONY: $(BUILDDIR)
 $(BUILDDIR):
@@ -140,4 +140,4 @@ $(TMPDIR):
 .PHONY: clean
 clean:
 	@rm -rf $(TMPDIR) $(BUILDDIR)/* $(WEBDIR)/*
-	@echo '   Removed temporary files and cleaned out $(BUILDDIR)/ and $(WEBDIR)/'
+	@echo 'make $(PROJ): Removed temporary files and cleaned out $(BUILDDIR)/ and $(WEBDIR)/'
