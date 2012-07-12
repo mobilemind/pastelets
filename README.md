@@ -60,18 +60,22 @@ For deployment "pastelets" likely requires web server configuration (e.g., `.hta
 Required configuration items include:
 
 1. The MIME type for the HTML 5 manifest file. For Apache that looks like:  
-  `AddType text/cache-manifest cache manifest`
+````apache
+AddType text/cache-manifest cache manifest
+````
 
 2. With files named '\_\_\_' or 'email' or 'tel':  
     a) Force to be MIME type `text/html`  
     b) Set encoding to zip  
     c) Set cache options to enable caching for a few minutes at least  
-For Apache that looks like:  
-    `<FilesMatch "^(___|email|tel)$">`   
-        `ForceType "text/html; charset=utf-8"`    
-        `Header set Content-Encoding "gzip"`       
-        `Header set Cache-Control "max-age=361, public, proxy-revalidate"`    
-    `</FilesMatch>`  
+For Apache that looks like:
+````Apache
+<FilesMatch "^(___|email|tel)$">    
+ForceType "text/html; charset=utf-8"    
+Header set Content-Encoding "gzip" 
+Header set Cache-Control "max-age=361, public, proxy-revalidate"
+</FilesMatch>
+````
 
 ## Notes
 1. The file name '\_\_\_' is used to clarify editing of the bookmarklet and serve as a short filename
