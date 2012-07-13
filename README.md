@@ -55,7 +55,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## Repository Notes
 The `/build` directory has the final, optimized HTML/JavaScript and their shared HTML5 manifest file.
 
-# Deployment Notes
+## Deployment Notes
 For deployment "pastelets" likely requires web server configuration (e.g., `.htaccess` on Apache servers).
 Required configuration items include:
 
@@ -71,9 +71,9 @@ AddType text/cache-manifest cache manifest
 For Apache that looks like:
 ````apache
 <FilesMatch "^(___|email|tel)$">    
- ForceType "text/html; charset=utf-8"    
- Header set Content-Encoding "gzip" 
- Header set Cache-Control "max-age=361, public, proxy-revalidate"
+ForceType "text/html; charset=utf-8"    
+Header set Content-Encoding "gzip" 
+Header set Cache-Control "max-age=361, public, proxy-revalidate"
 </FilesMatch>
 ````
 
@@ -83,7 +83,6 @@ For Apache that looks like:
 
 Finally, note that the app will work fine with the manifest directive removed, and/or the HTML file renamed.
 If you rename the HTML file, the instructions in the HTML should probably be changed.
-
 
 ## Build Notes
 The make file requires the Java-based htmlcompressor and yuicompressor included in the lib
