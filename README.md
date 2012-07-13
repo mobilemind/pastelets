@@ -11,10 +11,10 @@ The bookmarklet generators are available as:
 + **build/iphone/email** - iOS optimized to paste an email into the first Email/Login field on a page.
 + **build/iphone/tel** - iOS optimized to paste a phone number into the first telephone field on a page
 
-# Install
+## Install
 Copy the appropriate bookmarklet generator(s) to a web server.
 
-# Usage
+## Usage
 Each page includes usage instructions. Visit the appropriate bookmarklet generator page.
 
 The easiest way to use them is visiting the hosted versions
@@ -24,10 +24,10 @@ The easiest way to use them is visiting the hosted versions
 + iOS Email\/Login optimized version [http://mmind.me/email](http://mmind.me/email "Email/Login Pastelet Maker - iOS")
 + iOS Telephone field optimized version [http://mmind.me/tel](http://mmind.me/tel "Telephone Pastelet Maker - iOS")
 
-# Requirements
+## Requirements
 Web browser or Mobile Safari from iOS 3.3 or higher
 
-# License
+## License
 MIT License - <http://www.opensource.org/licenses/mit-license.php>
 
 Pastelets
@@ -52,7 +52,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Repository Notes
+## Repository Notes
 The `/build` directory has the final, optimized HTML/JavaScript and their shared HTML5 manifest file.
 
 # Deployment Notes
@@ -69,15 +69,15 @@ AddType text/cache-manifest cache manifest
     b) Set encoding to zip  
     c) Set cache options to enable caching for a few minutes at least  
 For Apache that looks like:
-````Apache
+````apache
 <FilesMatch "^(___|email|tel)$">    
-ForceType "text/html; charset=utf-8"    
-Header set Content-Encoding "gzip" 
-Header set Cache-Control "max-age=361, public, proxy-revalidate"
+ ForceType "text/html; charset=utf-8"    
+ Header set Content-Encoding "gzip" 
+ Header set Cache-Control "max-age=361, public, proxy-revalidate"
 </FilesMatch>
 ````
 
-## Notes
+### Tips
 1. The file name '\_\_\_' is used to clarify editing of the bookmarklet and serve as a short filename
 2. Ideally, the files will be in a subdirectory of the web server root with a short name.
 
@@ -85,7 +85,7 @@ Finally, note that the app will work fine with the manifest directive removed, a
 If you rename the HTML file, the instructions in the HTML should probably be changed.
 
 
-# Build Notes
+## Build Notes
 The make file requires the Java-based htmlcompressor and yuicompressor included in the lib
 folder. It also requires the bash shell, `make`, `perl`, `tidy` (or tidy-html5), `jsl`,
 `gzip` and optionally uses `growlnotify`.
@@ -94,5 +94,3 @@ The W3C tidy-html5 is available here: <http://w3c.github.com/tidy-html5/>
 
 The project has been built successfully on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79)
 with GNU Make 3.8, perl 5, tidy (tidy-html5), JavaScript Lint 0.3.0, and growlnotify 1.3.
-
-Tom King, March 16, 2012
