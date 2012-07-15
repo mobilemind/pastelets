@@ -27,7 +27,7 @@ SRCFILES = $(HTMLFILES) pastelet.manifest $(JSFILES)
 # macros/utils
 VERSION := $(shell head -1 src/VERSION.txt)
 COPYRIGHT := 2008, 2009, 2010, 2011, 2012
-HTMLCOMPRESSORJAR := htmlcompressor-1.5.2.jar
+HTMLCOMPRESSORJAR := htmlcompressor-1.5.3.jar
 HTMLCOMPRESSORPATH := $(shell [[ 'cygwin' == $$OSTYPE ]] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo "$(COMMONLIB)/")
 HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
