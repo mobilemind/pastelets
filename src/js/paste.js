@@ -1,5 +1,3 @@
-
-<!--
 // actually creates bookmarklet given 'u'=user string and 's'=skip confirm true/false
 
 //	pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
@@ -41,7 +39,7 @@ function pastelet(u,s) {
 // if(confirm('Paste%20Here?%20(field%20'%2b(i%2b1)%2b')')){f[i].blur();break}else%20f[i].value=o}void(0)
 
 // *	ANNOTATED JAVASCRIPT OF A BOOKMARKLET (short 'skip confirm' version)
-// 	javascript:
+//	javascript:
 //		// new string to 'paste'
 //		var s = 'your text',
 //		// get array of all input elements
@@ -84,4 +82,3 @@ function pastelet(u,s) {
 //				else f[i].value = o
 //		}
 //		void(0) // return void so browser doesn't navigate, etc.
-// -->

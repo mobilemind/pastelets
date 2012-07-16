@@ -1,4 +1,3 @@
-<!--
 // HTML Encoder from http://www.strictly-software.com/htmlencode
 Encoder = {
 	// When encoding do we convert characters into html or numerical entities
@@ -138,4 +137,3 @@ Encoder = {
 
 	inArray : function(item, arr){var i,l=arr.length; for (i=0;i<l;i++) {if (arr[i] === item) return i;} return -1;}
 };
-// -->

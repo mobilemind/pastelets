@@ -1,5 +1,4 @@
-
-<!-- loader _MmVERSION_, _MmBUILDDATE_
+// loader _MmVERSION_, _MmBUILDDATE_
 // listener to dynamically position page for initial or return-trip
 window.addEventListener('load',
 	function() {
@@ -45,13 +44,11 @@ window.addEventListener('load',
 		}
 		// hide address bar
 		else window.scrollTo(0,1);
-	}
-,true);
+	},true);
 // reload page with new bookmarklet appended
 function loadpg(p) {
 	if (p) {
-	  document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
-	  location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p);
+		document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
+		location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p);
 	}
 }
-// -->
