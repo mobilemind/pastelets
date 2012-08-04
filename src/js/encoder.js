@@ -36,7 +36,7 @@ Encoder = {
 		// convert HTML entites back to numerical entites first
 		d = this.HTML2Numerical(d);
 		// look for numerical entities &#34;
-		arr=d.match(/&#[0-9]{1,5};/g);
+		var arr=d.match(/&#[0-9]{1,5};/g);
 		// if no matches found in string then skip
 		if (arr!==null) {
 			for(var x=0;x<arr.length;x++){
