@@ -62,5 +62,10 @@ version 2.7.2; December 27, 2011; Tom King; copy of manifest made for each paste
 version 2.7.3; December 28, 2011; Tom King; updated URIencoding, changes to Makefile & ReadMe, resolve HTML tidy and jsl warnings
 version 2.7.4; January 10, 2012; Tom King; update pastelet.html & email.html source to quote all attributes in <head>
 version 2.7.5; February 18, 2012; Tom King; strip leading/trailing spaces from strings to help w/use of iOS 5 shortcut text
+version 2.7.6; April 8, 2012; Tom King; add required/autocomplete/autofocus,  disable HTML5 spell check on pastelet textarea field
+version 2.7.7; July 1, 2012; Tom King; widen div.grp percentage, 
+version 2.7.8; July 15, 2012; Tom King; stricter regex in JavaScript for matching whitespace to strip, updated using new HTMLcompressor
+version 2.7.9; July 16, 2012; Tom King; minor edits to pass validation & JSHint
+version 2.8.0; August 3, 2012; Tom King; resolve warnings from JSHint and CSS Lint
 
 Copyright (c) 2008-2012 Tom King. All rights reserved.
