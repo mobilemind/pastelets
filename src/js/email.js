@@ -16,7 +16,7 @@
 
 function pastelet(u) {
 	u = u.match(/^\s*(.\S*?)\s*$/)[1]; // strip leading/trailing spaces to help w/iOS 5 shortcut text
-	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
+	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1)))x=j,break;if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
 }
 
 //
@@ -36,10 +36,7 @@ function pastelet(u) {
 //		n = k.id + k.name + k.title; // join id, name, & title to easily check all at once
 //		t = k.type;
 //		// store index and break when type, id or name matches 'email' or 'ogin' (login/Login) or 'user' (user/userid/username)
-//		if (t in {email:1,login:1} || (t != 'hidden' && (n.indexOf('email') > -1 || n.indexOf('ogin') > 0 || n.indexOf('user') >-1))) {
-//			x = j;
-//			break
-//		}
+//		if (t in {email:1,login:1} || (t != 'hidden' && (n.indexOf('email') > -1 || n.indexOf('ogin') > 0 || n.indexOf('user') >-1))) x = j , break;
 //		// set fallback to first 'non-search' text input (uses 'earch' to test for Search or search)
 //		if (-1 == b && 'text' == t && n.indexOf('earch') < 0) b = j;
 //	}
@@ -53,4 +50,4 @@ function pastelet(u) {
 //		f[x].blur()
 //	}
 //	else alert('Email field not found');
-//	void(0) // return void so browser doesn't navigate, etc.
+//	void '_MmVERSION_' // return void so browser doesn't navigate, etc.
