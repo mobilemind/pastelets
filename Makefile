@@ -66,7 +66,7 @@ minify: validatehtml | $(BUILDDIR)
 		mv -f tel.html.gz tel )
 
 validatehtml: makehtml
-	@$(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSL)"
+	@$(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSL)\n"
 	@(	cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
@@ -93,7 +93,7 @@ makehtml: src2tmp | $(TMPDIR)
 		perl -p -i -e 's/special_Pastelet/Telephone Number Pastelet/g;' tel.html )
 
 src2tmp:	| $(TMPDIR) $(IMGDIR)
-	@$(GRECHO) 'make:' "Copy files from source to tmp directory..."
+	@$(GRECHO) 'make:' "Copy files from source to tmp directory...\n"
 	@cp -Rfp $(SRCDIR)/*.html $(SRCDIR)/js $(SRCDIR)/mm.css $(SRCDIR)/pastelet.manifest $(TMPDIR)
 	@cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html
 	@(	cd $(TMPDIR); \
