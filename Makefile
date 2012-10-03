@@ -18,6 +18,7 @@ VPATH := $(WEBDIR):$(BUILDDIR):$(WEBDIR)/$(DESKTOPDIR):$(BUILDDIR)/$(DESKTOPDIR)
 # files
 COMPRESSEDFILES := pastelet.html.gz email.html.gz tel.html.gz
 MANIFESTFILES= pastelet.manifest email.manifest tel.manifest
+VERSIONFILE := VERSION.txt
 WEBDESKFILES := $(DESKTOPDIR)/index.html $(DESKTOPDIR)/pastelet-history.txt $(DESKTOPDIR)/$(VERSIONFILE)
 IPHONEHTML := pastelet.html email.html tel.html
 HTMLFILES = $(IPHONEHTML) index.html
@@ -25,16 +26,16 @@ JSFILES := js/email.js js/loader.js js/paste.js js/tel.js
 SRCFILES = $(HTMLFILES) pastelet.manifest $(JSFILES)
 
 # macros/utils
-VERSION := $(shell head -1 src/VERSION.txt)
+VERSION := $(shell head -1 src/$(VERSIONFILE))
 COPYRIGHT := 2008, 2009, 2010, 2011, 2012
 HTMLCOMPRESSORJAR := htmlcompressor-1.5.3.jar
-HTMLCOMPRESSORPATH := $(shell [[ 'cygwin' == $$OSTYPE ]] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo "$(COMMONLIB)/")
+HTMLCOMPRESSORPATH := $(shell [ 'cygwin' = "$$OSTYPE" ] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo "$(COMMONLIB)/")
 HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
 TIDY := $(shell hash tidy-html5 2>/dev/null && echo 'tidy-html5' || (hash tidy 2>/dev/null && echo 'tidy' || exit 1))
 JSL := $(shell hash jsl 2>/dev/null && echo 'jsl' || exit 1)
-ECHOE := $(shell [[ 'cygwin' == $$OSTYPE ]] && echo -e 'echo -e' || echo 'echo\c')
-GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([[ 'darwin11' == $$OSTYPE ]] && echo "growlnotify -t $(PROJ) -m\c" || ([[ 'cygwin' == $$OSTYPE ]] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
+ECHOE := $(shell [ 'cygwin' = "$$OSTYPE" ] && echo -e 'echo -e' || echo 'echo\c')
+GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([ 'darwin11' = "$$OSTYPE" ] && echo "growlnotify -t $(PROJ) -m\c" || ([ 'cygwin' = "$$OSTYPE" ] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
 REPLACETOKENS = perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $@
 GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
 
@@ -70,8 +71,8 @@ validatehtml: makehtml
 	@(	cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
-			$(TIDY) -eq $(html); [[ $$? -lt 2 ]] && true; \
-			[[ $(html) != "index.html" ]] && ( \
+			$(TIDY) -eq $(html); [ $$? -lt 2 ] && true; \
+			[ "$(html)" != "index.html" ] && ( \
 				$(JSL) -process $(html) -nologo -nofilelisting -nosummary && echo ' JavaScript: OK') \
 			|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).'; \
 			echo ) \
@@ -115,18 +116,18 @@ deploy: mkweb
 
 .PHONY: $(BUILDDIR)
 $(BUILDDIR):
-	@[[ -d $(BUILDDIR) ]] || mkdir -m 755 $(BUILDDIR)
+	@[ -d "$(BUILDDIR)" ] || mkdir -m 755 $(BUILDDIR)
 
 .PHONY: $(DESKTOPDIR)
 $(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
-	@[[ -d $(BUILDDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)
-	@[[ -d $(BUILDDIR)/$(DESKTOPDIR)/css ]] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)/css
-	@[[ -d $(WEBDIR)/$(DESKTOPDIR) ]] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)
-	@[[ -d $(WEBDIR)/$(DESKTOPDIR)/css ]] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)/css
+	@[ -d "$(BUILDDIR)/$(DESKTOPDIR)" ] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)
+	@[ -d "$(BUILDDIR)/$(DESKTOPDIR)/css" ] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)/css
+	@[ -d "$(WEBDIR)/$(DESKTOPDIR)" ] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)
+	@[ -d "$(WEBDIR)/$(DESKTOPDIR)/css" ] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)/css
 
 .PHONY: $(WEBDIR)
 $(WEBDIR):
-	@[[ -d $(WEBDIR) ]] || mkdir -m 755 $(WEBDIR)
+	@[ -d "$(WEBDIR)" ] || mkdir -m 755 $(WEBDIR)
 
 .PHONY: $(IMGDIR)
 $(IMGDIR):	| $(BUILDDIR) $(TMPDIR)
@@ -135,7 +136,7 @@ $(IMGDIR):	| $(BUILDDIR) $(TMPDIR)
 
 .PHONY: $(TMPDIR)
 $(TMPDIR):
-	@[[ -d $(TMPDIR) ]] || mkdir -m 744 $(TMPDIR)
+	@[ -d "$(TMPDIR)" ] || mkdir -m 744 $(TMPDIR)
 
 .PHONY: clean
 clean:
