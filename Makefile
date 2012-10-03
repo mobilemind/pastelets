@@ -57,9 +57,8 @@ mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 
 minify: validatehtml | $(BUILDDIR)
 	@echo '   Compress files with htmlcompressor + gzip...'
-	@(	cd $(BUILDDIR); rm -f $(IPHONEHTML) )
-	@(	cd $(TMPDIR); \
-		$(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML) )
+	@cd $(BUILDDIR) && rm -f $(IPHONEHTML)
+	@cd $(TMPDIR) && $(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML)
 	@(	cd $(BUILDDIR); \
 		gzip -f9 $(IPHONEHTML); \
 		mv -f pastelet.html.gz ___; \
@@ -71,7 +70,7 @@ validatehtml: makehtml
 	@(	cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES), \
 			echo "$(html)"; \
-			$(TIDY) -eq $(html); [ $$? -lt 2 ] && true; \
+			$(TIDY) -eq $(html) || [ $$? -lt 2 ]; \
 			[ "$(html)" != "index.html" ] && ( \
 				$(JSL) -process $(html) -nologo -nofilelisting -nosummary && echo ' JavaScript: OK') \
 			|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).'; \
@@ -104,8 +103,7 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 .PHONY: deploy
 deploy: mkweb
 	@printf "\n\tDeploy to: $$MYSERVER/me\n"
-	@rsync -ptuv --executability $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel \
-		"$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
+	@rsync -ptuv --executability $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
 	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img"
 	@printf "\n\tDeploy to: $$MYSERVER\n"
 	@rsync -ptuv --executability $(WEBDIR)/desktop/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
