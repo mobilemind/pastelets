@@ -39,11 +39,11 @@ window.addEventListener('load',
 					console.log('error: ' + e);
 					alert("Unable to decode pastelet.\r\nForm will be reset.");
 					location.href = location.protocol + '//' + location.host + location.port + location.pathname;
-					return;
 				}
 		}
 		// hide address bar
 		else window.scrollTo(0,1);
+		return;
 	},true);
 // reload page with new bookmarklet appended
 function loadpg(p) {
