@@ -38,7 +38,7 @@ ECHOE := $(shell [ 'cygwin' = "$$OSTYPE" ] && echo -e 'echo -e' || echo 'echo\c'
 GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([ 'darwin11' = "$$OSTYPE" ] && echo "growlnotify -t $(PROJ) -m\c" || ([ 'cygwin' = "$$OSTYPE" ] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
 REPLACETOKENS = perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $@
 GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
-
+STATFMT := $(shell [ 'cygwin' = $$OSTYPE ] && echo '-c %s' || echo '-f%z' )
 
 default: mkweb
 	@rm -rf $(TMPDIR)
@@ -56,25 +56,27 @@ mkweb: minify | $(DESKTOPDIR) $(IMGDIR)
 	@chmod -R 755 $(WEBDIR)
 
 minify: validatehtml | $(BUILDDIR)
-	@echo '   Compress files with htmlcompressor + gzip...'
+	@$(GRECHO) 'make:' "Apply htmlcompressor to files and gzip...\n"
 	@cd $(BUILDDIR) && rm -f $(IPHONEHTML)
 	@cd $(TMPDIR) && $(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML)
-	@(	cd $(BUILDDIR); \
-		gzip -f9 $(IPHONEHTML); \
-		mv -f pastelet.html.gz ___; \
-		mv -f email.html.gz email; \
-		mv -f tel.html.gz tel )
+	@(cd $(BUILDDIR) && echo "   $(IPHONEHTML) (size in bytes): $$(stat $(STATFMT) $(IPHONEHTML) | tr '\n' ' ')"\
+		&& gzip -f9 $(IPHONEHTML) )
+	@mv -f $(BUILDDIR)/pastelet.html.gz $(BUILDDIR)/___
+	@mv -f $(BUILDDIR)/email.html.gz $(BUILDDIR)/email
+	@mv -f $(BUILDDIR)/tel.html.gz $(BUILDDIR)/tel
+	@(cd $(BUILDDIR) && echo "   [renamed files] ___ email tel (size in bytes): $$(stat $(STATFMT) ___ email tel | tr '\n' ' ')" )
 
 validatehtml: makehtml
 	@$(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSL)\n"
 	@(	cd $(TMPDIR); \
-		$(foreach html,$(HTMLFILES), \
-			echo "$(html)"; \
-			$(TIDY) -eq $(html) || [ $$? -lt 2 ]; \
-			[ "$(html)" != "index.html" ] && ( \
-				$(JSL) -process $(html) -nologo -nofilelisting -nosummary && echo ' JavaScript: OK') \
-			|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).'; \
-			echo ) \
+		$(foreach html,$(HTMLFILES),\
+			echo "$(html)";\
+			$(TIDY) -eq "$(html)" || [ $$? -lt 2 ];\
+			[ "$(html)" != "index.html" ]\
+				&& ($(JSL) -process "$(html)" -nologo -nofilelisting -nosummary && echo ' JavaScript: OK')\
+				|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).';\
+			echo;\
+		) \
 	)
 
 makehtml: src2tmp | $(TMPDIR)
@@ -102,6 +104,7 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 # deploy
 .PHONY: deploy
 deploy: mkweb
+	@$(GRECHO) 'make:' "Deploy to servers.\n"
 	@printf "\n\tDeploy to: $$MYSERVER/me\n"
 	@rsync -ptuv --executability $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
 	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img"
@@ -110,7 +113,7 @@ deploy: mkweb
 	@rsync -ptu web/desktop/css web/desktop/js "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
 	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone/img"
 	@echo
-	@$(GRECHO) 'make $(PROJ):' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
+	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
 
 .PHONY: $(BUILDDIR)
 $(BUILDDIR):
