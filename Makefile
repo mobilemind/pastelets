@@ -59,8 +59,8 @@ minify: validatehtml | $(BUILDDIR)
 	@$(GRECHO) 'make:' "Apply htmlcompressor to files and gzip...\n"
 	@cd $(BUILDDIR) && rm -f $(IPHONEHTML)
 	@cd $(TMPDIR) && $(HTMLCOMPRESSOR) $(COMPRESSOPTIONS) -o ../$(BUILDDIR) $(IPHONEHTML)
-	@(cd $(BUILDDIR) && echo "   $(IPHONEHTML) (size in bytes): $$(stat $(STATFMT) $(IPHONEHTML) | tr '\n' ' ')"\
-		&& gzip -f9 $(IPHONEHTML) )
+	@(cd $(BUILDDIR) && echo "   $(IPHONEHTML) (size in bytes): $$(stat $(STATFMT) $(IPHONEHTML) | tr '\n' ' ')")
+	@(cd $(BUILDDIR) && gzip -f9 $(IPHONEHTML) )
 	@mv -f $(BUILDDIR)/pastelet.html.gz $(BUILDDIR)/___
 	@mv -f $(BUILDDIR)/email.html.gz $(BUILDDIR)/email
 	@mv -f $(BUILDDIR)/tel.html.gz $(BUILDDIR)/tel
@@ -81,25 +81,26 @@ validatehtml: makehtml
 
 makehtml: src2tmp | $(TMPDIR)
 	@echo '   Replace tokens...'
-	@(	cd $(TMPDIR); \
-		perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) ;\
-		perl -p -i -e 's/pastelet\.manifest/___.manifest/g;' pastelet.html; \
-		perl -p -i -e 's/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;' pastelet.html; \
-		perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html ;\
-		perl -p -i -e 's/_MmSPECIAL_/Email\/Login/g;' email.html; \
-		perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html; \
-		perl -p -i -e 's/special_Pastelet/Email\/Login Pastelet/g;' email.html ;\
-		perl -p -i -e 's/email.manifest/tel.manifest/g;s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;' tel.html; \
-		perl -p -i -e 's/_MmSPECIAL_/Telephone Number/g;s/type=\"email/type=\"tel/g;s/email\@abc\.com/8005551212/g;' tel.html; \
-		perl -p -i -e 'BEGIN{open F,"js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' tel.html; \
-		perl -p -i -e 's/special_Pastelet/Telephone Number Pastelet/g;' tel.html )
+	@(cd $(TMPDIR) && perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) )
+	@(cd $(TMPDIR)\
+		&& perl -p -i -e 's/pastelet\.manifest/___.manifest/g;' pastelet.html\
+		&& perl -p -i -e 's/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;' pastelet.html)
+	@(cd $(TMPDIR) && perl -p -i -e 'BEGIN{open F,"js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' pastelet.html index.html)
+	@(cd $(TMPDIR)\
+		&& perl -p -i -e 's/_MmSPECIAL_/Email\/Login/g;' email.html\
+		&& perl -p -i -e 'BEGIN{open F,"js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' email.html\
+		&& perl -p -i -e 's/special_Pastelet/Email\/Login Pastelet/g;' email.html)
+	@(cd $(TMPDIR)\
+		&& perl -p -i -e 's/email.manifest/tel.manifest/g;s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;' tel.html\
+		&& perl -p -i -e 's/_MmSPECIAL_/Telephone Number/g;s/type=\"email/type=\"tel/g;s/email\@abc\.com/8005551212/g;' tel.html\
+		&& perl -p -i -e 'BEGIN{open F,"js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' tel.html\
+		&& perl -p -i -e 's/special_Pastelet/Telephone Number Pastelet/g;' tel.html)
 
 src2tmp:	| $(TMPDIR) $(IMGDIR)
 	@$(GRECHO) 'make:' "Copy files from source to tmp directory...\n"
 	@cp -Rfp $(SRCDIR)/*.html $(SRCDIR)/js $(SRCDIR)/mm.css $(SRCDIR)/pastelet.manifest $(TMPDIR)
 	@cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html
-	@(	cd $(TMPDIR); \
-		perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $(SRCFILES) )
+	@(cd $(TMPDIR) && perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $(SRCFILES) )
 
 # deploy
 .PHONY: deploy
