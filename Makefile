@@ -40,6 +40,8 @@ REPLACETOKENS = perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell 
 GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
 STATFMT := $(shell [ 'cygwin' = $$OSTYPE ] && echo '-c %s' || echo '-f%z' )
 
+.PHONY: deploy $(BUILDDIR) $(WEBDIR) $(DESKTOPDIR) $(IMGDIR) $(TMPDIR) clean
+
 default: mkweb
 	@rm -rf $(TMPDIR)
 	@$(GRECHO) 'make $(PROJ):' "Done.\n"
@@ -97,7 +99,6 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 	@(cd $(TMPDIR) && perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $(SRCFILES) )
 
 # deploy
-.PHONY: deploy
 deploy: mkweb
 	@$(GRECHO) 'make:' "Deploy to servers.\n"
 	@printf "\n\tDeploy to: $$MYSERVER/me\n"
@@ -110,31 +111,22 @@ deploy: mkweb
 	@echo
 	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
 
-.PHONY: $(BUILDDIR)
-$(BUILDDIR):
-	@[ -d "$(BUILDDIR)" ] || mkdir -m 755 $(BUILDDIR)
+$(BUILDDIR) $(WEBDIR):
+	@[ -d "$@" ] || mkdir -m 755 "$@"
 
-.PHONY: $(DESKTOPDIR)
 $(DESKTOPDIR):	| $(BUILDDIR) $(WEBDIR)
 	@[ -d "$(BUILDDIR)/$(DESKTOPDIR)" ] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)
 	@[ -d "$(BUILDDIR)/$(DESKTOPDIR)/css" ] || mkdir -m 744 $(BUILDDIR)/$(DESKTOPDIR)/css
 	@[ -d "$(WEBDIR)/$(DESKTOPDIR)" ] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)
 	@[ -d "$(WEBDIR)/$(DESKTOPDIR)/css" ] || mkdir -m 744 $(WEBDIR)/$(DESKTOPDIR)/css
 
-.PHONY: $(WEBDIR)
-$(WEBDIR):
-	@[ -d "$(WEBDIR)" ] || mkdir -m 755 $(WEBDIR)
-
-.PHONY: $(IMGDIR)
 $(IMGDIR):	| $(BUILDDIR) $(TMPDIR)
 	@cp -Rfp $(SRCDIR)/$(IMGDIR) $(BUILDDIR)
 	@cp -Rfp $(SRCDIR)/$(IMGDIR) $(TMPDIR)
 
-.PHONY: $(TMPDIR)
 $(TMPDIR):
-	@[ -d "$(TMPDIR)" ] || mkdir -m 744 $(TMPDIR)
+	@[ -d "$(TMPDIR)" ] || mkdir -m 744 "$(TMPDIR)"
 
-.PHONY: clean
 clean:
-	@rm -rf $(TMPDIR) $(BUILDDIR)/* $(WEBDIR)/*
+	@rm -rf $(TMPDIR) $(BUILDDIR) $(WEBDIR)
 	@echo 'make $(PROJ): Removed temporary files and cleaned out $(BUILDDIR)/ and $(WEBDIR)/'
