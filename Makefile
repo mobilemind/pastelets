@@ -85,12 +85,12 @@ makehtml: src2tmp | $(TMPDIR)
 	@echo '   Replace tokens...'
 	@(cd $(TMPDIR) && perl -p -i -e 'BEGIN{open F,"js/loader.js";@f=<F>}s# src=\"js/loader.js\"\>#\>@f#' $(HTMLFILES) )
 	@perl -p -i -e 's/pastelet\.manifest/___.manifest/g;s/(link rel=canonical href=\"http:\/\/mmind.me\/)pastelet/\\1___/g;' $(TMPDIR)/pastelet.html
-	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/paste.js";@f=<F>}s# src=\"$(TMPDIR)/js/paste.js\"\>#\>@f#' $(TMPDIR)/pastelet.html $(TMPDIR)/index.html
+	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/paste.js";@f=<F>}s# src=\"js/paste.js\"\>#\>@f#' $(TMPDIR)/pastelet.html $(TMPDIR)/index.html
 	@perl -p -i -e 's/_MmSPECIAL_/Email\/Login/g;s/special_Pastelet/Email\/Login Pastelet/g;' $(TMPDIR)/email.html
-	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/email.js";@f=<F>}s# src=\"$(TMPDIR)/js/email.js\"\>#\>@f#' $(TMPDIR)/email.html
+	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/email.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' $(TMPDIR)/email.html
 	@perl -p -i -e 's/email.manifest/tel.manifest/g;s/(link rel=canonical href=\"http:\/\/mmind.me\/)email/\\1tel/g;' $(TMPDIR)/tel.html
 	@perl -p -i -e 's/_MmSPECIAL_/Telephone Number/g;s/type=\"email/type=\"tel/g;s/email\@abc\.com/8005551212/g;s/special_Pastelet/Telephone Number Pastelet/g;' $(TMPDIR)/tel.html
-	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/tel.js";@f=<F>}s# src=\"$(TMPDIR)/js/email.js\"\>#\>@f#' $(TMPDIR)/tel.html
+	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' $(TMPDIR)/tel.html
 
 src2tmp:	| $(TMPDIR) $(IMGDIR)
 	@$(GRECHO) 'make:' "Copy files from source to tmp directory...\n"

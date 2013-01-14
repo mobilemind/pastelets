@@ -37,7 +37,7 @@ window.addEventListener('load',
 				}
 				catch (e) {
 					console.log('error: ' + e);
-					alert("Unable to decode pastelet.\r\nForm will be reset.");
+					alert("Unable to decode pastelet.\nForm will be reset.");
 					location.replace('//' + location.host + location.port + location.pathname);
 				}
 		}

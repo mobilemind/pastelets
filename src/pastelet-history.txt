@@ -68,5 +68,6 @@ version 2.7.8; July 15, 2012; Tom King; stricter regex in JavaScript for matchin
 version 2.7.9; July 16, 2012; Tom King; minor edits to pass validation & JSHint
 version 2.8.0; August 3, 2012; Tom King; resolve warnings from JSHint and CSS Lint
 version 2.8.3; January 13, 2013; Tom King; use location.replace() vs location.href= in loader.js
+version 2.8.4; January 14, 2013; Tom King; fix Makefile error introduced in 68db603eeb; use only \n in alert()
 
-Copyright (c) 2008-2012 Tom King. All rights reserved.
+Copyright (c) 2008-2013 Tom King. All rights reserved.
