@@ -38,7 +38,7 @@ window.addEventListener('load',
 				catch (e) {
 					console.log('error: ' + e);
 					alert("Unable to decode pastelet.\r\nForm will be reset.");
-					location.href = location.protocol + '//' + location.host + location.port + location.pathname;
+					location.replace('//' + location.host + location.port + location.pathname);
 				}
 		}
 		// hide address bar
@@ -49,6 +49,6 @@ window.addEventListener('load',
 function loadpg(p) {
 	if (p) {
 		document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
-		location.href = location.protocol + '//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p);
+		location.replace('//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p));
 	}
 }
