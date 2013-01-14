@@ -31,7 +31,7 @@ Web browser or Mobile Safari from iOS 3.3 or higher
 MIT License - <http://www.opensource.org/licenses/mit-license.php>
 
 Pastelets
-Copyright (c) 2008-2011 Tom King  <mobilemind@pobox.com>
+Copyright (c) 2008-2013 Tom King  <mobilemind@pobox.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -59,20 +59,20 @@ The `/build` directory has the final, optimized HTML/JavaScript and their shared
 For deployment "pastelets" likely requires web server configuration (e.g., `.htaccess` on Apache servers).
 Required configuration items include:
 
-1. The MIME type for the HTML 5 manifest file. For Apache that looks like:  
+1. The MIME type for the HTML 5 manifest file. For Apache that looks like:
 ````apache
 AddType text/cache-manifest cache manifest
 ````
 
-2. With files named '\_\_\_' or 'email' or 'tel':  
-    a) Force to be MIME type `text/html`  
-    b) Set encoding to zip  
-    c) Set cache options to enable caching for a few minutes at least  
+2. With files named '\_\_\_' or 'email' or 'tel':
+    a) Force to be MIME type `text/html`
+    b) Set encoding to zip
+    c) Set cache options to enable caching for a few minutes at least
 For Apache that looks like:
 ````apache
-<FilesMatch "^(___|email|tel)$">    
-ForceType "text/html; charset=utf-8"    
-Header set Content-Encoding "gzip" 
+<FilesMatch "^(___|email|tel)$">
+ForceType "text/html; charset=utf-8"
+Header set Content-Encoding "gzip"
 Header set Cache-Control "max-age=361, public, proxy-revalidate"
 </FilesMatch>
 ````
