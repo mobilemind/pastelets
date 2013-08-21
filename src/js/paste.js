@@ -19,8 +19,10 @@
 //
 
 function pastelet(u,s) {
-	u = u.match(/^\s*(\S*?)\s*$/)[1]; // strip leading/trailing spaces to help w/iOS 5 shortcut text
-	return !u ? '' : "var s='" + u + "',f=document.getElementsByTagName('input'),i=0" + (s ? ";" : ",o;") + "for(;i<f.length;i++)if(f[i].type in{text:1,email:1,login:1,tel:1,url:1,password:1}&&(f[i].id+f[i].name+f[i].title).indexOf('earch')<0){" + (s ? "" : "o=f[i].value;")  + "f[i].focus();f[i].value=s;" + (s ? "f[i].blur();break" : "if(confirm('Paste Here? (field '+(i+1)+')')){f[i].blur();break}else f[i].value=o") + "}void'_MmVERSION_'";
+	if (u) {
+	  // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
+    return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] + "',f=document.getElementsByTagName('input'),i=0" + (s ? ";" : ",o;") + "for(;i<f.length;i++)if(f[i].type in{text:1,email:1,login:1,tel:1,url:1,password:1}&&(f[i].id+f[i].name+f[i].title).indexOf('earch')<0){" + (s ? "" : "o=f[i].value;")  + "f[i].focus();f[i].value=s;" + (s ? "f[i].blur();break" : "if(confirm('Paste Here? (field '+(i+1)+')')){f[i].blur();break}else f[i].value=o") + "}void'_MmVERSION_'";
+  }
 }
 
 // Examples below provide samples of the resulting bookmarklet and expanded/commented code of the bookmarklet
