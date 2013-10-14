@@ -102,14 +102,13 @@ src2tmp:	| $(TMPDIR) $(IMGDIR)
 deploy: mkweb
 	@$(GRECHO) 'make:' "Deploy to servers.\n"
 	@printf "\n\tDeploy to: $$MYSERVER/me\n"
-	@rsync -ptuv --executability $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
-	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img"
-	@printf "\n\tDeploy to: $$MYSERVER\n"
-	@rsync -ptuv --executability $(WEBDIR)/desktop/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
-	@rsync -ptu web/desktop/css web/desktop/js "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone"
-	@rsync -ptu $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/iphone/img"
+	@rsync -puv --executability $(WEBDIR)/*.manifest $(WEBDIR)/___ $(WEBDIR)/email $(WEBDIR)/tel "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me"
+	@rsync -puv $(WEBDIR)/img/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/img"
+	@printf "\n\tDeploy to: $$MYSERVER/me/iphone\n"
+	@rsync -puv --executability $(WEBDIR)/desktop/*.* "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/iphone"
+	@rsync -puv web/desktop/css web/desktop/js "$$MYUSER@$$MYSERVER:$$MYSERVERHOME/me/iphone"
 	@echo
-	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/iphone\n"
+	@$(GRECHO) 'make:' "Done. Deployed $(PROJ) to $$MYSERVER/me, $$MYSERVER/me/iphone\n"
 
 $(BUILDDIR) $(WEBDIR):
 	@[ -d "$@" ] || mkdir -m 755 "$@"
