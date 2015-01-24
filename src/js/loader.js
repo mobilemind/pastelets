@@ -24,9 +24,9 @@ window.addEventListener('load',
 							if (!(-1 != navigator.userAgent.indexOf('Safari') && -1 != navigator.userAgent.indexOf('Mobile'))) {
 								var pal = document.getElementById('pal'), pl = document.getElementById('pl');
 								if (pal && pl) {
-									pal.setAttribute("style", "display:inline;padding:7px;height:auto");
-									pl.setAttribute('href', document.getElementById('bmrk').textContent);
-									pl.setAttribute('title', document.title);
+									pal.style = "display:inline;padding:7px;height:auto";
+									pl.href = document.getElementById('bmrk').textContent;
+									pl.title = document.title;
 									pl.innerHTML = document.title;
 								}
 							}
