@@ -41,8 +41,6 @@ window.addEventListener('load',
 					location.replace('//' + location.host + location.port + location.pathname);
 				}
 		}
-		// hide address bar
-		else window.scrollTo(0,1);
 		return;
 	},true);
 // reload page with new bookmarklet appended
