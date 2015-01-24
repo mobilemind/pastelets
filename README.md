@@ -31,7 +31,7 @@ Web browser or Mobile Safari from iOS 3.3 or higher
 MIT License - <http://www.opensource.org/licenses/mit-license.php>
 
 Pastelets
-Copyright (c) 2008-2013 Tom King  <mobilemind@pobox.com>
+Copyright (c) 2008-2015 Tom King  <mobilemind@pobox.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -91,5 +91,5 @@ folder. It also requires the bash shell, `make`, `perl`, `tidy` (or tidy-html5),
 
 The W3C tidy-html5 is available here: <http://w3c.github.com/tidy-html5/>
 
-The project has been built successfully on Mac OS X 10.7 and Windows 7 (w/ cygwin 1.79)
+The project has been built successfully on Mac OS X 10.7-10.10 and Windows 7 (w/ cygwin 1.79+)
 with GNU Make 3.8, perl 5, tidy (tidy-html5), JavaScript Lint 0.3.0, and growlnotify 1.3.
