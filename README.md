@@ -28,7 +28,7 @@ The easiest way to use them is visiting the hosted versions
 Web browser or Mobile Safari from iOS 3.3 or higher
 
 ## License
-MIT License - <http://www.opensource.org/licenses/mit-license.php>
+MIT License - <http://opensource.org/licenses/mit-license.php>
 
 Pastelets
 Copyright (c) 2008-2015 Tom King  <mobilemind@pobox.com>
