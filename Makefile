@@ -33,7 +33,7 @@ HTMLCOMPRESSORPATH := $(shell [ 'cygwin' = "$$OSTYPE" ] &&  echo "`cygpath -w $(
 HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
 TIDY := $(shell hash tidy-html5 2>/dev/null && echo 'tidy-html5' || (hash tidy 2>/dev/null && echo 'tidy' || exit 1))
-JSL := $(shell hash jsl 2>/dev/null && echo 'jsl' || exit 1)
+JSL := $(shell hash jshint 2>/dev/null && echo 'jshint' || exit 1)
 ECHOE := $(shell [ 'cygwin' = "$$OSTYPE" ] && echo -e 'echo -e' || echo 'echo\c')
 GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([ 'darwin11' = "$$OSTYPE" ] && echo "growlnotify -t $(PROJ) -m\c" || ([ 'cygwin' = "$$OSTYPE" ] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
 REPLACETOKENS = perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $@
@@ -74,9 +74,6 @@ validatehtml: makehtml
 		$(foreach html,$(HTMLFILES),\
 			echo "$(html)";\
 			$(TIDY) -eq "$(html)" || [ $$? -lt 2 ];\
-			[ "$(html)" != "index.html" ]\
-				&& ($(JSL) -process "$(html)" -nologo -nofilelisting -nosummary && echo ' JavaScript: OK')\
-				|| echo ' JavaScript: NOT CHECKED- contains hosted script(s).';\
 			echo;\
 		) \
 	)
@@ -92,11 +89,15 @@ makehtml: src2tmp | $(TMPDIR)
 	@perl -p -i -e 's/_MmSPECIAL_/Telephone Number/g;s/type=\"email/type=\"tel/g;s/email\@abc\.com/8005551212/g;s/special_Pastelet/Telephone Number Pastelet/g;' $(TMPDIR)/tel.html
 	@perl -p -i -e 'BEGIN{open F,"$(TMPDIR)/js/tel.js";@f=<F>}s# src=\"js/email.js\"\>#\>@f#' $(TMPDIR)/tel.html
 
-src2tmp:	| $(TMPDIR) $(IMGDIR)
+src2tmp: validatejs	| $(TMPDIR) $(IMGDIR)
 	@$(GRECHO) 'make:' "Copy files from source to tmp directory...\n"
 	@cp -Rfp $(SRCDIR)/*.html $(SRCDIR)/js $(SRCDIR)/mm.css $(SRCDIR)/pastelet.manifest $(TMPDIR)
 	@cp -fp $(SRCDIR)/email.html $(TMPDIR)/tel.html
 	@(cd $(TMPDIR) && perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $(SRCFILES) )
+
+validatejs:
+	jshint $(SRCDIR)/js/*.js
+	echo "    JavaScript OK: $(SRCDIR)/js/*.js"
 
 # deploy
 deploy: mkweb
