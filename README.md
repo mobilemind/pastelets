@@ -31,7 +31,7 @@ Web browser or Mobile Safari from iOS 3.3 or higher
 MIT License - <http://opensource.org/licenses/mit-license.php>
 
 Pastelets
-Copyright (c) 2008-2015 Tom King  <mobilemind@pobox.com>
+Copyright (c) 2008-2017 Tom King  <mobilemind@pobox.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
