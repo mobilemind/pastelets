@@ -1,5 +1,5 @@
 // HTML Encoder from http://www.strictly-software.com/htmlencode
-Encoder = {
+var Encoder = {
 	// When encoding do we convert characters into html or numerical entities
 	EncodeType : "entity",  // entity OR numerical
 
