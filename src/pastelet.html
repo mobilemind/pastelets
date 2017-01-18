@@ -97,21 +97,21 @@ form {
 <h1>Step 1: Enter the text</h1>
 <div class="grp">
 	<p>Enter the text to paste. Then tap Make Pastelet to reload this page for Step 2.</p>
-	<form id="pltMkr" method="GET" action="." onSubmit="loadpg(pastelet(document.getElementById('pStr').value, document.getElementById('skp').checked)); return false">
+	<form id="pltMkr" method="GET" action="." onsubmit="loadpg(pastelet(document.getElementById('pStr').value, document.getElementById('skp').checked)); return false">
 		<label for="pStr">Text to Paste
-				<input type="text" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="your snippet, string or email" autocapitalize="off" autocorrect="on" autocomplete="on" autofocus="autofocus">
+				<input type="text" id="pStr" size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="your snippet, string or email" autocapitalize="off" autocorrect="on" autocomplete="on" autofocus="autofocus">
 		</label>
 		<br>
 		<label for="skp" style="font-size:smaller;margin:2px 1px">
-			<input type="checkbox" id=skp style="margin:4px 2px; -webkit-appearance:checkbox">Skip &ldquo;<i>Paste here?</i>&rdquo; alert (paste into 1st field)<br><br>
+			<input type="checkbox" id="skp" style="margin:4px 2px; -webkit-appearance:checkbox">Skip &ldquo;<i>Paste here?</i>&rdquo; alert (paste into 1st field)<br><br>
 		</label>
 		<input type="submit" id="mkPltBtn" value="Make Pastelet" class="btn" style="margin:2px 0px 4px 33px">
 		<br><br>
-		<label id=yp for="bmrk" style="vertical-align:top">Your Pastelet&nbsp;
+		<label id="yp" for="bmrk" style="vertical-align:top">Your Pastelet&nbsp;
 			<textarea id="bmrk" cols="41" rows="4"  style="vertical-align:top" wrap="soft" spellcheck="false">No Pastelet yet. View Step 1 for instructions.</textarea>
 		</label>
 	</form>
-	<p id=pal style="display:none">Pastelet as link: <a id=pl href="." title="Pastelet">Pastelet</a><br><br></p>
+	<p id="pal" style="display:none">Pastelet as link: <a id="pl" href="." title="Pastelet">Pastelet</a><br><br></p>
 </div>
 
 <h1>Step 2: Add a Bookmark</h1>

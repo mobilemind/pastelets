@@ -97,18 +97,18 @@ form {
 <h1>Step 1: Enter the text</h1>
 <div class="grp">
 	<p>Enter the _MmSPECIAL_ to paste. Then tap Make Pastelet to reload this page for Step 2.</p>
-	<form id="pltMkr" method="GET" action="." onSubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
+	<form id="pltMkr" method="GET" action="." onsubmit="loadpg(pastelet(document.getElementById('pStr').value)); return false">
 		<label for="pStr">_MmSPECIAL_ to Paste
-				<input type="email" id=pStr size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocapitalize="off" autocorrect="on"  autocomplete="on" required="required" autofocus="autofocus">
+				<input type="email" id="pStr" size="25" maxlength="255" style="font-size:large; -webkit-appearance:textfield" placeholder="email@abc.com" autocapitalize="off" autocorrect="on"  autocomplete="on" required="required" autofocus="autofocus">
 		</label>
 		<br><br>
 		<input type="submit" id="mkPltBtn" value="Make Pastelet" class="btn" style="margin:2px 0px 4px 33px">
 		<br><br>
-		<label id=yp for="bmrk" style="vertical-align:top">Your Pastelet&nbsp;
+		<label id="yp" for="bmrk" style="vertical-align:top">Your Pastelet&nbsp;
 			<textarea id="bmrk" cols="41" rows="4"  style="vertical-align:top" wrap="soft" spellcheck="false">No Pastelet yet. View Step 1 for instructions.</textarea>
 		</label>
 	</form>
-	<p id=pal style="display:none">Pastelet as link: <a id=pl href="." title="Pastelet">Pastelet</a><br><br></p>
+	<p id="pal" style="display:none">Pastelet as link: <a id="pl" href="." title="Pastelet">Pastelet</a><br><br></p>
 </div>
 
 <h1>Step 2: Add a Bookmark</h1>
