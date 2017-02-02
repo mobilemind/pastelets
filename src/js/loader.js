@@ -8,10 +8,14 @@ window.addEventListener('load',
 					var q = location.search, m = [];
 					q = decodeURIComponent(q.substr(1));
 					m = q.match(/^javascript:var s='(.*?)',f/);
-					if (!m) throw {name: 'NoMatchInURL', message: 'No match in ' + q};
+					if (!m) {
+						throw {name: 'NoMatchInURL', message: 'No match in ' + q};
+					}
 					else {
 						var p = m[1], skp = null;
-						if (!p) throw {name: "EmptyString", message: 'Empty or invalid string to paste- ' + p};
+						if (!p) {
+							throw {name: "EmptyString", message: 'Empty or invalid string to paste- ' + p};
+						}
 						else {
 							document.title = 'Paste ' + p;
 							document.getElementById('pStr').value = p;

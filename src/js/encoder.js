@@ -69,7 +69,9 @@ var Encoder = {
 		dbl = dbl | false; //default to prevent double encoding
 		// if allowing double encoding we do ampersands first
 		if (dbl) {
-			if (this.EncodeType === "numerical") s = s.replace(/&/g, "&#38;");
+			if (this.EncodeType === "numerical") {
+				s = s.replace(/&/g, "&#38;");
+			{
 			else {
 				s = s.replace(/&/g, "&amp;");
 			}
@@ -89,8 +91,12 @@ var Encoder = {
 		// if we don't want double encoded entities we ignore the & in existing entities
 		if (!dbl) {
 			s = s.replace(/&#/g,"##AMPHASH##");
-			if (this.EncodeType === "numerical") s = s.replace(/&/g, "&#38;");
-			else s = s.replace(/&/g, "&amp;");
+			if (this.EncodeType === "numerical") {
+				s = s.replace(/&/g, "&#38;");
+			}
+			else {
+				s = s.replace(/&/g, "&amp;");
+			}
 			s = s.replace(/##AMPHASH##/g,"&#");
 		}
 		// replace any malformed entities
