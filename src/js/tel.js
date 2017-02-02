@@ -16,7 +16,7 @@
 
 function pastelet(u) {
 	if (u) {
-	  // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
+    // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
     return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,p='tel',k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t==p||(t!='hidden'&&(n.indexOf(p)>-1||n.indexOf('hone')>0))){x=j;break}if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
   }
 }

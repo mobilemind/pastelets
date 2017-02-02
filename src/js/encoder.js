@@ -71,7 +71,7 @@ var Encoder = {
 		if (dbl) {
 			if (this.EncodeType === "numerical") {
 				s = s.replace(/&/g, "&#38;");
-			{
+			}
 			else {
 				s = s.replace(/&/g, "&amp;");
 			}
