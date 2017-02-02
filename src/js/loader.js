@@ -8,20 +8,22 @@ window.addEventListener('load',
 					var q = location.search, m = [];
 					q = decodeURIComponent(q.substr(1));
 					m = q.match(/^javascript:var s='(.*?)',f/);
-					if (!m) throw 'No match in ' + q;
+					if (!m) throw {name: 'NoMatchInURL', message: 'No match in ' + q};
 					else {
-						var p = m[1], skp;
-						if (!p) throw 'Empty or invalid string to paste- ' + p;
+						var p = m[1], skp = null;
+						if (!p) throw {name: "EmptyString", message: 'Empty or invalid string to paste- ' + p};
 						else {
 							document.title = 'Paste ' + p;
 							document.getElementById('pStr').value = p;
 							// if generic pastelet maker "Skip...?" exists, set 'skip confirm' accordingly
 							skp = document.getElementById("skp");
-							if (skp && q.indexOf(';if(confirm(') < 0) skp.checked = 'on';
+							if (skp && q.indexOf(';if(confirm(') < 0) {
+								skp.checked = 'on';
+							}
 							// put a more human-readable, but URI encoded, version of bookmarklet in textarea
 							document.getElementById('bmrk').textContent = encodeURI(q);
 							// if not iPhone/iPad unhide 'Pastelet as link' and set anchor tag
-							if (!(-1 != navigator.userAgent.indexOf('Safari') && -1 != navigator.userAgent.indexOf('Mobile'))) {
+							if (!(-1 !== navigator.userAgent.indexOf('Safari') && -1 !== navigator.userAgent.indexOf('Mobile'))) {
 								var pal = document.getElementById('pal'), pl = document.getElementById('pl');
 								if (pal && pl) {
 									pal.style = "display:inline;padding:7px;height:auto";

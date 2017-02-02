@@ -3,7 +3,9 @@ var Encoder = {
 	// When encoding do we convert characters into html or numerical entities
 	EncodeType : "entity",  // entity OR numerical
 
-	isEmpty : function(val){return (val) ? ((val===null) || val.length===0 || (/^\s+$/.test(val))) : true;},
+	isEmpty : function(val) {
+		return val ? val===null || val.length===0 || /^\s+$/.test(val) : true;
+	},
 
 	// Convert HTML entities into numerical entities
 	HTML2Numerical : function(s){
@@ -24,14 +26,16 @@ var Encoder = {
 		var e = "";
 		for (var i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
-			if (c < " " || c > "~") c = "&#" + c.charCodeAt() + ";";
+			if (c < " " || c > "~") {
+				c = "&#" + c.charCodeAt() + ";";
+			}
 			e += c;
 		}
 		return e;
 	},
 
 	// HTML Decode numerical and HTML entities back to original values
-	htmlDecode : function(s){ var c,m,d = s;
+	htmlDecode : function(s){ var c = '', m = '', d = s;
 		if (this.isEmpty(d)) return "";
 		// convert HTML entites back to numerical entites first
 		d = this.HTML2Numerical(d);
@@ -43,8 +47,14 @@ var Encoder = {
 				m = arr[x];
 				c = m.substring(2,m.length-1); //get numeric part which is reference to unicode character
 				// if its a valid number we can decode
-				if (c >= -32768 && c <= 65535) d = d.replace(m, String.fromCharCode(c)); // decode every single match within string
-				else d = d.replace(m, ""); //invalid so replace with nada
+				if (c >= -32768 && c <= 65535) {
+					// decode every single match within string
+					d = d.replace(m, String.fromCharCode(c));
+				}
+				else {
+					//invalid so replace with nada
+					d = d.replace(m, "");
+				}
 			}
 		}
 		return d;
@@ -52,17 +62,24 @@ var Encoder = {
 
 	// encode an input string into either numerical or HTML entities
 	htmlEncode : function(s,dbl){
-		if (this.isEmpty(s)) return "";
+		if (this.isEmpty(s)) {
+			return "";
+		}
 		// do we allow double encoding? E.g will &amp; be turned into &amp;amp;
 		dbl = dbl | false; //default to prevent double encoding
 		// if allowing double encoding we do ampersands first
 		if (dbl) {
-			if (this.EncodeType=="numerical") s = s.replace(/&/g, "&#38;");
-			else s = s.replace(/&/g, "&amp;");
+			if (this.EncodeType === "numerical") s = s.replace(/&/g, "&#38;");
+			else {
+				s = s.replace(/&/g, "&amp;");
+			}
 		}
 		// convert the xss chars to numerical entities ' " < >
 		s = this.XSSEncode(s,false);
-		if (this.EncodeType=="numerical" || !dbl) s = this.HTML2Numerical(s); // Now call function that will convert any HTML entities to numerical codes
+		if (this.EncodeType === "numerical" || !dbl) {
+			// Now call function that will convert any HTML entities to numerical codes
+			s = this.HTML2Numerical(s);
+		}
 		// Now encode all chars above 127 e.g unicode
 		s = this.numEncode(s);
 		// now we know anything that needs to be encoded has been converted to numerical entities we
@@ -72,23 +89,29 @@ var Encoder = {
 		// if we don't want double encoded entities we ignore the & in existing entities
 		if (!dbl) {
 			s = s.replace(/&#/g,"##AMPHASH##");
-			if (this.EncodeType=="numerical") s = s.replace(/&/g, "&#38;");
+			if (this.EncodeType === "numerical") s = s.replace(/&/g, "&#38;");
 			else s = s.replace(/&/g, "&amp;");
 			s = s.replace(/##AMPHASH##/g,"&#");
 		}
 		// replace any malformed entities
 		s = s.replace(/&#\d*([^\d;]|$)/g, "$1");
-		if (!dbl) s = this.correctEncoding(s); // safety check to correct any double encoded &amp;
-		if (this.EncodeType=="entity") s = this.NumericalToHTML(s); // now do we need to convert our numerical encoded string into entities
+		if (!dbl) {
+			// safety check to correct any double encoded &amp;
+			s = this.correctEncoding(s);
+		}
+		if (this.EncodeTyp === "entity") {
+			// now do we need to convert our numerical encoded string into entities
+			s = this.NumericalToHTML(s);
+		}
 		return s;
 	},
 
 	// Encodes the basic 4 characters used to malform HTML in XSS hacks
 	XSSEncode : function(s,en){
-		if (!this.isEmpty(s)){
+		if (!this.isEmpty(s)) {
 			en = en || true;
 			// do we convert to numerical or html entity?
-			if (en){
+			if (en) {
 				s = s.replace(/\'/g,"&#39;"); //no HTML equivalent as &apos is not cross browser supported
 				s = s.replace(/\"/g,"&quot;");
 				s = s.replace(/</g,"&lt;");
@@ -102,14 +125,22 @@ var Encoder = {
 			}
 			return s;
 		}
-		else return "";
+		else {
+			return "";
+		}
 	},
 
 	// returns true if a string contains html or numerical encoded entities
 	hasEncoded : function(s){
-		if (/&#[0-9]{1,5};/g.test(s)) return true;
-		else if (/&[A-Z]{2,6};/gi.test(s)) return true;
-		else return false;
+		if (/&#[0-9]{1,5};/g.test(s)) {
+			return true;
+		}
+		else if (/&[A-Z]{2,6};/gi.test(s)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	},
 
 	// will remove any unicode characters
@@ -120,13 +151,15 @@ var Encoder = {
 
 	// Function to loop through an array swaping each item with the value from another array e.g swap HTML entities with Numericals
 	swapArrayVals : function(s,arr1,arr2){
-		if (this.isEmpty(s)) return "";
-		var re;
-		if (arr1 && arr2){
+		if (this.isEmpty(s)) {
+			return "";
+		}
+		var re = null;
+		if (arr1 && arr2) {
 			//ShowDebug("in swapArrayVals arr1.length = " + arr1.length + " arr2.length = " + arr2.length)
 			// array lengths must match
-			if (arr1.length == arr2.length) {
-				for(var x=0,i=arr1.length;x<i;x++) {
+			if (arr1.length === arr2.length) {
+				for(var x=0, i=arr1.length; x<i; x++) {
 					re = new RegExp(arr1[x], 'g');
 					s = s.replace(re,arr2[x]); //swap arr1 item with matching item from arr2
 				}
@@ -135,5 +168,13 @@ var Encoder = {
 		return s;
 	},
 
-	inArray : function(item, arr){var i,l=arr.length; for (i=0;i<l;i++) {if (arr[i] === item) return i;} return -1;}
+	inArray : function(item, arr) {
+		var i=0,l=arr.length;
+		for (i=0; i<l; i++) {
+			if (arr[i] === item) {
+				return i;
+			}
+		}
+		return -1;
+	}
 };

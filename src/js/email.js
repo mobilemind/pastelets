@@ -10,15 +10,15 @@
 // *	The 'paste string' variable ('n') is defined first to make it more visible and ease editing the bookmark itself.
 // *	The text entry types for HTML5 are checked, except search. Search is skipped as a convenience (fixed text for a search is rare)
 // *	Bookmarklet code is optimized for size (ie, string length of all the code), given goal above.
-// **	it wasn't written as an anonymous function, because the 'function(){..}' declaration adds characters
+// ** it wasn't written as an anonymous function, because the 'function(){..}' declaration adds characters
 // * void(0) is included for cross-browser compatibility, a non-null return value causes some browsers to navigate
 //
 
 function pastelet(u) {
 	if (u) {
-	  // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
-    return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1)))x=j,break;if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
-  }
+		// strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
+		return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] + "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1)))x=j,break;if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
+	}
 }
 
 //
