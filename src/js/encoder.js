@@ -22,7 +22,10 @@ var Encoder = {
 	},
 
 	// Numerically encodes all unicode characters
-	numEncode : function(s){ if (this.isEmpty(s)) return "";
+	numEncode : function(s) {
+		if (this.isEmpty(s)) {
+			return "";
+		}
 		var e = "";
 		for (var i = 0; i < s.length; i++) {
 			var c = s.charAt(i);
@@ -36,7 +39,9 @@ var Encoder = {
 
 	// HTML Decode numerical and HTML entities back to original values
 	htmlDecode : function(s){ var c = '', m = '', d = s;
-		if (this.isEmpty(d)) return "";
+		if (this.isEmpty(d)) {
+			return "";
+		}
 		// convert HTML entites back to numerical entites first
 		d = this.HTML2Numerical(d);
 		// look for numerical entities &#34;
