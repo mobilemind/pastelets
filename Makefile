@@ -27,15 +27,15 @@ SRCFILES = $(HTMLFILES) pastelet.manifest $(JSFILES)
 
 # macros/utils
 VERSION := $(shell head -1 src/$(VERSIONFILE))
-COPYRIGHT := 2008-2015
+COPYRIGHT := 2008-2017
 HTMLCOMPRESSORJAR := htmlcompressor-1.5.3.jar
 HTMLCOMPRESSORPATH := $(shell [ 'cygwin' = "$$OSTYPE" ] &&  echo "`cygpath -w $(COMMONLIB)`\\" || echo "$(COMMONLIB)/")
 HTMLCOMPRESSOR := java -jar '$(HTMLCOMPRESSORPATH)$(HTMLCOMPRESSORJAR)'
 COMPRESSOPTIONS := -t html -c utf-8 --remove-quotes --remove-intertag-spaces --remove-surrounding-spaces min --compress-js --compress-css
-TIDY := $(shell hash tidy 2>/dev/null && echo 'tidy' || exit 1)
-JSL := $(shell hash jshint 2>/dev/null && echo 'jshint' || exit 1)
+TIDY :=  $(shell hash tidy >/dev/null 2>&1 && echo 'tidy' || echo 'echo "*** WARNING continuing, but unable to: tidy"')
+JSHINT := $(shell hash jshint >/dev/null 2>&1 && echo 'jshint' || echo '@echo "*** WARNING continuing, but unable to: jshint"')
 ECHOE := $(shell [ 'cygwin' = "$$OSTYPE" ] && echo -e 'echo -e' || echo 'echo\c')
-GROWL := $(shell ! hash growlnotify &>/dev/null && $(ECHOE) 'true\c' || ([ 'darwin11' = "$$OSTYPE" ] && echo "growlnotify -t $(PROJ) -m\c" || ([ 'cygwin' = "$$OSTYPE" ] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
+$(PROJ) -m\c" || ([ 'cygwin' = "$$OSTYPE" ] && echo -e "growlnotify /t:$(PROJ)\c" || $(ECHOE) '\c')) )
 REPLACETOKENS = perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $@
 GRECHO = $(shell hash grecho &> /dev/null && echo 'grecho' || echo 'printf')
 STATFMT := $(shell [ 'cygwin' = $$OSTYPE ] && echo '-c %s' || echo '-f%z' )
@@ -69,7 +69,7 @@ minify: validatehtml | $(BUILDDIR)
 	@echo "   [renamed files] ___ email tel (size in bytes): $$(stat $(STATFMT) $(BUILDDIR)/___ $(BUILDDIR)/email $(BUILDDIR)/tel | tr '\n' ' ')"
 
 validatehtml: makehtml
-	@$(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSL)\n"
+	@$(GRECHO) 'make:' "Validation started with $(TIDY) and $(JSHINT)\n"
 	@(	cd $(TMPDIR); \
 		$(foreach html,$(HTMLFILES),\
 			echo "$(html)";\
@@ -96,8 +96,8 @@ src2tmp: validatejs	| $(TMPDIR) $(IMGDIR)
 	@(cd $(TMPDIR) && perl -pi -e 's/_MmVERSION_/$(VERSION)/g;s/_MmBUILDDATE_/$(shell date)/g;s/_MmCOPYRIGHT_/$(COPYRIGHT)/g;' $(SRCFILES) )
 
 validatejs:
-	jshint $(SRCDIR)/js/*.js
-	echo "    JavaScript OK: $(SRCDIR)/js/*.js"
+	$(JSHINT) $(SRCDIR)/js/*.js
+	@echo "    JavaScript OK: $(SRCDIR)/js/*.js"
 
 # deploy
 deploy: mkweb
