@@ -1,25 +1,25 @@
 # Pastelets
 
-Pastelets are web pages that generate Javascript bookmarklets primarily intended
-for Mobile Safari on iOS (iPhone/iPad/iPod Touch). Each generated bookmarklet
-pastes its specified string into a text field.
+Pastelets are web pages that generate Javascript bookmarklets primarily
+intended for Mobile Safari on iOS (iPhone/iPad/iPod Touch). Each generated
+bookmarklet pastes its specified string into a text field.
 
-The purpose is to make it quick and easy to complete web forms on iOS with Mobile
-Safari, without reliance on autocomplete.
+The purpose is to make it quick and easy to complete web forms on iOS wit
+Mobile Safari, without reliance on autocomplete.
 
 The bookmarklet generators are available as:
 
-+ `build/web/iphone/index.html` - desktop version that pastes into 1st field
-(or asks successively)
++ `web/desktop/index.html` - desktop version that pastes into 1st field
+(or asks successively). NOTE: This file is `gzip` compressed.
 
-+ `build/iphone/___` - iOS optimized (with brief name) that pastes into
-1st field (or asks successively)
++ `web/___` - iOS optimized (with brief name) that pastes into
+1st field (or asks successively). NOTE: This file is `gzip` compressed.
 
-+ `build/iphone/email` - iOS optimized to paste an email into the first Email/Login
-field on a page.
++ `web/email` - iOS optimized to paste an email into the first
+Email/Login field on a page. NOTE: This file is `gzip` compressed.
 
-+ `build/iphone/tel` - iOS optimized to paste a phone number into the first
-telephone field on a page
++ `web/tel` - iOS optimized to paste a phone number into the first
+telephone field on a page NOTE: This file is `gzip` compressed.
 
 ## Install
 
@@ -27,8 +27,8 @@ Copy the appropriate bookmarklet generator(s) to a web server.
 
 ## Usage
 
-Each page includes usage instructions. Visit the appropriate bookmarklet generator
-page.
+Each page includes usage instructions. Visit the appropriate bookmarklet
+generator page.
 
 The easiest way to use them is visiting the hosted versions
 
@@ -56,8 +56,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is furnished
-to do so, subject to the following conditions:
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -72,8 +72,9 @@ SOFTWARE.
 
 ## Repository Notes
 
-The `/build` directory has the final, optimized HTML/JavaScript and their shared
-HTML5 manifest file.
+The `/web` directory has the final, optimized HTML/JavaScript and their
+shared HTML5 manifest file. With the exception of `web/desktop/index.html`
+all of the HTML files are `gzip` compressed.
 
 ## Deployment Notes
 
@@ -105,8 +106,8 @@ Header set Cache-Control "max-age=361, public, proxy-revalidate"
 
 ### Tips
 
-1. The file name '\_\_\_' is used to clarify editing of the bookmarklet and serve
-as a short filename
+1. The file name `___` is used to clarify editing of the bookmarklet and
+serve as a short filename
 
 2. Ideally, the files will be in a subdirectory of the web server root with a
 short name.
@@ -117,12 +118,11 @@ the HTML should probably be changed.
 
 ## Build Notes
 
-The make file requires the Java-based htmlcompressor and yuicompressor included
-in the lib folder. It also requires the bash shell, `make`, `perl`, `tidy` (or
-tidy-html5), `jsl`, `gzip` and optionally uses `growlnotify`.
+The make file requires the Java-based htmlcompressor and yuicompressor
+included in the lib folder. It also requires the bash shell, `make`, `perl`,
+`tidy` (or `tidy-html5`), `jshint`, and `gzip`.
 
-The W3C tidy-html5 is available here: <http://w3c.github.com/tidy-html5/>
+The W3C tidy-html5 is available here: <https://github.com/htacg/tidy-html5>
 
 The project has been built successfully on Mac OS X 10.7-10.10 and Windows 7
-(w/ cygwin 1.79+) with GNU Make 3.8, perl 5, tidy (tidy-html5), JavaScript Lint
-0.3.0, and growlnotify 1.3.
+(w/ cygwin 1.79+) with GNU Make 3.8, perl 5, tidy (tidy-html5), and jshint.
