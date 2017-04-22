@@ -11,14 +11,14 @@ copyright holder's terms via the Apache License found at:
 https://www.apache.org/licenses/LICENSE-2.0
 
 YUICOMPRESSOR
-Copyright © 2011 Yahoo! Inc. All rights reserved.
+Copyright © 2013 Yahoo! Inc. All rights reserved.
 The yuicompressor object code included in this distribution was
 obtained from:
-http://yuilibrary.com/projects/yuicompressor/
+https://github.com/yui/yuicompressor/
 
 It is distributed under the copyright holder's terms via the
 BSD license found here:
-http://yuilibrary.com/license/
+https://github.com/yui/yuicompressor/blob/master/LICENSE.TXT
 
 Within the pastelets projects, see the file bin/LICENSE.TXT for
 the complete license included per the BSD license cited above.
