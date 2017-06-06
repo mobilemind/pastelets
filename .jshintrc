@@ -1,16 +1,17 @@
 {
+	"boss": true,
+	"browser": true,
+	"devel": true,
+	"eqnull": true,
+	"esversion": 6,
 	"evil": true,
 	"freeze": true,
+	"lastsemic": true,
 	"latedef": true,
 	"multistr": true,
 	"noarg": true,
 	"noempty": true,
-	"strict": "implied",
-	"trailing": true,
-	"boss": true,
-	"eqnull": true,
-	"lastsemic": true,
 	"scripturl": true,
-	"browser": true,
-	"devel": true
+	"strict": "implied",
+	"trailing": true
 }
