@@ -3,7 +3,7 @@
 	"browser": true,
 	"devel": true,
 	"eqnull": true,
-	"esversion": 6,
+	"esnext": 6,
 	"evil": true,
 	"freeze": true,
 	"lastsemic": true,
