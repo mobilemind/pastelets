@@ -36,9 +36,13 @@ window.addEventListener('load',
               const pal = document.getElementById('pal'), pl = document.getElementById('pl');
               if (pal && pl) {
                 pal.style = "display:inline;padding:7px;height:auto";
+                pal.disabled = false;
                 pl.href = document.getElementById('bmrk').textContent;
                 pl.title = document.title;
                 pl.replaceChild(document.createTextNode(document.title), pl.childNodes[0]);
+                pl.disabled = false;
+                pl.selectable = true;
+                pl.style = "display:inline;" + pl.style;
               }
             }
             // unhide remaining steps
