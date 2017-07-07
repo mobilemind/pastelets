@@ -7,18 +7,6 @@
 	<link rel="stylesheet" href="css/mm.css" type="text/css">
 	<link rel="shortcut icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
 	<link rel="icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
-	<script type="text/javascript"><!--
-		var _gaq = _gaq || [];
-		_gaq.push(['_setAccount', 'UA-3189666-1']);
-		_gaq.push(['_trackPageview']);
-
-		(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		})();
-	//-->
-	</script>
 	<script src="js/encoder.js" type="text/javascript" async="async"></script>
 	<script type="text/javascript"><!--
 	function showLink(linkname, pastelet) {
@@ -66,7 +54,7 @@
  function pastelet(u,s) {
    if (u) {
      // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
-     return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] +
+     return "var s='" + u.match(/^\s*(\S.*?\S)\s*$/)[1] +
        "',f=document.getElementsByTagName('input'),i=0" +
        (s ? ";" : ",o;") +
        "for(;i<f.length;i++)if(f[i].type in{text:1,email:1,login:1,tel:1,url:1,password:1}&&(f[i].id+f[i].name+f[i].title).indexOf('earch')<0){" +
@@ -148,7 +136,7 @@
 	version 2.3.0; January 1, 2010; Tom King; don't reset form, add favicon, accessibility & validation fixes, IE work-arounds added
 	version 2.3.1; January 3, 2010; Tom King; change button to 'submit' and use onSubmit handler, add <noscript> tag
 
-	version 3.4; Tue Jun  6 00:47:14 PDT 2017; Tom King; full history in paste-history.txt
+	version 3.4; Fri Jul  7 07:45:18 PDT 2017; Tom King; full history in paste-history.txt
 
 	This page and paste.js are Copyright (c) 2008-2017 Tom King. All rights reserved. -->
 <body>
