@@ -38,7 +38,7 @@ window.addEventListener('load',
                 pal.style = "display:inline;padding:7px;height:auto";
                 pl.href = document.getElementById('bmrk').textContent;
                 pl.title = document.title;
-                pl.innerHTML = document.title;
+                pl.replaceChild(document.createTextNode(document.title), pl.childNodes[0]);
               }
             }
             // unhide remaining steps
