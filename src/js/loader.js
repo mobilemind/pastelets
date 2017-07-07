@@ -2,15 +2,15 @@
 // listener to dynamically position page for initial or return-trip
 window.addEventListener('load',
   function() {
-    if (location.search) {
+    if (location.hash) {
       // reload form UI from query string
       try {
         let m = [];
-        const q = decodeURIComponent(location.search.substr(1));
+        const q = decodeURIComponent(location.hash.substr(1));
         m = q.match(/^javascript:var s='(.*?)',f/);
         if (!m) {
           throw {
-            "message": "No match in " + location.search,
+            "message": "No match in " + location.hash,
             "name": "NoMatchInURL"
           };
         } else {
@@ -56,6 +56,6 @@ window.addEventListener('load',
 function loadpg(p) {
   if (p) {
     document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
-    location.replace('//' + location.host + location.port + location.pathname + '?javascript:' + encodeURIComponent(p));
+    location.replace('//' + location.host + location.port + location.pathname + '#javascript:' + encodeURIComponent(p));
   }
 }
