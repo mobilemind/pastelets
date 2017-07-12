@@ -7,28 +7,31 @@
 	<link rel="stylesheet" href="css/mm.css" type="text/css">
 	<link rel="shortcut icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
 	<link rel="icon" href="img/pastelet.ico" title="Pastelet Maker from Mobilemind" type="image/x-icon">
-	<script src="js/encoder.js" type="text/javascript" async="async"></script>
 	<script type="text/javascript"><!--
-	function showLink(linkname, pastelet) {
-		var newlink='';
-		// build text + link (or error message) for result div
-		if (!pastelet) newlink = '&lt;em&gt;ERROR: You must provide &lt;strong&gt;Text to Paste&lt;/strong&gt; and a &lt;strong&gt;Link/Bookmark name&lt;/strong&gt;&lt;/em&gt;.';
-		else {
-			var m = pastelet.match(/var s='(.*?)'/);
-			if (!linkname && m) linkname = 'paste ' + m[1];
-			Encoder.EncodeType = "entity";
-			var htlinkname = Encoder.htmlEncode(linkname);
-			newlink = '<' + 'a href="javascript:' + encodeURIComponent(pastelet) + '" title="' + htlinkname + '">' + htlinkname + '<' + '/a>';
+		function showLink(name, pastelet) {
+			let linkname = name,
+				linkNode = document.createElement("a"),
+				m = pastelet.match(/var s='(.*?)'/),
+				resultNode = document.getElementById('result');
+			// adjust linkname if needed
+			if (!name && m) linkname = 'paste ' + m[1];
+			// build link HTML for result node of DOM
+			linkNode.href = 'javascript:' + encodeURIComponent(pastelet);
+			linkNode.title = linkname;
+			linkNode.appendChild(document.createTextNode(linkname));
+			// clear-out & then update result node
+			while (resultNode.hasChildNodes()) {
+				resultNode.removeChild(resultNode.lastChild);
+			}
+			resultNode.appendChild(linkNode);
+			// update form fields and address
+			document.getElementById('lnkStr').value = linkname;
+			document.getElementById('bmrk').value = 'javascript:' + encodeURI(pastelet);
+			resultNode.setAttribute('style','font-style:normal;color:#000');
+			location.hash = 'pasteletMaker';
+			document.getElementById('pStr').focus();
+			return false;
 		}
-		// update form fields and hyperlink
-		document.getElementById('lnkStr').value = linkname;
-		document.getElementById('bmrk').value = 'javascript:' + encodeURI(pastelet);
-		document.getElementById('result').setAttribute('style','font-style:normal;color:#000');
-		document.getElementById('result').innerHTML = newlink;
-		location.hash = 'pasteletMaker';
-		document.getElementById('pStr').focus();
-		return false;
-	}
 	//-->
 	</script>
 	<script type="text/javascript" src="js/paste.js"></script>
@@ -122,13 +125,6 @@
 		(<a href="http://lipidity.com/apple/iphone-webkit-css-3/">Make the most of the iPhone SDK</a>) for inspiration and examples.</p>
 		<br><hr><br>
 
-	<div class="adsense" style="text-align:center; padding: 0px 3px 0.5em 3px;">
-		<script type="text/javascript"><!--
-		google_ad_client="pub-4994337394137257";google_ad_slot="0352518008";// Mm-ifooter
-		google_ad_width=728;google_ad_height=90;
-		//--></script>
-		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-	</div>
 	<br>
 	<p class="byline">Views I express on this site are mine, period. My views and opinions do not necessarily reflect the views of my employer,
 		my clients or anyone else for that matter.  My opinions are my own. Likewise, you're all grown up and should understand this is free code,
@@ -137,13 +133,6 @@
 </div> <!-- mainClm -->
 
 <div id="sideBar">
-	<div class="adsense" style="text-align:left; padding: 0px 3px 0.5em 8px;">
-		<script type="application/javascript"><!--
-		google_ad_client="pub-4994337394137257";google_ad_slot="9216238369";//Mm-iside
-		google_ad_width=120;google_ad_height=600;
-		//--></script>
-		<script type="application/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-	</div>
- </div>
+</div>
 </body>
 </html>
