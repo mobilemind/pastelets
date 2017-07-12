@@ -24,9 +24,7 @@ window.addEventListener('load', function() {
       let m = [];
       const q = decodeURIComponent(location.hash.substr(1));
       m = q.match(/^javascript:var s='(.*?)',f/);
-      if (!m) {
-        throw new Error('No match in location.hash');
-      } else {
+      if (m) {
         const p = m[1];
         let skp = null;
         if (!p) {
@@ -43,6 +41,8 @@ window.addEventListener('load', function() {
         document.getElementById('bmrk').textContent = encodeURI(q);
         // show link if desktop AND scroll page
         showDesktopLink();
+      } else {
+        throw new Error('No match in location.hash');
       }
     } catch (e) {
       console.log('error: ' + e);
