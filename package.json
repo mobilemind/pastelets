@@ -1,0 +1,51 @@
+{
+  "author": {
+    "email": "mobilemind@pobox.com",
+    "name": "'mobilemind' Tom King",
+    "url": "https://mobilemind.net/"
+  },
+  "bugs": {
+    "url": "https://github.com/mobilemind/pastelets/issues"
+  },
+  "dependencies": {},
+  "description": "utility pages to make javascript bookmarklets to paste comon strings",
+  "devDependencies": {
+    "eslint-plugin-compat": ">1.0.3",
+    "eslint-plugin-no-storage": ">=1.0.2",
+    "eslint-plugin-no-unsanitized": ">=2.0.1",
+    "eslint-plugin-security": ">=1.4.0",
+    "eslint-plugin-xss": ">=0.1.8",
+    "grunt-contrib-clean": ">=1.1.0",
+    "grunt-contrib-copy": ">=1.0.0",
+    "grunt-contrib-csslint": ">=2.0.0",
+    "grunt-contrib-cssmin": ">=2.2.0",
+    "grunt-contrib-rename": ">=0.2.0",
+    "grunt-contrib-uglify": "2.3.0",
+    "grunt-eslint": ">=20.0.0",
+    "grunt-html-minify": ">=0.3.1",
+    "grunt-minify-html": ">=3.0.0",
+    "grunt-yamllint": ">=0.3.0",
+    "grunt-zopfli-native": ">=1.0.1",
+    "grunt": ">=1.0.1"
+  },
+  "directories": {},
+  "engines": {
+    "node": ">8.0.0"
+  },
+  "homepage": "https://github.com/mobilemind/pastelets",
+  "keywords": [
+    "bookmarklet, generator"
+  ],
+  "license": "MIT",
+  "main": "Gruntfile.js",
+  "name": "pastelets",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mobilemind/pastelet.git"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "version": "3.5.0"
+}
