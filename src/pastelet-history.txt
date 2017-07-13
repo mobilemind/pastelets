@@ -74,4 +74,5 @@ version 2.8.6; July 14, 2013; Tom King; Update copyright to "2008-2013" from "20
 version 2.8.7; July 17, 2013; Tom King; remove text references to donating
 version 3.3; January 18, 2017; Tom King; revise make to use jshint; manually check with htmlhint
 version 3.5; July 11, 2017; Tom King; revise javascript to use HTML/URL hash/named-anchor ("#") instead of search/query ("?") as separator between page URL and javascript code; remove dependency on encoder.js
+LAST VERSION PUBLISHED:  v_MmVERSION_ on _MmBUILDDATE_
 Copyright (c) 2008-2017 Tom King. All rights reserved.
