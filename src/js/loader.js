@@ -21,12 +21,11 @@ window.addEventListener('load', function() {
   if (location.hash) {
     // reload form UI from query string
     try {
-      let m = [];
       const q = decodeURIComponent(location.hash.substr(1));
-      m = q.match(/^javascript:var s='(.*?)',f/);
+      var m = q.match(/^javascript:var s='(.*?)',f/);
       if (m) {
         const p = m[1];
-        let skp = null;
+        var skp = null;
         if (!p) {
           throw new Error('Empty or invalid string to paste from location.hash');
         }
