@@ -15,43 +15,54 @@
 //
 
 function pastelet(u) {
-  if (u) {
-    // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
-    return "var s='" + u.match(/^\s*(.\S*?)\s*$/)[1] +
-      "',f=document.getElementsByTagName('input'),x=-1,b=x,j=0,l=f.length,k,n,t;for(;j<l;j++){k=f[j];n=k.id+k.name+k.title;t=k.type;if(t in{email:1,login:1}||(t!='hidden'&&(n.indexOf('email')>-1||n.indexOf('ogin')>0||n.indexOf('user')>-1)))x=j,break;if(-1==b&&'text'==t&&n.indexOf('earch')<0)b=j}if(-1==x)x=b;if(-1!=x){f[x].focus();f[x].value=s;f[x].blur()};void'_MmVERSION_'";
-  }
-  return null;
+  // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
+  return u ? `(() => {const a="${u.trim()}",f=document.getElementsByTagName("input"),l=f.length;let b=-1,i=0,k=null,n="",t="",x=-1;for(;i<l;i++){k=f[i];t=k.type;if("hidden"===t)continue;n=k.id+k.name+k.title;if(t in{email:1,login:1}||n.indexOf("email")>-1||n.indexOf("ogin")>0||n.indexOf("user")>-1){x=i;break}if(-1==b&&"text"==t&&n.indexOf("earch")<0)b=i}if(-1===x)x=b;if(-1===x)alert("Email field not found");else{f[x].focus();f[x].value=a;f[x].blur()}return void"_MmVERSION_"})()` : null;
 }
 
 //
 // annotated version of code for generated bookmark
 //
-// var s = 'your text', // string to 'paste'
-//  // all potential input fields
-//  f = document.getElementsByTagName('input'),
-//  x = -1,
-//  b = x,
-//  j = 0,
-//  l = f.length,
-//  k, n, t;
-//  // loop through all inputs
-//  for (; j < l; j++) {
-//    k = f[j];
-//    n = k.id + k.name + k.title; // join id, name, & title to easily check all at once
-//    t = k.type;
-//    // store index and break when type, id or name matches 'email' or 'ogin' (login/Login) or 'user' (user/userid/username)
-//    if (t in {email:1,login:1} || (t != 'hidden' && (n.indexOf('email') > -1 || n.indexOf('ogin') > 0 || n.indexOf('user') >-1))) x = j , break;
-//    // set fallback to first 'non-search' text input (uses 'earch' to test for Search or search)
-//    if (-1 == b && 'text' == t && n.indexOf('earch') < 0) b = j;
-//  }
-//  // no match? use fallback
-//  if(-1 == x) x = b;
-//  if (-1 != x) {
-//    // set focus and value to match
-//    f[x].focus();
-//    f[x].value = s;
-//    // blur to trigger a change event (helps some frameworks)
-//    f[x].blur()
-//  }
-//  else alert('Email field not found');
-//  void '_MmVERSION_' // return void so browser doesn't navigate, etc.
+// (() => {
+//   // a = string to 'paste'
+//   const a = "email@domain.co",
+//     f = document.getElementsByTagName("input"),
+//     l = f.length;
+//   let b = -1,
+//     i = 0,
+//     k = null,
+//     n = "",
+//     t = "",
+//     x = -1;
+//   // loop through all inputs
+//   for (; i < l; i++) {
+//     k = f[i];
+//     t = k.type;
+//     if ("hidden" === t) {
+//       continue;
+//     }
+//     // join id, name, & title to easily check all at once
+//     n = k.id + k.name + k.title;
+//     if (t in {"email": 1, "login": 1} || n.indexOf("email") > -1 || n.indexOf("ogin") > 0 || n.indexOf("user") > -1) {
+//       x = i;
+//       break;
+//     }
+//     // set fallback to first 'non-search' text input (uses 'earch' to test for Search or search)
+//     if (-1 == b && "text" == t && n.indexOf("earch") < 0) {
+//       b = i;
+//     }
+//   }
+//   // no match? use fallback
+//   if (-1 === x) {
+//     x = b;
+//   }
+//   if (-1 === x) {
+//     alert("Email field not found");
+//   } else {
+//     // set focus and value to match
+//     f[x].focus();
+//     f[x].value = a;
+//     // blur to trigger a change event (helps some frameworks)
+//     f[x].blur();
+//   }
+//   return void "_MmVERSION_";
+// })()
