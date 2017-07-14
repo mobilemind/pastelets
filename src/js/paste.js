@@ -20,7 +20,7 @@
 
 function pastelet(u,s) {
   // strip leading/trailing spaces to help w/iOS 5 shortcut text & pastelet
-  return u ? `(()=>{const a="${u.trim()}",f=document.getElementsByTagName("input");let i=0${s?'':',o=""'};for(;i<f.length;i++){if("hidden"===f[i].type)continue;if(f[i].type in{email:1,login:1,password:1,tel:1,text:1,url:1}&&(f[i].id+f[i].name+f[i].title).indexOf("earch")<0){${s?'':'o=f[i].value;'}f[i].focus();f[i].value=a;${s?'':'if(confirm("Paste Here? (field "+(i+1)+")")){'}`f[i].blur();break${s?'':'}else{f[i].value=o}'}}}return void"_MmVERSION_"})()` : null;
+  return u ? `(()=>{const a="${u.trim()}",f=document.getElementsByTagName("input");let i=0${s?'':',o=""'};for(;i<f.length;i++){if("hidden"===f[i].type)continue;if(f[i].type in{email:1,login:1,password:1,tel:1,text:1,url:1}&&(f[i].id+f[i].name+f[i].title).indexOf("earch")<0){${s?'':'o=f[i].value;'}f[i].focus();f[i].value=a;${s?'':'if(confirm("Paste Here? (field "+(i+1)+")")){'}f[i].blur();break${s?'':'}else{f[i].value=o}'}}}return void"_MmVERSION_"})()` : null;
 }
 
 
