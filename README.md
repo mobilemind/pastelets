@@ -53,8 +53,8 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -108,17 +108,21 @@ Required configuration items include:
 2. Ideally, the files will be in a subdirectory of the web server root with a
    short name.
 
-Finally, note that the app will work fine with the manifest directive removed,
-and/or the HTML file renamed. If you rename the HTML file, the instructions in
-the HTML should probably be changed.
+Finally, note that the app will work fine with the manifest directive 
+removed, and/or the HTML file renamed. If the manifest is used the file
+should be served via HTTPS for best results. If the HTML file is renamed, the
+instructions in the HTML should probably be changed.
 
 ## Build Notes
 
-The make file requires the Java-based htmlcompressor and yuicompressor
-included in the lib folder. It also requires the bash shell, `make`, `perl`,
-`tidy` (or `tidy-html5`), `jshint`, and `gzip`.
+The project builds with `node`, `npm` and `grunt`. It should build on
+most platforms that support node. To clone and build the project:
 
-The W3C tidy-html5 is available here: <https://github.com/htacg/tidy-html5>
+   ````bash
+   git clone https://github.com/mobilemind/pastelets
+   cd pastelets
+   npm install
+   grunt
+   ````
 
-The project has been built successfully on macOS 10.7-10.12 and Windows 7
-(w/ cygwin 1.7.9+) with GNU Make 3.8, perl 5, tidy (tidy-html5), and jshint.
+The project has been built successfully on macOS 10.7-10.12.
