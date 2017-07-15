@@ -77,8 +77,8 @@ module.exports = function (grunt) {
             result = result.replace(/special_Pastelet/g, "Telephone Number Pastelet");
             result = result.replace(/type="email/g, 'type="tel');
             result = result.replace(/("canonical" href="http:\/\/mmind\.me\/)email/g, "$1tel");
-            result = result.replace(/email@abc.com/g, "8005551212");            
-             return result.replace(/js\/email.js/g, "js/tel.js");
+            result = result.replace(/email@abc.com/g, "8005551212");
+            return result.replace(/js\/email.js/g, "js/tel.js");
           }
         }
       }
