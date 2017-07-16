@@ -148,8 +148,7 @@ module.exports = function (grunt) {
           "max_line_len": 32766,
           "quote_keys": false,
           "quote_style": 1,
-          "semicolons": true,
-          "space_colon": false
+          "semicolons": true
         },
         "compress": {
           "booleans": true,
@@ -197,8 +196,7 @@ module.exports = function (grunt) {
           "max_line_len": 32766,
           "quote_keys": false,
           "quote_style": 0,
-          "semicolons": true,
-          "space_colon": false
+          "semicolons": true
         },
         "preserveComments": false,
         "properties": false,
@@ -245,8 +243,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-csslint");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-rename");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-eslint");
   grunt.loadNpmTasks("grunt-html-minify");
   grunt.loadNpmTasks("grunt-minify-html");
@@ -267,9 +265,8 @@ module.exports = function (grunt) {
   grunt.registerTask("compresshtml", ["preflight", "copytransform",
     "html_minify", "minifyHtml", "zopfli", "rename"]);
 
-
+  // test task
   grunt.registerTask("test", ["preflight", "copytransform", "compresshtml"]);
-  // "html_minify", "minifyHtml", "zopfli", "rename"]);
 
   // Default task
   grunt.registerTask("default", ["clean", "test"]);
