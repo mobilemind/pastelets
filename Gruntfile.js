@@ -3,14 +3,15 @@ module.exports = function (grunt) {
   // Project configuration
   grunt.initConfig({
     "clean": {
-      "tmp": ["tmp2/"],
-      "web": ["web2/"]
+      "tmp": ["tmp/"],
+      "web": ["web/"],
+      "web-html": ["web/*.html"]
     },
     "copy": {
       "core": {
         "files": [{
           "cwd": "src/",
-          "dest": "tmp2/",
+          "dest": "tmp/",
           "expand": true,
           "src": ["**"]
         }],
@@ -25,13 +26,13 @@ module.exports = function (grunt) {
       },
       "desktop": {
         "files": {
-          "web2/desktop/index.html": ["tmp2/index.html"],
-          "web2/desktop/js/paste.js": ["tmp2/js/paste.js"],
-          "web2/desktop/pastelet-history.txt": ["tmp2/pastelet-history.txt"]
+          "web/desktop/index.html": ["tmp/index.html"],
+          "web/desktop/js/paste.js": ["tmp/js/paste.js"],
+          "web/desktop/pastelet-history.txt": ["tmp/pastelet-history.txt"]
         }
       },
       "email": {
-        "files": {"web2/email.html": ["tmp2/email.html"]},
+        "files": {"web/email.html": ["tmp/email.html"]},
         "options": {
           process(content, srcpath) {
             const result = content.replace(/_MmSPECIAL_/g, "Email/Login");
@@ -41,17 +42,17 @@ module.exports = function (grunt) {
       },
       "images": {
         "files": [{
-          "cwd": "tmp2/img",
-          "dest": "web2/img/",
+          "cwd": "tmp/img",
+          "dest": "web/img/",
           "expand": true,
           "src": ["*"]
         }]
       },
       "manifests": {
         "files": {
-          "web2/___.manifest": ["tmp2/pastelet.manifest"],
-          "web2/email.manifest": ["tmp2/pastelet.manifest"],
-          "web2/tel.manifest": ["tmp2/pastelet.manifest"]
+          "web/___.manifest": ["tmp/pastelet.manifest"],
+          "web/email.manifest": ["tmp/pastelet.manifest"],
+          "web/tel.manifest": ["tmp/pastelet.manifest"]
         }
       },
       "options": {
@@ -61,7 +62,7 @@ module.exports = function (grunt) {
         "timestamp": true
       },
       "pastelet": {
-        "files": {"web2/___.html": ["tmp2/pastelet.html"]},
+        "files": {"web/___.html": ["tmp/pastelet.html"]},
         "options": {
           process(content, srcpath) {
             const result = content.replace("pastelet.manifest", "___.manifest");
@@ -70,7 +71,7 @@ module.exports = function (grunt) {
         }
       },
       "tel": {
-        "files": {"web2/tel.html": ["tmp2/email.html"]},
+        "files": {"web/tel.html": ["tmp/email.html"]},
         "options": {
           process(content, srcpath) {
             let result = content.replace(/_MmSPECIAL_/g, "Telephone Number");
@@ -98,7 +99,7 @@ module.exports = function (grunt) {
         "rebase": false,
         "report": "min"
       },
-      "target": {"files": {"web2/desktop/css/mm.css": ["tmp2/mm.css"]}}
+      "target": {"files": {"web/desktop/css/mm.css": ["tmp/mm.css"]}}
     },
     "eslint": {
       "options": {"configFile": ".eslintrc.yml"},
@@ -108,10 +109,10 @@ module.exports = function (grunt) {
       "options": {},
       "target": {
         "files": {
-          "web2/___.html": ["web2/___.html"],
-          "web2/desktop/index.html": ["web2/desktop/index.html"],
-          "web2/email.html": ["web2/email.html"],
-          "web2/tel.html": ["web2/tel.html"]
+          "web/___.html": ["web/___.html"],
+          "web/desktop/index.html": ["web/desktop/index.html"],
+          "web/email.html": ["web/email.html"],
+          "web/tel.html": ["web/tel.html"]
         }
       }
     },
@@ -119,10 +120,10 @@ module.exports = function (grunt) {
       "options": {},
       "target": {
         "files": {
-          "web2/___.html": ["web2/___.html"],
-          "web2/desktop/index.html": ["web2/desktop/index.html"],
-          "web2/email.html": ["web2/email.html"],
-          "web2/tel.html": ["web2/tel.html"]
+          "web/___.html": ["web/___.html"],
+          "web/desktop/index.html": ["web/desktop/index.html"],
+          "web/email.html": ["web/email.html"],
+          "web/tel.html": ["web/tel.html"]
         }
       }
     },
@@ -130,9 +131,9 @@ module.exports = function (grunt) {
     "rename": {
       "main": {
         "files": {
-          "web2/___": ["web2/___.deflate"],
-          "web2/email": ["web2/email.deflate"],
-          "web2/tel": ["web2/tel.deflate"]
+          "web/___": ["web/___.deflate"],
+          "web/email": ["web/email.deflate"],
+          "web/tel": ["web/tel.deflate"]
         }
       },
       "options": {"force": true}
@@ -207,8 +208,8 @@ module.exports = function (grunt) {
       },
       "target": {
         "files": [{
-          "cwd": "tmp2/js",
-          "dest": "web2/js",
+          "cwd": "tmp/js",
+          "dest": "web/js",
           "expand": true,
           "src": "*.js"
         }]
@@ -230,9 +231,9 @@ module.exports = function (grunt) {
       },
       "target": {
         "files": {
-          "web2/___.deflate": ["web2/___.html"],
-          "web2/email.deflate": ["web2/email.html"],
-          "web2/tel.deflate": ["web2/tel.html"]
+          "web/___.deflate": ["web/___.html"],
+          "web/email.deflate": ["web/email.html"],
+          "web/tel.deflate": ["web/tel.html"]
         }
       }
     }
@@ -269,6 +270,6 @@ module.exports = function (grunt) {
   grunt.registerTask("test", ["preflight", "copytransform", "compresshtml"]);
 
   // Default task
-  grunt.registerTask("default", ["clean", "test"]);
+  grunt.registerTask("default", ["clean", "test", "clean:web-html"]);
 
 };
