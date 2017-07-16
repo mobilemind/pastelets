@@ -57,7 +57,7 @@ module.exports = function (grunt) {
       },
       "options": {
         "mode": true,
-        "noProcess": ["**/*.{png,gif,jpg,ico,ttf,otf,woff,svg}"],
+        "noProcess": ["**/*.{deflte,png,gif,gz,jpg,ico,ttf,otf,woff,svg}"],
         "nonull": true,
         "timestamp": true
       },
@@ -131,9 +131,9 @@ module.exports = function (grunt) {
     "rename": {
       "main": {
         "files": {
-          "web/___": ["web/___.deflate"],
-          "web/email": ["web/email.deflate"],
-          "web/tel": ["web/tel.deflate"]
+          "web/___": ["web/___.gz"],
+          "web/email": ["web/email.gz"],
+          "web/tel": ["web/tel.gz"]
         }
       },
       "options": {"force": true}
@@ -224,16 +224,16 @@ module.exports = function (grunt) {
         "blocksplitting": true,
         "blocksplittinglast": false,
         "blocksplittingmax": 15,
-        "mode": "deflate",
+        "mode": "gzip",
         "numiterations": 96,
         "verbose": false,
         "verbose_more": false
       },
       "target": {
         "files": {
-          "web/___.deflate": ["web/___.html"],
-          "web/email.deflate": ["web/email.html"],
-          "web/tel.deflate": ["web/tel.html"]
+          "web/___.gz": ["web/___.html"],
+          "web/email.gz": ["web/email.html"],
+          "web/tel.gz": ["web/tel.html"]
         }
       }
     }
