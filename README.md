@@ -29,10 +29,14 @@ generator page.
 
 The easiest way to use them is visiting the hosted versions
 
-+ Web/Desktop version [http://mmind.me/iphone/](http://mmind.me/iphone/ "Pastelet Maker - Desktop")
-+ iOS General purpose version [http://mmind.me/\_\_\_](http://mmind.me/___ "Pastelet Maker - iOS")
-+ iOS Email\/Login optimized version [http://mmind.me/email](http://mmind.me/email "Email/Login Pastelet Maker - iOS")
-+ iOS Telephone field optimized version [http://mmind.me/tel](http://mmind.me/tel "Telephone Pastelet Maker - iOS")
++ Web/Desktop version
+  [http://mmind.me/iphone/](http://mmind.me/iphone/ "Pastelet Maker - Desktop")
++ iOS General purpose version
+  [http://mmind.me/\_\_\_](http://mmind.me/___ "Pastelet Maker - iOS")
++ iOS Email\/Login optimized version
+  [http://mmind.me/email](http://mmind.me/email "Email/Login Pastelet Maker - iOS")
++ iOS Telephone field optimized version
+  [http://mmind.me/tel](http://mmind.me/tel "Telephone Pastelet Maker - iOS")
 
 ## Requirements
 
@@ -66,9 +70,9 @@ SOFTWARE.
 
 ## Repository Notes
 
-The `/web` directory has the final, optimized HTML/JavaScript and their
-shared HTML5 manifest file. With the exception of `web/desktop/index.html`
-all of the HTML files are `gzip` compressed.
+The `/web` directory has the final, optimized HTML/CSS/JavaScript and their
+shared HTML5 manifest file. The HTML, CSS, and manifest files are `deflate`
+compressed. The JavaScript is "uglified", but not compressed.
 
 ## Deployment Notes
 
@@ -96,7 +100,7 @@ Required configuration items include:
     ````apache
     <FilesMatch "^(___|email|tel)$">
     ForceType "text/html; charset=utf-8"
-    Header set Content-Encoding "gzip"
+    Header set Content-Encoding "deflate"
     Header set Cache-Control "max-age=361, public, proxy-revalidate"
     </FilesMatch>
     ````
@@ -108,10 +112,10 @@ Required configuration items include:
 2. Ideally, the files will be in a subdirectory of the web server root with a
    short name.
 
-Finally, note that the app will work fine with the manifest directive 
+Finally, note that the app will work fine with the manifest directive
 removed, and/or the HTML file renamed. If the manifest is used the file
-should be served via HTTPS for best results. If the HTML file is renamed, the
-instructions in the HTML should probably be changed.
+should be served via HTTPS for best results. If the HTML file is renamed,
+the instructions in the HTML should probably be changed.
 
 ## Build Notes
 
