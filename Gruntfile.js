@@ -274,6 +274,7 @@ module.exports = function (grunt) {
   grunt.registerTask("test", ["preflight", "copytransform", "compresshtml"]);
 
   // Default task
-  grunt.registerTask("default", ["clean", "test", "clean:web-html"]);
+  grunt.registerTask("default", ["clean", "test", "clean:web-html",
+    "clean:tmp"]);
 
 };
