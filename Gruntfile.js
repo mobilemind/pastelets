@@ -131,9 +131,11 @@ module.exports = function (grunt) {
     "rename": {
       "main": {
         "files": {
-          "web/___": ["web/___.gz"],
-          "web/email": ["web/email.gz"],
-          "web/tel": ["web/tel.gz"]
+          "web/___": ["web/___.deflate"],
+          "web/desktop/css/mm.css": ["web/desktop/css/mm.deflate"],
+          "web/desktop/index.html": ["web/desktop/index.deflate"],
+          "web/email": ["web/email.deflate"],
+          "web/tel": ["web/tel.deflate"]
         }
       },
       "options": {"force": true}
@@ -224,16 +226,18 @@ module.exports = function (grunt) {
         "blocksplitting": true,
         "blocksplittinglast": false,
         "blocksplittingmax": 15,
-        "mode": "gzip",
+        "mode": "deflate",
         "numiterations": 96,
         "verbose": false,
         "verbose_more": false
       },
       "target": {
         "files": {
-          "web/___.gz": ["web/___.html"],
-          "web/email.gz": ["web/email.html"],
-          "web/tel.gz": ["web/tel.html"]
+          "web/___.deflate": ["web/___.html"],
+          "web/desktop/css/mm.deflate": ["web/desktop/css/mm.css"],
+          "web/desktop/index.deflate": ["web/desktop/index.html"],
+          "web/email.deflate": ["web/email.html"],
+          "web/tel.deflate": ["web/tel.html"]
         }
       }
     }
