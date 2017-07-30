@@ -22,7 +22,7 @@ window.addEventListener('load', function() {
     // reload form UI from query string
     try {
       const q = decodeURIComponent(location.hash.substr(1));
-      var m = q.match(/^javascript:var s='(.*?)',f/);
+      var m = q.match(/^javascript:\(\(\).*? \w="(.*?)"/);
       if (m) {
         const p = m[1];
         var skp = null;
