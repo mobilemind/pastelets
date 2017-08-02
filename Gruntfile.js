@@ -48,13 +48,6 @@ module.exports = function (grunt) {
           "src": ["*"]
         }]
       },
-      "manifests": {
-        "files": {
-          "web/___.manifest": ["tmp/pastelet.manifest"],
-          "web/email.manifest": ["tmp/pastelet.manifest"],
-          "web/tel.manifest": ["tmp/pastelet.manifest"]
-        }
-      },
       "options": {
         "mode": true,
         "noProcess": ["**/*.{deflte,png,gif,gz,jpg,ico,ttf,otf,woff,svg}"],
@@ -65,8 +58,7 @@ module.exports = function (grunt) {
         "files": {"web/___.html": ["tmp/pastelet.html"]},
         "options": {
           process(content, srcpath) {
-            const result = content.replace("pastelet.manifest", "___.manifest");
-            return result.replace(/("canonical" href="http:\/\/mmind\.me\/)pastelet/g, "$1___");
+            return content.replace(/("canonical" href="http:\/\/mmind\.me\/)pastelet/g, "$1___");
           }
         }
       },
@@ -263,8 +255,7 @@ module.exports = function (grunt) {
 
   // copytransform task
   grunt.registerTask("copytransform", ["copy:core", "copy:desktop", "cssmin",
-    "copy:email", "copy:images", "copy:manifests", "copy:pastelet",
-    "copy:tel", "uglify"]);
+    "copy:email", "copy:images", "copy:pastelet", "copy:tel", "uglify"]);
 
   // compresshtml task
   grunt.registerTask("compresshtml", ["preflight", "copytransform",

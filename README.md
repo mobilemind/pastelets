@@ -79,31 +79,22 @@ compressed. The JavaScript is "uglified", but not compressed.
 For deployment "pastelets" likely requires web server configuration (e.g.,
 `.htaccess` on Apache servers).
 
-Required configuration items include:
+Recommended configuration items apply to: files named '\_\_\_', 'email',
+and 'tel':
 
-1. The MIME type for the HTML 5 manifest file. For Apache that looks like:
+1. Force to be MIME type `text/html`
+2. Set encoding to `deflate`
+3. Set cache options to enable caching for a few minutes at least.
 
-    ````apache
-    AddType text/cache-manifest cache manifest
-    ````
+For Apache this looks like:
 
-2. With files named '\_\_\_' or 'email' or 'tel':
-
-    a. Force to be MIME type `text/html`
-
-    b. Set encoding to zip
-
-    c. Set cache options to enable caching for a few minutes at least.
-
-    For Apache this looks like:
-
-    ````apache
-    <FilesMatch "^(___|email|tel)$">
-    ForceType "text/html; charset=utf-8"
-    Header set Content-Encoding "deflate"
-    Header set Cache-Control "max-age=361, public, proxy-revalidate"
-    </FilesMatch>
-    ````
+````apache
+<FilesMatch "^(___|email|tel)$">
+ForceType "text/html; charset=utf-8"
+Header set Content-Encoding "deflate"
+Header set Cache-Control "max-age=361, public, proxy-revalidate"
+</FilesMatch>
+````
 
 ### Tips
 
@@ -112,21 +103,20 @@ Required configuration items include:
 2. Ideally, the files will be in a subdirectory of the web server root with a
    short name.
 
-Finally, note that the app will work fine with the manifest directive
-removed, and/or the HTML file renamed. If the manifest is used the file
-should be served via HTTPS for best results. If the HTML file is renamed,
-the instructions in the HTML should probably be changed.
+Finally, note that the app will work if the HTML file is renamed. However, if
+the HTML file is renamed, the instructions in the HTML should probably be
+changed.
 
 ## Build Notes
 
 The project builds with `node`, `npm` and `grunt`. It should build on
 most platforms that support node. To clone and build the project:
 
-   ````bash
-   git clone https://github.com/mobilemind/pastelets
-   cd pastelets
-   npm install
-   grunt
-   ````
+````bash
+git clone https://github.com/mobilemind/pastelets
+cd pastelets
+npm install
+grunt
+````
 
 The project has been built successfully on macOS 10.7-10.12.
