@@ -1,7 +1,7 @@
 // actually creates bookmarklet given 'u'=user string and 's'=skip confirm true/false
 
 //  pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
-//  3.5.3
+//  3.6.0
 //
 //  Copyright (c) 2008-2017 Tom King. All rights reserved.
 //
@@ -26,7 +26,7 @@ function pastelet(u,s) {
   (s ? '' : 'o=f[i].value;') + 'f[i].focus();f[i].value=a;' +
   (s ? '' : 'if(confirm("Paste Here? (field "+(i+1)+")")){') +
   'f[i].blur();break' + (s ? '' : '}else{f[i].value=o}') +
-  '}}return void"3.5.3"})()' : null;
+  '}}return void"3.6.0"})()' : null;
 }
 
 
@@ -53,7 +53,7 @@ function pastelet(u,s) {
 //       break;
 //     }
 //   }
-//   return void '3.5.3';
+//   return void '3.6.0';
 // })();
 
 // *  ANNOTATED JAVASCRIPT OF A BOOKMARKLET (longer 'confirm field' version)
@@ -85,5 +85,5 @@ function pastelet(u,s) {
 //       }
 //     }
 //   }
-//   return void '3.5.3';
+//   return void '3.6.0';
 // })();
