@@ -46,7 +46,9 @@ window.addEventListener('load', function() {
     } catch (e) {
       console.log('error: ' + e);
       alert("Unable to decode pastelet.\nForm will be reset.");
+      location.hash = "";
       location.replace('//' + location.host + location.port + location.pathname);
+      location.reload(true);
     }
   }
 }, true);
@@ -54,7 +56,8 @@ window.addEventListener('load', function() {
 function loadpg(p) {
   if (p) {
     document.getElementById('bmrk').textContent = 'javascript:' + encodeURI(p);
-    location.replace('//' + location.host + location.port + location.pathname + '#javascript:' + encodeURIComponent(p));
+    history.pushState({}, 'Paste ' + document.getElementById('pStr').value,
+      location.pathname + '#javascript:' + encodeURIComponent(p));
     document.title = 'Paste ' + document.getElementById('pStr').value;
     showDesktopLink();
   }
