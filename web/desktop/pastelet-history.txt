@@ -75,5 +75,5 @@ version 2.8.7; July 17, 2013; Tom King; remove text references to donating
 version 3.3; January 18, 2017; Tom King; revise make to use jshint; manually check with htmlhint
 version 3.5; July 11, 2017; Tom King; revise javascript to use HTML/URL hash/named-anchor ("#") instead of search/query ("?") as separator between page URL and javascript code; remove dependency on encoder.js
 version 3.5.2; July 30, 2017; Tom King; fix loader.js to work with hash and arrow-fucntions
-LAST VERSION PUBLISHED:  v3.5.2 on Sun Jul 30 2017 15:32 PM PDT
+LAST VERSION PUBLISHED:  v3.5.2 on Thu Aug 03 2017 17:07 PM PDT
 Copyright (c) 2008-2017 Tom King. All rights reserved.
