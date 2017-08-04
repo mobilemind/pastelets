@@ -26,7 +26,8 @@
     "grunt-minify-html": ">=3.0.0",
     "grunt-yamllint": ">=0.3.0",
     "grunt-zopfli-native": ">=1.0.1",
-    "grunt": ">=1.0.1"
+    "grunt": ">=1.0.1",
+    "text2datauri": ">=1.1.0"
   },
   "directories": {},
   "engines": {
@@ -47,5 +48,5 @@
   "scripts": {
     "test": "grunt"
   },
-  "version": "3.5.3"
+  "version": "3.6.0"
 }
