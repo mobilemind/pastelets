@@ -18,7 +18,7 @@
     "grunt-contrib-clean": ">=1.1.0",
     "grunt-contrib-copy": ">=1.0.0",
     "grunt-contrib-csslint": ">=2.0.0",
-    "grunt-contrib-cssmin": ">=2.2.0",
+    "grunt-contrib-cssmin": ">=2.2.1",
     "grunt-contrib-rename": ">=0.2.0",
     "grunt-contrib-uglify": "2.3.0",
     "grunt-eslint": ">=20.0.0",
@@ -48,5 +48,5 @@
   "scripts": {
     "test": "grunt"
   },
-  "version": "3.6.0"
+  "version": "3.7.0"
 }
