@@ -32,7 +32,10 @@ module.exports = function (grunt) {
         }
       },
       "email": {
-        "files": {"web/email.html": ["tmp/email.html"]},
+        "files": {
+          "web/email.html": ["tmp/email.html"],
+          "web/email.url.html": ["tmp/email.url.html"]
+        },
         "options": {
           process(content, srcpath) {
             const result = content.replace(/_MmSPECIAL_/g, "Email/Login");
@@ -57,7 +60,7 @@ module.exports = function (grunt) {
       },
       "options": {
         "mode": true,
-        "noProcess": ["**/*.{deflte,png,gif,gz,jpg,ico,ttf,otf,woff,svg}"],
+        "noProcess": ["**/*.{deflate,png,gif,gz,jpg,ico,ttf,otf,woff,svg}"],
         "nonull": true,
         "timestamp": true
       },
@@ -71,7 +74,10 @@ module.exports = function (grunt) {
         }
       },
       "tel": {
-        "files": {"web/tel.html": ["tmp/email.html"]},
+        "files": {
+          "web/tel.html": ["tmp/email.html"],
+          "web/tel.url.html": ["tmp/tel.url.html"]
+        },
         "options": {
           process(content, srcpath) {
             let result = content.replace(/_MmSPECIAL_/g, "Telephone Number");
@@ -112,7 +118,9 @@ module.exports = function (grunt) {
           "web/___.html": ["web/___.html"],
           "web/desktop/index.html": ["web/desktop/index.html"],
           "web/email.html": ["web/email.html"],
-          "web/tel.html": ["web/tel.html"]
+          "web/email.url.html": ["web/email.url.html"],
+          "web/tel.html": ["web/tel.html"],
+          "web/tel.url.html": ["web/tel.url.html"]
         }
       }
     },
@@ -123,7 +131,9 @@ module.exports = function (grunt) {
           "web/___.html": ["web/___.html"],
           "web/desktop/index.html": ["web/desktop/index.html"],
           "web/email.html": ["web/email.html"],
-          "web/tel.html": ["web/tel.html"]
+          "web/email.url.html": ["web/email.url.html"],
+          "web/tel.html": ["web/tel.html"],
+          "web/tel.url.html": ["web/tel.url.html"]
         }
       }
     },
@@ -139,6 +149,17 @@ module.exports = function (grunt) {
         }
       },
       "options": {"force": true}
+    },
+    "text2datauri": {
+      "options": {
+        "encoding": "base64",
+        "mimeType": "text/html",
+        "protocol": "data:",
+        "sourceCharset": "utf-8",
+        "targetCharset": "utf-8"
+      },
+      "web/email.url": "web/email.url.html",
+      "web/tel.url": "web/tel.url.html"
     },
     "uglify": {
       "options": {
@@ -255,6 +276,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-minify-html");
   grunt.loadNpmTasks("grunt-yamllint");
   grunt.loadNpmTasks("grunt-zopfli-native");
+  grunt.loadNpmTasks("text2datauri");
 
   grunt.log.writeln(`\n${grunt.config("pkg.name")} ${grunt.config("pkg.version")}`);
 
@@ -268,7 +290,7 @@ module.exports = function (grunt) {
 
   // compresshtml task
   grunt.registerTask("compresshtml", ["preflight", "copytransform",
-    "html_minify", "minifyHtml", "zopfli", "rename"]);
+    "html_minify", "minifyHtml", "text2datauri", "zopfli", "rename"]);
 
   // test task
   grunt.registerTask("test", ["preflight", "copytransform", "compresshtml"]);
