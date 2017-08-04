@@ -1,20 +1,23 @@
 // loader _MmVERSION_, _MmBUILDDATE_
 // listener to dynamically position page for initial or return-trip
 function showDesktopLink() {
+  const b = document.getElementById('bmrk'),
+    pal = document.getElementById('pal'),
+    pl = document.getElementById('pl');
   // if not iPhone/iPad unhide 'Pastelet as link' and set anchor tag
   if (!(-1 !== navigator.userAgent.indexOf('Safari') && -1 !== navigator.userAgent.indexOf('Mobile'))) {
-    const pal = document.getElementById('pal'),
-      pl = document.getElementById('pl');
     if (pal && pl) {
-      pl.href = document.getElementById('bmrk').textContent;
+      pl.href = b.textContent;
       pl.title = document.title;
       pl.replaceChild(document.createTextNode(document.title),
         pl.childNodes[0]);
       pal.style.display = pl.style.display = "inline";
     }
   }
-  // scroll to show remaining steps
+  // scroll to show remaining steps & select bookmark text
   window.scrollTo(0, 78 + document.getElementById('pltMkr').scrollHeight);
+  b.focus();
+  b.select();
 }
 
 window.addEventListener('load', function() {
