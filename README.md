@@ -15,8 +15,12 @@ The bookmarklet generators are available as:
   1st field (or asks successively). NOTE: This file is `gzip` compressed.
 + `web/email` - iOS optimized to paste an email into the first
   Email/Login field on a page. NOTE: This file is `gzip` compressed.
++ `web/email.url` - standalone bookmarklet version. Entire email pastelet
+  generator HTML form as a base64 encoded bookmarklet for offline use.
 + `web/tel` - iOS optimized to paste a phone number into the first
   telephone field on a page NOTE: This file is `gzip` compressed.
++ `web/tel.url` - standalone bookmarklet version. Entire telephone pastelet
+  generator HTML form as a base64 encoded bookmarklet for offline use.
 
 ## Install
 
@@ -27,7 +31,7 @@ Copy the appropriate bookmarklet generator(s) to a web server.
 Each page includes usage instructions. Visit the appropriate bookmarklet
 generator page.
 
-The easiest way to use them is visiting the hosted versions
+The easiest way to use them is visiting the hosted versions:
 
 + Web/Desktop version
   [http://mmind.me/iphone/](http://mmind.me/iphone/ "Pastelet Maker - Desktop")
@@ -37,6 +41,14 @@ The easiest way to use them is visiting the hosted versions
   [http://mmind.me/email](http://mmind.me/email "Email/Login Pastelet Maker - iOS")
 + iOS Telephone field optimized version
   [http://mmind.me/tel](http://mmind.me/tel "Telephone Pastelet Maker - iOS")
+
+Bookmarklet versions of two forms are also available. Visit one of the links
+below. Then copy the displayed _contents_ of the page (`data:text/html...`)
+and create a new bookmark with the clipboard contents as the address/location.
+
++ [Email Pastelet Maker](http://mmind.me/email.joj "Email Pastelet Maker")
++ [Telephone Pastelet Maker](http://mmind.me/tel.joj "Telephone Pastelet
+  Maker")
 
 ## Requirements
 
