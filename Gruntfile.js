@@ -175,40 +175,21 @@ module.exports = function (grunt) {
           "semicolons": true
         },
         "compress": {
-          "booleans": true,
-          "cascade": true,
           "collapse_vars": false,
-          "comparisons": true,
-          "conditionals": true,
-          "dead_code": false,
-          "drop_console": false,
-          "drop_debugger": true,
-          "evaluate": true,
-          "expression": false,
-          "global_defs": {},
-          "hoist_funs": false,
-          "hoist_vars": false,
-          "if_return": true,
-          "join_vars": false,
-          "keep_fargs": true,
-          "loops": true,
-          "negate_iife": true,
-          "passes": 1,
-          "properties": true,
+          "expression": true,
+          "passes": 2,
           "pure_funcs": [],
           "pure_getters": true,
           "reduce_vars": false,
-          "sequences": true,
           "side_effects": false,
-          "top_retain": [],
           "toplevel": true,
           "unsafe": true,
           "unsafe_comps": true,
           "unsafe_math": true,
           "unsafe_proto": true,
-          "unused": false,
-          "warnings": true
+          "unused": false
         },
+        "es": 6,
         "ie8": false,
         "mangle": {"toplevel": false},
         "maxLineLen": 32766,
@@ -270,7 +251,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-contrib-csslint");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-rename");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-contrib-uglify-es");
   grunt.loadNpmTasks("grunt-eslint");
   grunt.loadNpmTasks("grunt-html-minify");
   grunt.loadNpmTasks("grunt-minify-html");
