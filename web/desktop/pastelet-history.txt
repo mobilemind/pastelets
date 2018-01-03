@@ -78,5 +78,6 @@ version 3.5.2; July 30, 2017; Tom King; fix loader.js to work with hash and arro
 version 3.5.3; August 3, 2017; Tom King; use location.reload() and history.pushState() to manage URL
 version 3.6.0; August 3, 2017; Tom King; create data: URL versions to make Pastelets for email or tel
 version 3.7.0; August 4, 2017; Tom King; update data URL (bookmarklet) versions with media queries for common mobiles iPhone/iPad
-LAST VERSION PUBLISHED:  v3.7.0 on Wed Dec 06 2017 20:02 PM CST
+version 3.7.1; January 3, 2018; Tom King; switch to grunt plugin for uglify-es to compress code.
+LAST VERSION PUBLISHED:  v3.7.1 on Wed Jan 03 2018 10:54 AM PST
 Copyright (c) 2008-2017 Tom King. All rights reserved.

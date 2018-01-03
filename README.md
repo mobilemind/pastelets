@@ -60,7 +60,7 @@ MIT License - <http://opensource.org/licenses/mit-license.php>
 
 Pastelets
 
-Copyright (c) 2008-2017 Tom King  <mobilemind@pobox.com>
+Copyright (c) 2008-2018 Tom King  <mobilemind@pobox.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -141,4 +141,4 @@ most platforms that support node. To clone and build the project:
    grunt
    ````
 
-The project has been built successfully on macOS 10.7-10.12.
+The project has been built successfully on macOS 10.7-10.13.
