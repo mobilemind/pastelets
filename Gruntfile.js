@@ -225,13 +225,9 @@ module.exports = function (grunt) {
     },
     "zopfli": {
       "options": {
-        "blocksplitting": true,
-        "blocksplittinglast": false,
-        "blocksplittingmax": 15,
-        "mode": "deflate",
-        "numiterations": 96,
-        "verbose": false,
-        "verbose_more": false
+        "format": "deflate",
+        "iterations": 96,
+        "report": true
       },
       "target": {
         "files": {
@@ -256,7 +252,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-html-minify");
   grunt.loadNpmTasks("grunt-minify-html");
   grunt.loadNpmTasks("grunt-yamllint");
-  grunt.loadNpmTasks("grunt-zopfli-native");
+  grunt.loadNpmTasks("grunt-zopfli");
   grunt.loadNpmTasks("text2datauri");
 
   grunt.log.writeln(`\n${grunt.config("pkg.name")} ${grunt.config("pkg.version")}`);
