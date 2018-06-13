@@ -10,28 +10,28 @@
   "dependencies": {},
   "description": "utility pages to make javascript bookmarklets to paste comon strings",
   "devDependencies": {
-    "eslint-plugin-compat": ">=2.3.0",
+    "eslint-plugin-compat": ">=2.4.0",
     "eslint-plugin-no-storage": ">=1.0.2",
     "eslint-plugin-no-unsanitized": ">=3.0.2",
     "eslint-plugin-security": ">=1.4.0",
     "eslint-plugin-xss": ">=0.1.9",
-    "grunt": ">=1.0.2",
+    "grunt": ">=1.0.3",
     "grunt-contrib-clean": ">=1.1.0",
     "grunt-contrib-copy": ">=1.0.0",
     "grunt-contrib-csslint": ">=2.0.0",
     "grunt-contrib-cssmin": ">=2.2.1",
     "grunt-contrib-rename": ">=0.2.0",
     "grunt-contrib-uglify-es": "git+https://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
-    "grunt-eslint": ">=20.1.0",
+    "grunt-eslint": ">=20.2.0",
     "grunt-html-minify": ">=0.3.1",
     "grunt-minify-html": ">=3.0.0",
     "grunt-yamllint": ">=0.3.0",
-    "grunt-zopfli-native": ">=1.0.1",
-    "text2datauri": ">=1.1.0"
+    "grunt-zopfli": ">=0.3.3",
+    "text2datauri": ">=1.1.1"
   },
   "directories": {},
   "engines": {
-    "node": ">8.0.0"
+    "node": ">=10.4.1"
   },
   "homepage": "https://github.com/mobilemind/pastelets",
   "keywords": [
@@ -48,5 +48,5 @@
   "scripts": {
     "test": "grunt"
   },
-  "version": "3.7.1"
+  "version": "3.7.2"
 }
