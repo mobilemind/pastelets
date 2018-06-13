@@ -132,7 +132,12 @@ the instructions in the HTML should probably be changed.
 ## Build Notes
 
 The project builds with `node`, `npm` and `grunt`. It should build on
-most platforms that support node. To clone and build the project:
+most platforms that support node. It also **requires** a local command line
+version of `zopfli`; for zopfli installation information see
+<https://github.com/mathiasbynens/grunt-zopfli> or
+<https://github.com/google/zopfli>.
+
+To clone and build the project:
 
    ````bash
    git clone https://github.com/mobilemind/pastelets
