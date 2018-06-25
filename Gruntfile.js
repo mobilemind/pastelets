@@ -18,7 +18,7 @@ module.exports = function (grunt) {
         "options": {
           "noprocess": ["**/*.ico", "**/*.png"],
           process(content, srcpath) {
-            let result = content.replace(/_MmCOPYRIGHT_/g, "2008-2017");
+            let result = content.replace(/_MmCOPYRIGHT_/g, "2008-2018");
             result = result.replace(/_MmBUILDDATE_/g, grunt.template.date(new Date(), "ddd mmm dd yyyy HH:MM TT Z"));
             return result.replace(/_MmVERSION_/g, grunt.config("pkg.version"));
           }
