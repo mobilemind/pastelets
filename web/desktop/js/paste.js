@@ -3,7 +3,7 @@
 //  pastelet- create bookmarklet for Mobile Safari to 'paste' provided text into HTML form text field
 //  3.7.2
 //
-//  Copyright (c) 2008-2017 Tom King. All rights reserved.
+//  Copyright (c) 2008-2018 Tom King. All rights reserved.
 //
 // Comments- Generated bookmarklet is carefully constructed.
 // *  The 'paste string' variable ('n') is defined first to make it more visible and ease editing the bookmark itself.
