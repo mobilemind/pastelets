@@ -7,10 +7,12 @@
   "bugs": {
     "url": "https://github.com/mobilemind/pastelets/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js2uri": ">=1.6.0"
+  },
   "description": "utility pages to make javascript bookmarklets to paste comon strings",
   "devDependencies": {
-    "eslint-plugin-compat": ">=2.5.0",
+    "eslint-plugin-compat": ">=2.5.1",
     "eslint-plugin-no-storage": ">=1.0.2",
     "eslint-plugin-no-unsanitized": ">=3.0.2",
     "eslint-plugin-security": ">=1.4.0",
@@ -27,7 +29,7 @@
     "grunt-minify-html": ">=3.0.0",
     "grunt-yamllint": ">=0.3.0",
     "grunt-zopfli": ">=0.3.3",
-    "text2datauri": ">=1.1.2"
+    "text2datauri": ">=1.2.0"
   },
   "directories": {},
   "engines": {
