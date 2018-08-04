@@ -20,15 +20,15 @@ function showDesktopLink() {
   b.select();
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   if (location.hash) {
     // reload form UI from query string
     try {
       const q = decodeURIComponent(location.hash.substr(1));
-      var m = q.match(/^javascript:\(\(\).*? \w="(.*?)"/);
+      const m = q.match(/^javascript:\(\(\).*? \w="(.*?)"/);
       if (m) {
         const p = m[1];
-        var skp = null;
+        let skp = null;
         if (!p) {
           throw new Error('Empty or invalid string to paste from location.hash');
         }
