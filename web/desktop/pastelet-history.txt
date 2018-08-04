@@ -79,5 +79,5 @@ version 3.5.3; August 3, 2017; Tom King; use location.reload() and history.pushS
 version 3.6.0; August 3, 2017; Tom King; create data: URL versions to make Pastelets for email or tel
 version 3.7.0; August 4, 2017; Tom King; update data URL (bookmarklet) versions with media queries for common mobiles iPhone/iPad
 version 3.7.1; January 3, 2018; Tom King; switch to grunt plugin for uglify-es to compress code.
-LAST VERSION PUBLISHED:  v3.7.2 on Sun Jun 24 2018 21:07 PM PDT
+LAST VERSION PUBLISHED:  v3.7.2 on Fri Aug 03 2018 21:49 PM PDT
 Copyright (c) 2008-2018 Tom King. All rights reserved.
