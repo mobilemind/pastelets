@@ -9,7 +9,7 @@
   },
   "description": "utility pages to make javascript bookmarklets to paste comon strings",
   "devDependencies": {
-    "eslint-plugin-compat": ">=2.5.1",
+    "eslint-plugin-compat": ">=2.6.0",
     "eslint-plugin-no-storage": ">=1.0.2",
     "eslint-plugin-no-unsanitized": ">=3.0.2",
     "eslint-plugin-security": ">=1.4.0",
@@ -31,7 +31,7 @@
   },
   "directories": {},
   "engines": {
-    "node": ">=10.5.0"
+    "node": ">=10.10.0"
   },
   "homepage": "https://github.com/mobilemind/pastelets",
   "keywords": [
