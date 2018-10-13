@@ -146,4 +146,4 @@ To clone and build the project:
    grunt
    ````
 
-The project has been built successfully on macOS 10.7-10.13.
+The project has been built successfully on macOS 10.7-10.14.
