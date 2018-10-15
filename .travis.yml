@@ -1,0 +1,18 @@
+branches:
+  except:
+  - gh-pages
+sudo: false
+dist: trusty
+language: node_js
+node_js:
+- '10'
+cache:
+  directories:
+  - node_modules
+matrix:
+  fast_finish: true
+before_install:
+- npm set progress=false ; npm install -g grunt-cli
+notifications:
+  slack:
+    secure: waRQD52SJKNyrX9P4mcxe/YmPNdib2q6MKT4yoNDlSZpQ1N2UjD4Ht8QA3K4ofZtupSXQq3bK8aWMKyNe5496kESEiIhASdpEjyebQZPDAcUkDZ8k50N7P6K+1tmb6R6rIjyNj76XPyA93u40YHuwVfmFF/acgOO5C1yz1AtlEg=
