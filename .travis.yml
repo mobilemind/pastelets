@@ -12,6 +12,9 @@ cache:
 matrix:
   fast_finish: true
 before_install:
+- curl -LO "https://github.com/google/zopfli/archive/zopfli-1.0.2.zip"; unzip zopfli-1.0.2.zip;
+  cd zopfli-zopfli-1.0.2; make; chmod +x zopfli; export PATH="$(pwd):${PATH}"; cd
+  ..
 - npm set progress=false ; npm install -g grunt-cli
 notifications:
   slack:
