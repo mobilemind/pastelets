@@ -27,12 +27,12 @@
     "grunt-minify-html": "3.0.0",
     "grunt-yamllint": "0.3.0",
     "grunt-zopfli": "0.3.3",
-    "js2uri": "1.6.5",
-    "text2datauri": "1.2.5"
+    "js2uri": "1.6.6",
+    "text2datauri": "1.2.6"
   },
   "directories": {},
   "engines": {
-    "node": "10"
+    "node": "11"
   },
   "homepage": "https://github.com/mobilemind/pastelets",
   "keywords": [
