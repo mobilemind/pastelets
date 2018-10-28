@@ -1,11 +1,11 @@
 branches:
   except:
   - gh-pages
-sudo: false
+os: linux
 dist: trusty
+sudo: false
 git:
-  depth: 12
-  quiet: true
+  depth: 8
   submodules: false
 language: node_js
 node_js:
