@@ -28,7 +28,7 @@
     "grunt-yamllint": "0.3.0",
     "grunt-zopfli": "0.3.3",
     "js2uri": "1.6.6",
-    "text2datauri": "1.2.6"
+    "text2datauri": "1.2.7"
   },
   "directories": {},
   "engines": {
