@@ -27,7 +27,7 @@
     "grunt-minify-html": "3.0.0",
     "grunt-yamllint": "0.3.0",
     "grunt-zopfli": "0.3.3",
-    "js2uri": "1.6.7",
+    "js2uri": "1.6.8",
     "text2datauri": "1.2.7"
   },
   "directories": {},
