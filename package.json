@@ -32,7 +32,7 @@
   },
   "directories": {},
   "engines": {
-    "node": ">=11"
+    "node": "12"
   },
   "homepage": "https://github.com/mobilemind/pastelets",
   "keywords": [
@@ -49,5 +49,5 @@
   "scripts": {
     "test": "grunt"
   },
-  "version": "3.7.4"
+  "version": "3.8.0"
 }
