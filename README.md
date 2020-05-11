@@ -60,7 +60,7 @@ MIT License - <http://opensource.org/licenses/mit-license.php>
 
 Pastelets
 
-Copyright (c) 2008-2018 Tom King  <mobilemind@pobox.com>
+Copyright (c) 2008-2020 Tom King  <mobilemind@pobox.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
