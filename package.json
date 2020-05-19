@@ -24,7 +24,7 @@
     "grunt-contrib-cssmin": "3.0.0",
     "grunt-contrib-rename": "0.2.0",
     "grunt-contrib-uglify-es": "git+https://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
-    "grunt-eslint": "22.0.0",
+    "grunt-eslint": "23.0.0",
     "grunt-html-minify": "0.3.1",
     "grunt-minify-html": "3.0.0",
     "grunt-yamllint": "0.3.0",
