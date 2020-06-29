@@ -8,7 +8,7 @@
     "url": "https://github.com/mobilemind/pastelets/issues"
   },
   "dependencies": {
-    "snyk": "^1.319.2"
+    "snyk": "^1.349.0"
   },
   "description": "utility pages to make javascript bookmarklets to paste comon strings",
   "devDependencies": {
