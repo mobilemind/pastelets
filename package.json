@@ -8,7 +8,7 @@
     "url": "https://github.com/mobilemind/pastelets/issues"
   },
   "dependencies": {
-    "snyk": "^1.349.0"
+    "snyk": "^1.360.0"
   },
   "description": "utility pages to make javascript bookmarklets to paste comon strings",
   "devDependencies": {
@@ -17,7 +17,7 @@
     "eslint-plugin-no-unsanitized": "3.1.2",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-xss": "0.1.10",
-    "grunt": "1.1.0",
+    "grunt": "1.2.0",
     "grunt-contrib-clean": "2.0.0",
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-csslint": "2.0.0",
@@ -29,8 +29,8 @@
     "grunt-minify-html": "3.0.0",
     "grunt-yamllint": "0.3.0",
     "grunt-zopfli": "0.3.3",
-    "js2uri": "1.8.0",
-    "text2datauri": "1.4.0"
+    "js2uri": "1.8.1",
+    "text2datauri": "1.4.1"
   },
   "directories": {},
   "engines": {
@@ -53,6 +53,6 @@
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
-  "version": "3.8.1",
+  "version": "3.8.2",
   "snyk": true
 }
