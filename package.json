@@ -17,7 +17,7 @@
     "eslint-plugin-no-unsanitized": "3.1.2",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-xss": "0.1.10",
-    "grunt": "1.2.0",
+    "grunt": "1.2.1",
     "grunt-contrib-clean": "2.0.0",
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-csslint": "2.0.0",
