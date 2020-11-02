@@ -21,7 +21,7 @@ before_install:
 - cd zopfli-zopfli-1.0.3 && make
 - chmod +x zopfli && export PATH="$(pwd):${PATH}"
 - cd ..
-- npm set progress=false ; npm install -g grunt-cli
+- npm set progress=false ; npm install -g grunt-cli uglify-js
 notifications:
   slack:
     secure: KKr6pcguQ00qFhlLTK4+/vJDUst0kgllBbUISJ4GfFISh0f0jjXslhkz6e34bATzF9MYcrQ1mP8ifiYHXbbOKJMADKxb8m/uRFXYXkJSo8nmm8B8Mu9M6tADie1EorMSEfF1ImJnagqFLNCVdzZiNP9U6f3vOPtp6Jyi3LnO/vSmf5xZVpxFPTjCtUm7mrks6v6ylGsj+yDUzWIK6IU6qrb/Dq8aZdsmZjlqPmGq5XzPhxOfo+5jbepF2pvcSOf5j0Fiq/fZNjLqoqu4SzCcFarZcMCrtzEhS0No7BvhLGg1Mrt0MYmRe0YvZECE1KUXzW8TJ/XD9NYlMSi44nkkFVSWE972LgS1wulZtDGKkFUJgzvrQgSN/8z0N8sAV6YOBjoF8lPLeqG8qjyCEZXvnx34ymC2kA1eNHQAOSuWUYaANAJlsc1caB7gfwkXQ3e2lJwAZT000WnpKve7wSiQb/ObcH2Tkcgj4JtETyrPJg9VulSQBEw3A6S9CEMnryjVjqdLVOivENeR6MZB5p4UcoRHbOoax9osN4bhv6w283RLMB7SCYOHZdcJC+oFr7qn8LsuLbaJo6wrV7c90bFRDC6pqaAjv0ys26h+yJ5b1AJHiHRp2lbEOy69BI2nmU8gA5iYbnWZIpeJZBY/E6E1RXdYfEnGcctWQXQX6JS2h+4=
