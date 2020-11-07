@@ -17,7 +17,7 @@ cache:
 matrix:
   fast_finish: true
 before_install:
-- curl -LO "https://github.com/google/zopfli/archive/zopfli-1.0.3.zip" && unzip zopfli-1.0.3.zip
+- curl -L -O "https://github.com/google/zopfli/archive/zopfli-1.0.3.zip" && unzip zopfli-1.0.3.zip
 - cd zopfli-zopfli-1.0.3 && make
 - chmod +x zopfli && export PATH="$(pwd):${PATH}"
 - cd ..
