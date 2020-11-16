@@ -13,7 +13,9 @@ node_js:
 - '15'
 cache:
   directories:
+  - $HOME/.npm
   - node_modules
+  - /usr/local/lib/node_modules
 matrix:
   fast_finish: true
 before_install:
