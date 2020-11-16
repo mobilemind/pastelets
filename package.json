@@ -28,7 +28,6 @@
     "grunt-yamllint": "0.3.0",
     "grunt-zopfli": "0.3.3",
     "js2uri": "1.8.2",
-    "snyk": "1.426.0",
     "text2datauri": "1.4.2"
   },
   "directories": {},
@@ -48,9 +47,7 @@
     "url": "git://github.com/mobilemind/pastelet.git"
   },
   "scripts": {
-    "test": "grunt",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "test": "grunt"
   },
   "version": "3.8.2",
   "snyk": true
